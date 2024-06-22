@@ -1,0 +1,61 @@
+package com.wqz.allinone.ui
+
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.tween
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.gestures.detectTapGestures
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.interaction.collectIsPressedAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.composed
+import androidx.compose.ui.draw.scale
+import androidx.compose.ui.input.pointer.pointerInput
+
+/**
+ * 按压缩放效果
+ * Created by Wu Qizhen on 2024.6.16
+ */
+object ModifierExtends {
+    fun Modifier.clickVfx(
+        interactionSource: MutableInteractionSource = MutableInteractionSource(),
+        isEnabled: Boolean = true,
+        onClick: () -> Unit,
+    ): Modifier = composed {
+        if (isEnabled) {
+            val isPressed by interactionSource.collectIsPressedAsState()
+            val sizePercent by animateFloatAsState(
+                targetValue = if (isPressed) 0.95f else 1f,
+                animationSpec = tween(durationMillis = 150), label = ""
+            )
+            scale(sizePercent).clickable(
+                indication = null, interactionSource = interactionSource, onClick = onClick
+            )
+        } else {
+            Modifier
+        }
+    }
+
+    fun Modifier.clickVfx(
+        // interactionSource: MutableInteractionSource = MutableInteractionSource(),
+        onClick: () -> Unit,
+        onLongClick: () -> Unit
+    ): Modifier = composed {
+        var isPressed by remember {
+            mutableStateOf(false)
+        }
+        val sizePercent by animateFloatAsState(
+            targetValue = if (isPressed) 0.95f else 1f,
+            animationSpec = tween(durationMillis = 150), label = ""
+        )
+        scale(sizePercent).pointerInput(Unit) {
+            detectTapGestures(
+                onTap = { onClick() },
+                onLongPress = { onLongClick() },
+                onPress = { isPressed = true })
+        }
+    }
+}
