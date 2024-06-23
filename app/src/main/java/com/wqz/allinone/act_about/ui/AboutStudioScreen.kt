@@ -12,22 +12,17 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.Font
-import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.wqz.allinone.R
 import com.wqz.allinone.ui.ModifierExtends.clickVfx
+import com.wqz.allinone.ui.TitleBar
 import com.wqz.allinone.ui.theme.AllInOneTheme
 
 /**
@@ -46,20 +41,7 @@ fun AboutStudioScreen() {
             .padding(horizontal = 20.dp),
         verticalArrangement = Arrangement.Top,
     ) {
-        Text(
-            text = stringResource(id = R.string.title_about_studio),
-            fontSize = 20.sp,
-            fontWeight = FontWeight.Bold,
-            fontFamily = FontFamily(
-                Font(R.font.fzfengrusongti_regular, FontWeight.Normal)
-            ),
-            color = colorResource(id = R.color.theme_yellow),
-            textAlign = TextAlign.Center,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(vertical = 10.dp)
-                .align(Alignment.CenterHorizontally)
-        )
+        TitleBar.TextTitleBar(title = R.string.title_about_studio)
 
         Image(
             painter = painterResource(id = R.drawable.logo_code_intellix_poster),

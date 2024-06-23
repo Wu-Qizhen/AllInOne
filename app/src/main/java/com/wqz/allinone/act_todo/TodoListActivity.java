@@ -1,6 +1,7 @@
 package com.wqz.allinone.act_todo;
 
 import android.animation.ValueAnimator;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
@@ -82,7 +83,7 @@ public class TodoListActivity extends AppCompatActivity implements View.OnClickL
 
     private void initListView() {
         List<Todo> uncompletedTodos = todoDBHelper.getUncompletedTodos();
-        if (uncompletedTodos != null && uncompletedTodos.size() != 0) {
+        if (uncompletedTodos != null && !uncompletedTodos.isEmpty()) {
             adapter = new TodoAdapter(this, uncompletedTodos, listView);
             listView.setAdapter(adapter);
             setListViewHeightBasedOnChildren(listView);
@@ -169,14 +170,18 @@ public class TodoListActivity extends AppCompatActivity implements View.OnClickL
         }
     }
 
+    @SuppressLint("SetTextI18n")
     private void todoDetailsDialog(int id, String name) {
         // 初始化对话框
         View view = View.inflate(this, R.layout.dialog_todo_details, null);
         Dialog dialog = new Dialog(this);
         dialog.setContentView(view);
 
-        TextView textView = dialog.findViewById(R.id.tv_name);
-        textView.setText(name);
+        TextView tvName = dialog.findViewById(R.id.tv_name);
+        tvName.setText(name);
+
+        TextView tvNumber = dialog.findViewById(R.id.tv_number);
+        tvNumber.setText("* 这是第 " + id + " 条待办");
 
         Button confirmButton = dialog.findViewById(R.id.btn_delete);
         confirmButton.setOnClickListener(v -> {

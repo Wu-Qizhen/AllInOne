@@ -3,10 +3,13 @@ package com.wqz.allinone
 import android.app.ActivityOptions
 import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
 import android.util.Pair
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 class LauncherActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,7 +36,7 @@ class LauncherActivity : AppCompatActivity() {
             startActivity(intent, options.toBundle())
         }, 1500)*/
 
-        Handler().postDelayed({
+        /*Handler().postDelayed({
             val imagePair = Pair(ivPen, "logo_pen")
             val textPair = Pair(ivTextWxgy, "logo_text")
 
@@ -43,6 +46,24 @@ class LauncherActivity : AppCompatActivity() {
             val intent = Intent(this, MainActivity::class.java)
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
             startActivity(intent, bundle)
-        }, 1500)
+        }, 1500)*/
+
+        CoroutineScope(Dispatchers.Main).launch {
+            delay(1500) // 延迟 1500 毫秒
+
+            // 转场动画设置
+            val imagePair = Pair(ivPen, "logo_pen")
+            val textPair = Pair(ivTextWxgy, "logo_text")
+            val bundle = ActivityOptions.makeSceneTransitionAnimation(
+                this@LauncherActivity,
+                imagePair,
+                textPair
+            ).toBundle()
+
+            // 启动新活动
+            val intent = Intent(this@LauncherActivity, MainActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            startActivity(intent, bundle)
+        }
     }
 }

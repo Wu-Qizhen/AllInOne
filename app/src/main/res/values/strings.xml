@@ -4,34 +4,15 @@
     <string name="slogan">点滴记忆，万象收纳</string>
     <string name="copyright">Copyright © 2024 Code IntelliX.\nAll rights reserved.</string>
     <string name="studio">Code IntelliX</string>
-    <!--   <string name="title_activity_launcher">LauncherActivity</string>-->
 
     <!-- 关于我们 -->
     <string name="title_about_us">关于我们</string>
     <string name="introduction">一笔一划，万象尽在掌握</string>
 
-    <string name="btn_version">Released 0.0.3\n版本号</string>
     <string name="version">Aurora（A）</string>
     <string name="version_desc">版本号</string>
     <string name="title_update_log">更新日志</string>
 
-    <string name="btn_develop_method">应用架构\n多语言混合开发</string>
-    <string name="develop_method">应用架构</string>
-    <string name="develop_method_desc">多语言混合开发</string>
-    <string name="title_app_info">应用信息</string>
-    <string name="text_languages">语言使用</string>
-    <string name="text_develop_tools">构建工具</string>
-
-    <string name="btn_license">许可协议\n查看许可 / 授权</string>
-    <string name="license">许可协议</string>
-    <string name="license_desc">查看许可 / 授权</string>
-    <string name="title_license">许可协议</string>
-    <string name="text_license">此应用使用了以下第三方库 / 资源：</string>
-    <string name="text_font_res">字体资源</string>
-    <string name="text_code_res">开源代码库</string>
-    <string name="text_misans">MiSans | 软件界面\n小米科技有限责任公司</string>
-
-    <string name="btn_open_source">开源信息\n查看我们的开源项目</string>
     <string name="open_source">开源信息</string>
     <string name="open_source_desc">查看我们的开源项目</string>
     <string name="title_open_source">开源信息</string>
@@ -54,31 +35,24 @@
     <string name="text_licenses">License</string>
 
     <string name="participating_team">参与团队</string>
-    <string name="btn_usoft_studio">Code IntelliX\n设计 | 开发</string>
     <string name="studio_desc">设计 | 开发</string>
-    <string name="usoft_studio">Code IntelliX</string>
     <string name="title_about_studio">组织详情</string>
     <string name="text_studio_describe">一个热爱开发和设计的小小工作室\n\nEvery Moment Worth Creating, \nEverywhere
         Filled with Creativity.\n\n每一刻都值得创造，\n每一处都充满创意。
     </string>
 
     <string name="participating_individuals">参与成员</string>
-    <string name="btn_wqz">Wu Qizhen\n开发者 | 项目发起人</string>
     <string name="wqz">Wu Qizhen</string>
     <string name="wqz_desc">开发者 | 项目发起人</string>
-    <string name="btn_chatglm">ChatGLM（AI）\n技术协力</string>
     <string name="chatglm">智谱清言</string>
     <string name="chatglm_desc">技术协力</string>
     <string name="tylm">通义灵码</string>
     <string name="tylm_desc">开发协力</string>
-    <string name="btn_codegeex">CodeGeeX（AI）\n开发协力</string>
     <string name="codegeex">CodeGeeX</string>
     <string name="codegeex_desc">开发协力</string>
-    <string name="btn_sd">Stable Diffusion（AI）\n设计协力</string>
     <string name="sd">Stable Diffusion</string>
     <string name="sd_desc">设计协力</string>
     <string name="title_about_developer">关于此成员</string>
-    <string name="text_wqz">Wu Qizhen</string>
     <string name="text_about_wqz">简历：
         \n» 熟练掌握 Java 和 Kotlin 编程语言，具备扎实的编程基础。
         \n» 熟悉 Android 开发，熟练使用 Android Studio 和相关工具。
@@ -115,7 +89,6 @@
         \n» 版本控制：
         \n - Git：熟练
     </string>
-    <string name="text_codegeex">CodeGeeX</string>
     <string name="text_about_codegeex">简介：
         \nCodeGeeX 是清华和智谱 AI 联合打造具有 130 亿参数的多语言代码生成模型，二代 CodeGeeX 不同于一代
         CodeGeeX（完全在国产华为昇腾芯片平台训练），CodeGeeX 是基于 ChatGLM 架构加入代码预训练实现，得益于 ChatGLM
@@ -139,7 +112,6 @@
         / 函数级代码、单元测试、代码注释等，此外还具备代码解释、智能研发问答、异常报错排查等能力，并针对阿里云 SDK/OpenAPI
         使用场景调优，为开发者带来高效、流畅的编码体验。
     </string>
-    <string name="text_chatglm">智谱清言</string>
     <string name="text_about_chatglm">简介：
         \nChatGLM-6B 是一个具有 62 亿参数的中英双语语言模型。通过使用与 ChatGLM（chatglm.cn）相同的技术，ChatGLM-6B
         初具中文问答和对话功能，并支持在单张 2080Ti 上进行推理使用。具体来说，ChatGLM-6B 有如下特点：
@@ -163,7 +135,6 @@
         \n
         \n官网：https://chatglm.cn/
     </string>
-    <string name="text_sd">Stable Diffusion\n设计协力</string>
     <string name="text_about_sd">简介：
         \nStable Diffusion 是一款基于潜在扩散模型的深度学习工具，主要用于文本生成图像（txt2img）的应用场景。这款产品由
         StabilityAI 公司开发，并于 2022 年 8 月发布。Stable Diffusion 在艺术创作、程序开发等领域广泛应用，因其生成图像速度快、对资源和内存要求低等特点而受到欢迎。
@@ -180,7 +151,6 @@
     <string name="text_personal_manage">个人管理</string>
     <string name="btn_diary">生活书</string>
     <string name="btn_note">随手记</string>
-    <string name="title_activity_test">TestActivity</string>
     <string name="btn_todo">待办箱</string>
     <string name="btn_clock_in">打卡通</string>
     <string name="btn_schedule">日程达</string>
@@ -223,4 +193,5 @@
     <string name="dept_design">设计部</string>
     <string name="dept_create">创作部</string>
     <string name="title_activity_about_studio">AboutStudioActivity</string>
+    <string name="text_todo_number">* 这是第 条待办</string>
 </resources>

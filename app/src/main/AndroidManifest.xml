@@ -57,18 +57,10 @@
             android:name=".act_bookmark.BookmarkFoldersActivity"
             android:exported="false" />
         <activity
-            android:name=".TestActivity"
-            android:exported="false"
-            android:label="@string/title_activity_test"
-            android:theme="@style/Theme.万象归一" />
-        <activity
             android:name=".MainActivity"
             android:exported="false" />
         <activity
             android:name=".SettingActivity"
-            android:exported="false" />
-        <activity
-            android:name=".act_about.AboutUsActivity"
             android:exported="false" />
         <activity
             android:name=".LauncherActivity"
