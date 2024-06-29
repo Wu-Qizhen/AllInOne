@@ -9,7 +9,7 @@
     <string name="title_about_us">关于我们</string>
     <string name="introduction">一笔一划，万象尽在掌握</string>
 
-    <string name="version">Aurora（A）</string>
+    <string name="version">Bismuth（B）</string>
     <string name="version_desc">版本号</string>
     <string name="title_update_log">更新日志</string>
 
@@ -89,8 +89,7 @@
         \n» 版本控制：
         \n - Git：熟练
     </string>
-    <string name="text_about_codegeex">简介：
-        \nCodeGeeX 是清华和智谱 AI 联合打造具有 130 亿参数的多语言代码生成模型，二代 CodeGeeX 不同于一代
+    <string name="text_about_codegeex">CodeGeeX 是清华和智谱 AI 联合打造具有 130 亿参数的多语言代码生成模型，二代 CodeGeeX 不同于一代
         CodeGeeX（完全在国产华为昇腾芯片平台训练），CodeGeeX 是基于 ChatGLM 架构加入代码预训练实现，得益于 ChatGLM
         的更优性能，CodeGeeX 在多项指标上取得性能提升（+107% > CodeGeeX；仅 60 亿参数即超过 150 亿参数的 StarCoder-15B 近
         10%），更多特性包括：
@@ -103,17 +102,12 @@
         \n» 更全面的编程助手：CodeGeeX 插件（VS Code, Jetbrains）后端升级，支持超过 100 种编程语言，新增上下文补全、跨文件补全等实用功能。结合
         Ask CodeGeeX 交互式编程助手，支持中英文对话解决各种编程问题，包括且不限于代码解释、代码翻译、代码纠错、文档生成等，帮助程序员更高效开发。
         \n» 更开放的协议：CodeGeeX2-6B 权重对学术研究完全开放，填写登记表申请商业使用。
-        \n
-        \n官网：https://codegeex.cn/zh-CN
-        \n模型介绍：https://github.com/THUDM/CodeGeeX2
     </string>
-    <string name="text_about_tylm">简介：
-        \n通义灵码是一款基于阿里云通义代码大模型打造的智能编码助手，基于海量优秀开源代码数据集和编程教科书训练，可根据当前代码文件及跨文件的上下文，自动生成行级
+    <string name="text_about_tylm">通义灵码是一款基于阿里云通义代码大模型打造的智能编码助手，基于海量优秀开源代码数据集和编程教科书训练，可根据当前代码文件及跨文件的上下文，自动生成行级
         / 函数级代码、单元测试、代码注释等，此外还具备代码解释、智能研发问答、异常报错排查等能力，并针对阿里云 SDK/OpenAPI
         使用场景调优，为开发者带来高效、流畅的编码体验。
     </string>
-    <string name="text_about_chatglm">简介：
-        \nChatGLM-6B 是一个具有 62 亿参数的中英双语语言模型。通过使用与 ChatGLM（chatglm.cn）相同的技术，ChatGLM-6B
+    <string name="text_about_chatglm">ChatGLM-6B 是一个具有 62 亿参数的中英双语语言模型。通过使用与 ChatGLM（chatglm.cn）相同的技术，ChatGLM-6B
         初具中文问答和对话功能，并支持在单张 2080Ti 上进行推理使用。具体来说，ChatGLM-6B 有如下特点：
         \n» 充分的中英双语预训练：ChatGLM-6B 在 1:1 比例的中英语料上训练了 1T 的 token 量，兼具双语能力。
         \n» 优化的模型架构和大小：吸取 GLM-130B 训练经验，修正了二维 RoPE 位置编码实现，使用传统 FFN
@@ -132,11 +126,8 @@
         \n» 英文能力不足：训练时使用的指示大部分都是中文的，只有一小部分指示是英文的。因此在使用英文指示时，回复的质量可能不如中文指示的回复，甚至与中文指示下的回复矛盾。
         \n» 易被误导：ChatGLM-6B 的“自我认知”可能存在问题，很容易被误导并产生错误的言论。例如当前版本模型在被误导的情况下，会在自我认知上发生偏差。即使该模型经过了
         1 万亿标识符（token）左右的双语预训练，并且进行了指令微调和人类反馈强化学习（RLHF），但是因为模型容量较小，所以在某些指示下可能会产生有误导性的内容。
-        \n
-        \n官网：https://chatglm.cn/
     </string>
-    <string name="text_about_sd">简介：
-        \nStable Diffusion 是一款基于潜在扩散模型的深度学习工具，主要用于文本生成图像（txt2img）的应用场景。这款产品由
+    <string name="text_about_sd">Stable Diffusion 是一款基于潜在扩散模型的深度学习工具，主要用于文本生成图像（txt2img）的应用场景。这款产品由
         StabilityAI 公司开发，并于 2022 年 8 月发布。Stable Diffusion 在艺术创作、程序开发等领域广泛应用，因其生成图像速度快、对资源和内存要求低等特点而受到欢迎。
         \n
         \nStable Diffusion 的核心技术来源于 AI 视频剪辑技术创业公司 Runway 的 Patrick Esser 以及慕尼黑大学机器视觉学习组的
@@ -159,7 +150,7 @@
     <string name="text_study">学术管理</string>
     <string name="btn_school_timetable">课程表</string>
     <string name="text_option">选项操作</string>
-    <string name="btn_setting">设置</string>
+    <string name="setting">设置</string>
     <string name="btn_about">关于</string>
     <string name="btn_add_folder">新建收藏夹</string>
     <string name="text_folder_search_tip">名称</string>
@@ -172,7 +163,7 @@
     <string name="title_bookmark_details">书签信息</string>
     <string name="btn_delete">删除</string>
     <string name="btn_modify">修改</string>
-    <string name="text_url_introduce">* 点击链接访问，长按复制</string>
+    <string name="text_url_introduce">* 点击访问，长按复制</string>
     <string name="text_delete_confirm">删除确认</string>
     <string name="text_delete_confirm_hint">确定要删除吗？</string>
     <string name="btn_cancel">取消</string>

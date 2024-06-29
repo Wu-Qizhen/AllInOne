@@ -1,7 +1,5 @@
 package com.wqz.allinone.ui
 
-import android.annotation.SuppressLint
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -23,11 +21,13 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.wqz.allinone.R
@@ -38,35 +38,30 @@ import com.wqz.allinone.ui.ModifierExtends.clickVfx
  * Created by Wu Qizhen on 2024.6.16
  */
 object CapsuleButton {
-    @SuppressLint("InvalidColorHexValue")
-    private val defaultBackgroundColor = Color(0xFF8C262626)
-
-    @SuppressLint("InvalidColorHexValue")
-    private val pressedBackgroundColor = Color(0xFFD9262626)
-
+    private val defaultBackgroundColor = Color(38, 38, 38, 115)
+    private val pressedBackgroundColor = Color(38, 38, 38, 153)
     private val borderColors = listOf(
-        Color(0xFF333333),
-        defaultBackgroundColor
+        Color(54, 54, 54, 255),
+        Color.Transparent
     )
+    private val borderWidth = 0.4f.dp
 
     @Composable
-    fun LogoButtonWithBorder(
+    fun LogoButton(
         icon: Int,
         text: String,
         subText: String,
-        onClick: () -> Unit,
+        onClick: () -> Unit
     ) {
-        // val context = LocalContext.current
         val interactionSource = remember { MutableInteractionSource() }
         val isPressed = interactionSource.collectIsPressedAsState()
-        // val borderColor = Color(0xFF333333)
         val backgroundColor =
             if (isPressed.value) pressedBackgroundColor else defaultBackgroundColor
-        val borderColorsBrush = remember {
+        /*val borderColorsBrush = remember {
             Brush.linearGradient(
                 borderColors
             )
-        }
+        }*/
 
         /*Button(
             onClick = { },
@@ -81,19 +76,22 @@ object CapsuleButton {
             interactionSource = interactionSource
         ) {*/
         Row(
-            modifier = Modifier.run {
-                clickVfx(interactionSource, true, onClick)
-                    // .height(50.dp)
-                    .wrapContentHeight()
-                    .background(backgroundColor, RoundedCornerShape(50.dp))
-                    // .border(1.dp, color = borderColor, shape = RoundedCornerShape(50.dp))
-                    .border(
-                        BorderStroke(1.dp, borderColorsBrush),
-                        RoundedCornerShape(50.dp)
+            modifier = Modifier
+                .clickVfx(interactionSource, true, onClick)
+                .wrapContentHeight()
+                .background(backgroundColor, RoundedCornerShape(50.dp))
+                // .border(1.dp, color = borderColor, shape = RoundedCornerShape(50.dp))
+                .border(
+                    width = borderWidth,
+                    shape = RoundedCornerShape(50.dp),
+                    brush = Brush.linearGradient(
+                        borderColors,
+                        start = Offset.Zero,
+                        end = Offset.Infinite
                     )
-                    .fillMaxWidth()
-                    .padding(10.dp)
-            },
+                )
+                .fillMaxWidth()
+                .padding(10.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
             Image(
@@ -111,13 +109,13 @@ object CapsuleButton {
                 Text(
                     text = text,
                     fontWeight = FontWeight.Bold,
-                    fontSize = 12.sp,
+                    fontSize = 14.sp,
                     maxLines = 1
                 )
                 // Spacer(modifier = Modifier.height(2.dp))
                 Text(
                     text = subText,
-                    fontSize = 10.sp,
+                    fontSize = 12.sp,
                     color = Color.Gray,
                     maxLines = 1
                     // modifier = Modifier.alpha(ContentAlpha.medium)
@@ -128,42 +126,50 @@ object CapsuleButton {
     }
 
     @Composable
-    fun IconButtonWithBorder(
+    fun IconButton(
         icon: Int,
+        iconSize: Int = 30,
         text: String,
         subText: String,
-        onClick: () -> Unit,
+        onClick: () -> Unit
     ) {
         val interactionSource = remember { MutableInteractionSource() }
         val isPressed = interactionSource.collectIsPressedAsState()
         val backgroundColor =
             if (isPressed.value) pressedBackgroundColor else defaultBackgroundColor
-        val borderColorsBrush = remember {
-            Brush.linearGradient(
-                borderColors
-            )
-        }
 
         Row(
             modifier = Modifier
                 .clickVfx(interactionSource, true, onClick)
-                // .height(50.dp)
                 .wrapContentHeight()
                 .background(backgroundColor, RoundedCornerShape(50.dp))
                 // .border(1.dp, color = borderColor, shape = RoundedCornerShape(50.dp))
                 .border(
-                    BorderStroke(1.dp, borderColorsBrush),
-                    RoundedCornerShape(50.dp)
+                    width = borderWidth,
+                    shape = RoundedCornerShape(50.dp),
+                    brush = Brush.linearGradient(
+                        borderColors,
+                        start = Offset.Zero,
+                        end = Offset.Infinite
+                    )
                 )
                 .fillMaxWidth()
                 .padding(10.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
+            val iconPadding: Dp = if (iconSize >= 30) {
+                0.dp
+            } else if (iconSize == 20) {
+                5.dp
+            } else {
+                ((30 - iconSize) / 2).dp
+            }
+
             Image(
                 painter = painterResource(id = icon),
                 modifier = Modifier
-                    .padding(5.dp)
-                    .size(20.dp),
+                    .size(30.dp)
+                    .padding(iconPadding),
                 contentDescription = null,
             )
             Column(
@@ -174,14 +180,74 @@ object CapsuleButton {
                 Text(
                     text = text,
                     fontWeight = FontWeight.Bold,
-                    fontSize = 12.sp,
+                    fontSize = 14.sp,
+                    maxLines = 1
                 )
                 Text(
                     text = subText,
-                    fontSize = 10.sp,
-                    color = Color.Gray
+                    fontSize = 12.sp,
+                    color = Color.Gray,
+                    maxLines = 1
                 )
             }
+        }
+    }
+
+    @Composable
+    fun IconButton(
+        icon: Int,
+        iconSize: Int = 30,
+        text: String,
+        onClick: () -> Unit
+    ) {
+        val interactionSource = remember { MutableInteractionSource() }
+        val isPressed = interactionSource.collectIsPressedAsState()
+        val backgroundColor =
+            if (isPressed.value) pressedBackgroundColor else defaultBackgroundColor
+
+        Row(
+            modifier = Modifier
+                .clickVfx(interactionSource, true, onClick)
+                .wrapContentHeight()
+                .background(backgroundColor, RoundedCornerShape(50.dp))
+                // .border(1.dp, color = borderColor, shape = RoundedCornerShape(50.dp))
+                .border(
+                    width = borderWidth,
+                    shape = RoundedCornerShape(50.dp),
+                    brush = Brush.linearGradient(
+                        borderColors,
+                        start = Offset.Zero,
+                        end = Offset.Infinite
+                    )
+                )
+                .fillMaxWidth()
+                .padding(10.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            val iconPadding: Dp = if (iconSize >= 30) {
+                0.dp
+            } else if (iconSize == 20) {
+                5.dp
+            } else {
+                ((30 - iconSize) / 2).dp
+            }
+
+            Image(
+                painter = painterResource(id = icon),
+                modifier = Modifier
+                    .size(30.dp)
+                    .padding(iconPadding),
+                contentDescription = null,
+            )
+            Text(
+                modifier = Modifier
+                    .padding(start = 8.dp)
+                    .align(Alignment.CenterVertically),
+                text = text,
+                fontWeight = FontWeight.Bold,
+                fontSize = 16.sp,
+                maxLines = 1
+            )
         }
     }
 }
@@ -190,13 +256,13 @@ object CapsuleButton {
 @Composable
 fun CapsuleButtonPreview() {
     Column {
-        CapsuleButton.LogoButtonWithBorder(
+        CapsuleButton.LogoButton(
             icon = R.drawable.logo_wqz,
             text = "Wu Qizhen",
             subText = "Developer"
         ) { }
         Spacer(modifier = Modifier.height(10.dp))
-        CapsuleButton.IconButtonWithBorder(
+        CapsuleButton.IconButton(
             icon = R.drawable.ic_version,
             text = "Released 1.0.0",
             subText = "Version"

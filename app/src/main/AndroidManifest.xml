@@ -12,66 +12,57 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.万象归一"
+        android:theme="@style/Theme.AllInOne"
         tools:targetApi="31">
         <activity
-            android:name=".act_about.AboutStudioActivity"
+            android:name=".act.about.AboutStudioActivity"
             android:exported="false"
-            android:label="@string/title_activity_about_studio"
-            android:theme="@style/Theme.万象归一" />
+            android:label="@string/title_activity_about_studio" />
         <activity
-            android:name=".act_about.AboutAppActivity"
+            android:name=".act.about.AboutAppActivity"
             android:exported="false"
-            android:label="@string/title_activity_about_app"
-            android:theme="@style/Theme.万象归一" />
+            android:label="@string/title_activity_about_app" />
         <activity
-            android:name=".act_about.AboutDeveloperActivity"
+            android:name=".act.about.AboutDeveloperActivity"
             android:exported="false"
-            android:label="@string/title_activity_about_developer"
-            android:theme="@style/Theme.万象归一" />
+            android:label="@string/title_activity_about_developer" />
         <activity
-            android:name=".act_todo.TodoCompletedActivity"
+            android:name=".act.todo.TodoCompletedActivity"
             android:exported="false" />
         <activity
-            android:name=".act_todo.TodoAddActivity"
+            android:name=".act.todo.TodoAddActivity"
             android:exported="false" />
         <activity
-            android:name=".act_todo.TodoListActivity"
+            android:name=".act.todo.TodoListActivity"
             android:exported="false" />
         <activity
-            android:name=".act_bookmark.FolderDetailsActivity"
+            android:name=".act.bookmark.FolderDetailsActivity"
             android:exported="false" />
         <activity
-            android:name=".act_bookmark.LinkDetailsActivity"
+            android:name=".act.bookmark.LinkDetailsActivity"
             android:exported="false" />
         <activity
-            android:name=".act_bookmark.LinkAddActivity"
+            android:name=".act.bookmark.LinkAddActivity"
             android:exported="false" />
         <activity
-            android:name=".act_bookmark.BookmarkLinksActivity"
+            android:name=".act.bookmark.BookmarkLinksActivity"
             android:exported="false" />
         <activity
-            android:name=".act_bookmark.FolderAddActivity"
+            android:name=".act.bookmark.FolderAddActivity"
             android:exported="false" />
         <activity
-            android:name=".act_bookmark.BookmarkFoldersActivity"
+            android:name=".act.bookmark.BookmarkFoldersActivity"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".act.setting.SettingActivity"
             android:exported="false" />
         <activity
-            android:name=".SettingActivity"
-            android:exported="false" />
-        <activity
-            android:name=".LauncherActivity"
-            android:exported="true"
-            android:theme="@style/Theme.万象归一">
+            android:name=".act.main.MainActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
     </application>
-
 </manifest>

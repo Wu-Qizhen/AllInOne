@@ -31,7 +31,7 @@ import com.wqz.allinone.R
  */
 object CirclesBackground {
     @Composable
-    fun RegularBackgroundWithNoTitle(content: @Composable () -> Unit) {
+    fun RegularBackground(content: @Composable () -> Unit) {
         var bottomWidth by remember { mutableStateOf(0.dp) }
         var topWidth by remember { mutableStateOf(0.dp) }
         val localDensity = LocalDensity.current
@@ -80,7 +80,8 @@ object CirclesBackground {
             Column(
                 Modifier
                     .fillMaxSize()
-                    /*.padding(horizontal = 20.dp)*/) {
+                /*.padding(horizontal = 20.dp)*/
+            ) {
                 // Spacer(Modifier.width(8.dp))
                 content()
                 // Spacer(Modifier.width(8.dp))
@@ -92,5 +93,5 @@ object CirclesBackground {
 @Preview
 @Composable
 fun CirclesBackgroundPreview() {
-    CirclesBackground.RegularBackgroundWithNoTitle {}
+    CirclesBackground.RegularBackground {}
 }

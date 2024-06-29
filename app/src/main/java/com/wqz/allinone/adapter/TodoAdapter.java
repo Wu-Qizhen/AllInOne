@@ -3,7 +3,6 @@ package com.wqz.allinone.adapter;
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.graphics.Color;
-import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -58,11 +57,18 @@ public class TodoAdapter extends ArrayAdapter<Todo> {
         }
 
         // 设置 CheckBox 的点击监听器来更新待办事项的状态
+        View finalConvertView = convertView;
         cbCompleted.setOnClickListener(v -> {
             cbCompleted.setClickable(false);
             todo.toggleCompleted(); // 切换完成状态
             todoDBHelper.updateTodo(todo); // 更新数据库中的待办事项
-            new Handler().postDelayed(() -> {
+            /* new Handler().postDelayed(() -> {
+                todos.remove(t o d o);
+                notifyDataSetChanged(); // 再次通知 ListView 更新视图
+                setListViewHeightWithAnimation(listView); // 再次调整 ListView 高度
+            }, 500); // 延迟 500 毫秒（0.5 秒）执行 */
+            // 使用post()在主线程中延迟执行
+            finalConvertView.postDelayed(() -> {
                 todos.remove(todo);
                 notifyDataSetChanged(); // 再次通知 ListView 更新视图
                 setListViewHeightWithAnimation(listView); // 再次调整 ListView 高度
