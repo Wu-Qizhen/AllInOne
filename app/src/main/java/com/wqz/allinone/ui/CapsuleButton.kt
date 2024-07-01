@@ -32,18 +32,25 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.wqz.allinone.R
 import com.wqz.allinone.ui.ModifierExtends.clickVfx
+import com.wqz.allinone.ui.theme.AllInOneTheme
+import com.wqz.allinone.ui.theme.BorderColors
+import com.wqz.allinone.ui.theme.DefaultBackgroundColor
+import com.wqz.allinone.ui.theme.PressedBackgroundColor
 
 /**
  * 胶囊按钮
  * Created by Wu Qizhen on 2024.6.16
  */
 object CapsuleButton {
-    private val defaultBackgroundColor = Color(38, 38, 38, 115)
+    /*private val defaultBackgroundColor = Color(38, 38, 38, 115)
     private val pressedBackgroundColor = Color(38, 38, 38, 153)
     private val borderColors = listOf(
         Color(54, 54, 54, 255),
         Color.Transparent
-    )
+    )*/
+    private val defaultBackgroundColor = DefaultBackgroundColor
+    private val pressedBackgroundColor = PressedBackgroundColor
+    private val borderColors = BorderColors
     private val borderWidth = 0.4f.dp
 
     @Composable
@@ -79,6 +86,7 @@ object CapsuleButton {
             modifier = Modifier
                 .clickVfx(interactionSource, true, onClick)
                 .wrapContentHeight()
+                .fillMaxWidth()
                 .background(backgroundColor, RoundedCornerShape(50.dp))
                 // .border(1.dp, color = borderColor, shape = RoundedCornerShape(50.dp))
                 .border(
@@ -90,7 +98,6 @@ object CapsuleButton {
                         end = Offset.Infinite
                     )
                 )
-                .fillMaxWidth()
                 .padding(10.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
@@ -142,6 +149,7 @@ object CapsuleButton {
             modifier = Modifier
                 .clickVfx(interactionSource, true, onClick)
                 .wrapContentHeight()
+                .fillMaxWidth()
                 .background(backgroundColor, RoundedCornerShape(50.dp))
                 // .border(1.dp, color = borderColor, shape = RoundedCornerShape(50.dp))
                 .border(
@@ -153,7 +161,6 @@ object CapsuleButton {
                         end = Offset.Infinite
                     )
                 )
-                .fillMaxWidth()
                 .padding(10.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
@@ -209,6 +216,7 @@ object CapsuleButton {
             modifier = Modifier
                 .clickVfx(interactionSource, true, onClick)
                 .wrapContentHeight()
+                .fillMaxWidth()
                 .background(backgroundColor, RoundedCornerShape(50.dp))
                 // .border(1.dp, color = borderColor, shape = RoundedCornerShape(50.dp))
                 .border(
@@ -220,7 +228,6 @@ object CapsuleButton {
                         end = Offset.Infinite
                     )
                 )
-                .fillMaxWidth()
                 .padding(10.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
@@ -255,17 +262,20 @@ object CapsuleButton {
 @Preview
 @Composable
 fun CapsuleButtonPreview() {
-    Column {
-        CapsuleButton.LogoButton(
-            icon = R.drawable.logo_wqz,
-            text = "Wu Qizhen",
-            subText = "Developer"
-        ) { }
-        Spacer(modifier = Modifier.height(10.dp))
-        CapsuleButton.IconButton(
-            icon = R.drawable.ic_version,
-            text = "Released 1.0.0",
-            subText = "Version"
-        ) { }
+    AllInOneTheme {
+        Column {
+            CapsuleButton.LogoButton(
+                icon = R.drawable.logo_wqz,
+                text = "Wu Qizhen",
+                subText = "Developer"
+            ) { }
+            Spacer(modifier = Modifier.height(10.dp))
+            CapsuleButton.IconButton(
+                icon = R.drawable.ic_version,
+                iconSize = 20,
+                text = "Released 1.0.0",
+                subText = "Version"
+            ) { }
+        }
     }
 }

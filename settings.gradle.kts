@@ -15,7 +15,6 @@ dependencyResolutionManagement {
 
 pluginManagement {
     repositories {
-        // 使用阿里镜像源
         maven(url = "https://maven.aliyun.com/repository/google")
         maven(url = "https://maven.aliyun.com/repository/central")
         maven(url = "https://maven.aliyun.com/repository/gradle-plugin")
@@ -27,9 +26,9 @@ pluginManagement {
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
-        // 使用阿里镜像源
         maven(url = "https://maven.aliyun.com/repository/google")
         maven(url = "https://maven.aliyun.com/repository/central")
+        maven(url = "https://maven.aliyun.com/repository/gradle-plugin")
         google()
         mavenCentral()
     }
@@ -37,4 +36,3 @@ dependencyResolutionManagement {
 
 rootProject.name = "万象归一"
 include(":app")
- 

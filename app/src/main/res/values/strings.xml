@@ -185,4 +185,7 @@
     <string name="dept_create">创作部</string>
     <string name="title_activity_about_studio">AboutStudioActivity</string>
     <string name="text_todo_number">* 这是第 条待办</string>
+    <string name="title_activity_note_list">NoteListActivity</string>
+    <string name="btn_add_note">新建笔记</string>
+    <string name="title_activity_note_edit">NoteEditActivity</string>
 </resources>

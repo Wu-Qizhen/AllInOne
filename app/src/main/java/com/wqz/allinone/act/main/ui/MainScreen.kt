@@ -46,6 +46,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.wqz.allinone.R
 import com.wqz.allinone.act.bookmark.BookmarkFoldersActivity
+import com.wqz.allinone.act.note.NoteListActivity
 import com.wqz.allinone.act.setting.SettingActivity
 import com.wqz.allinone.act.todo.TodoListActivity
 import com.wqz.allinone.ui.CapsuleButton
@@ -181,7 +182,7 @@ fun MainScreen(
             icon = R.drawable.ic_note,
             text = stringResource(id = R.string.btn_note)
         ) {
-            Toast.makeText(context, "施工中", Toast.LENGTH_SHORT).show()
+            context.startActivity(Intent(context, NoteListActivity::class.java))
         }
         Spacer(modifier = Modifier.height(5.dp))
         CapsuleButton.IconButton(

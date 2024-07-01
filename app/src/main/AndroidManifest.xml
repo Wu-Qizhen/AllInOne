@@ -15,6 +15,16 @@
         android:theme="@style/Theme.AllInOne"
         tools:targetApi="31">
         <activity
+            android:name=".act.note.NoteEditActivity"
+            android:exported="false"
+            android:label="@string/title_activity_note_edit"
+            android:theme="@style/Theme.AllInOne" />
+        <activity
+            android:name=".act.note.NoteListActivity"
+            android:exported="false"
+            android:label="@string/title_activity_note_list"
+            android:theme="@style/Theme.AllInOne" />
+        <activity
             android:name=".act.about.AboutStudioActivity"
             android:exported="false"
             android:label="@string/title_activity_about_studio" />
@@ -61,8 +71,10 @@
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
     </application>
+
 </manifest>
