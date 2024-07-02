@@ -1,6 +1,8 @@
 package com.wqz.allinone.database
 
+import android.content.Context
 import androidx.room.Database
+import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.wqz.allinone.dao.NoteDao
 import com.wqz.allinone.entity.Note
@@ -12,4 +14,21 @@ import com.wqz.allinone.entity.Note
 @Database(entities = [Note::class], version = 1 /*, exportSchema = true*/)
 abstract class NoteDatabase : RoomDatabase() {
     abstract fun noteDao(): NoteDao
+
+    companion object {
+        @Volatile
+        private var INSTANCE: NoteDatabase? = null
+
+        fun getInstance(context: Context): NoteDatabase {
+            return INSTANCE ?: synchronized(this) {
+                val instance = Room.databaseBuilder(
+                    context.applicationContext,
+                    NoteDatabase::class.java,
+                    "Note"
+                ).build()
+                INSTANCE = instance
+                instance
+            }
+        }
+    }
 }

@@ -50,6 +50,27 @@ object TitleBar {
     }
 
     @Composable
+    fun TextTitleBar(
+        title: Int,
+        modifier: Modifier = Modifier
+    ) {
+        Text(
+            text = stringResource(id = title),
+            fontSize = 20.sp,
+            fontWeight = FontWeight.Bold,
+            fontFamily = FontFamily(
+                Font(R.font.fzfengrusongti_regular, FontWeight.Normal)
+            ),
+            maxLines = 1,
+            color = ThemeColor,
+            textAlign = TextAlign.Center,
+            modifier = modifier
+                .fillMaxWidth()
+                .padding(vertical = 10.dp)
+        )
+    }
+
+    @Composable
     fun LogoTitleBar() {
         Column(
             modifier = Modifier.fillMaxWidth(),

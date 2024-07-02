@@ -5,6 +5,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.collectIsPressedAsState
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -13,6 +14,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
@@ -32,26 +34,48 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.wqz.allinone.R
 import com.wqz.allinone.ui.ModifierExtends.clickVfx
+import com.wqz.allinone.ui.color.BackgroundColor
+import com.wqz.allinone.ui.color.BorderColor
+import com.wqz.allinone.ui.color.ContentColor
 import com.wqz.allinone.ui.theme.AllInOneTheme
-import com.wqz.allinone.ui.theme.BorderColors
-import com.wqz.allinone.ui.theme.DefaultBackgroundColor
-import com.wqz.allinone.ui.theme.PressedBackgroundColor
 
 /**
  * 胶囊按钮
  * Created by Wu Qizhen on 2024.6.16
  */
 object CapsuleButton {
-    /*private val defaultBackgroundColor = Color(38, 38, 38, 115)
-    private val pressedBackgroundColor = Color(38, 38, 38, 153)
-    private val borderColors = listOf(
-        Color(54, 54, 54, 255),
-        Color.Transparent
-    )*/
-    private val defaultBackgroundColor = DefaultBackgroundColor
-    private val pressedBackgroundColor = PressedBackgroundColor
-    private val borderColors = BorderColors
-    private val borderWidth = 0.4f.dp
+    private val BACKGROUND_DEFAULT_GRAY = BackgroundColor.DEFAULT_GRAY
+    private val BACKGROUND_PRESSED_GRAY = BackgroundColor.PRESSED_GRAY
+    private val BACKGROUND_DEFAULT_YELLOW = BackgroundColor.DEFAULT_YELLOW
+    private val BACKGROUND_PRESSED_YELLOW = BackgroundColor.PRESSED_YELLOW
+    private val BORDER_DEFAULT_GRAY = BorderColor.DEFAULT_GRAY
+    private val BORDER_Width = 0.4f.dp
+
+    @Composable
+    fun TextButton(
+        text: String,
+        onClick: () -> Unit
+    ) {
+        val interactionSource = remember { MutableInteractionSource() }
+        val isPressed = interactionSource.collectIsPressedAsState()
+        val backgroundColor =
+            if (isPressed.value) BACKGROUND_PRESSED_YELLOW else BACKGROUND_DEFAULT_YELLOW
+
+        Box(
+            modifier = Modifier
+                .clickVfx(interactionSource, true, onClick)
+                .wrapContentSize()
+                .background(backgroundColor, RoundedCornerShape(50.dp))
+                .padding(horizontal = 20.dp, vertical = 10.dp)
+        ) {
+            Text(
+                text = text,
+                fontSize = 14.sp,
+                fontWeight = FontWeight.Bold,
+                color = ContentColor.DEFAULT_BROWN
+            )
+        }
+    }
 
     @Composable
     fun LogoButton(
@@ -63,7 +87,7 @@ object CapsuleButton {
         val interactionSource = remember { MutableInteractionSource() }
         val isPressed = interactionSource.collectIsPressedAsState()
         val backgroundColor =
-            if (isPressed.value) pressedBackgroundColor else defaultBackgroundColor
+            if (isPressed.value) BACKGROUND_PRESSED_GRAY else BACKGROUND_DEFAULT_GRAY
         /*val borderColorsBrush = remember {
             Brush.linearGradient(
                 borderColors
@@ -90,10 +114,10 @@ object CapsuleButton {
                 .background(backgroundColor, RoundedCornerShape(50.dp))
                 // .border(1.dp, color = borderColor, shape = RoundedCornerShape(50.dp))
                 .border(
-                    width = borderWidth,
+                    width = BORDER_Width,
                     shape = RoundedCornerShape(50.dp),
                     brush = Brush.linearGradient(
-                        borderColors,
+                        BORDER_DEFAULT_GRAY,
                         start = Offset.Zero,
                         end = Offset.Infinite
                     )
@@ -143,7 +167,7 @@ object CapsuleButton {
         val interactionSource = remember { MutableInteractionSource() }
         val isPressed = interactionSource.collectIsPressedAsState()
         val backgroundColor =
-            if (isPressed.value) pressedBackgroundColor else defaultBackgroundColor
+            if (isPressed.value) BACKGROUND_PRESSED_GRAY else BACKGROUND_DEFAULT_GRAY
 
         Row(
             modifier = Modifier
@@ -153,10 +177,10 @@ object CapsuleButton {
                 .background(backgroundColor, RoundedCornerShape(50.dp))
                 // .border(1.dp, color = borderColor, shape = RoundedCornerShape(50.dp))
                 .border(
-                    width = borderWidth,
+                    width = BORDER_Width,
                     shape = RoundedCornerShape(50.dp),
                     brush = Brush.linearGradient(
-                        borderColors,
+                        BORDER_DEFAULT_GRAY,
                         start = Offset.Zero,
                         end = Offset.Infinite
                     )
@@ -210,7 +234,7 @@ object CapsuleButton {
         val interactionSource = remember { MutableInteractionSource() }
         val isPressed = interactionSource.collectIsPressedAsState()
         val backgroundColor =
-            if (isPressed.value) pressedBackgroundColor else defaultBackgroundColor
+            if (isPressed.value) BACKGROUND_PRESSED_GRAY else BACKGROUND_DEFAULT_GRAY
 
         Row(
             modifier = Modifier
@@ -220,10 +244,10 @@ object CapsuleButton {
                 .background(backgroundColor, RoundedCornerShape(50.dp))
                 // .border(1.dp, color = borderColor, shape = RoundedCornerShape(50.dp))
                 .border(
-                    width = borderWidth,
+                    width = BORDER_Width,
                     shape = RoundedCornerShape(50.dp),
                     brush = Brush.linearGradient(
-                        borderColors,
+                        BORDER_DEFAULT_GRAY,
                         start = Offset.Zero,
                         end = Offset.Infinite
                     )
@@ -276,6 +300,8 @@ fun CapsuleButtonPreview() {
                 text = "Released 1.0.0",
                 subText = "Version"
             ) { }
+            Spacer(modifier = Modifier.height(10.dp))
+            CapsuleButton.TextButton(text = "Text Button") { }
         }
     }
 }

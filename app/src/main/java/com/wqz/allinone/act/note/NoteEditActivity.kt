@@ -1,7 +1,6 @@
 package com.wqz.allinone.act.note
 
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -41,53 +40,79 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.room.Room
-import com.wqz.allinone.dao.NoteDao
-import com.wqz.allinone.database.NoteDatabase
+import androidx.lifecycle.viewModelScope
+import com.wqz.allinone.act.note.viewmodel.NoteViewModel
 import com.wqz.allinone.entity.Note
 import com.wqz.allinone.ui.CirclesBackground
 import com.wqz.allinone.ui.theme.AllInOneTheme
 import com.wqz.allinone.ui.theme.ThemeColor
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
+import kotlinx.coroutines.launch
 
+/**
+ * 笔记编辑
+ * Created by Wu Qizhen on 2024.7.1
+ */
 class NoteEditActivity : ComponentActivity() {
+    private lateinit var viewModel: NoteViewModel
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        try {
-            val noteId = intent.getIntExtra("NOTE_ID", -1)
+        // viewModel = ViewModelProvider(this)[NoteViewModel::class.java]
+        viewModel = NoteViewModel(application)
 
-            val noteDatabase =
-                Room.databaseBuilder(this@NoteEditActivity, NoteDatabase::class.java, "Note")
-                    .build()
-            val noteDao = noteDatabase.noteDao()
+        val noteId = intent.getIntExtra("NOTE_ID", -1)
+        val note: Note
+        if (noteId != -1) {
+            val noteTitle = intent.getStringExtra("NOTE_TITLE")
+            val noteContent = intent.getStringExtra("NOTE_CONTENT")
+            val noteCreateTime = intent.getStringExtra("NOTE_CREATE_TIME")
+            val noteUpdateTime = intent.getStringExtra("NOTE_UPDATE_TIME")
+            note = Note(
+                id = noteId,
+                title = noteTitle ?: "",
+                content = noteContent ?: "",
+                createTime = noteCreateTime ?: viewModel.getDateTime(),
+                updateTime = noteUpdateTime ?: viewModel.getDateTime()
+            )
+        } else {
+            note = Note(
+                id = -1,
+                title = "",
+                content = "",
+                createTime = viewModel.getDateTime(),
+                updateTime = viewModel.getDateTime()
+            )
+        }
 
-            enableEdgeToEdge()
-            setContent {
-                AllInOneTheme {
-                    CirclesBackground.RegularBackground {
-                        NoteEditScreen(
-                            noteId = noteId,
-                            noteDao = noteDao
-                            // onNavigateBack = { finish() }
-                            // onBackButtonClick = ::finish
-                        )
-                    }
+        /*val noteDatabase =
+            Room.databaseBuilder(this@NoteEditActivity, NoteDatabase::class.java, "Note")
+                .build()
+        val noteDao = noteDatabase.noteDao()*/
+
+        enableEdgeToEdge()
+        setContent {
+            AllInOneTheme {
+                CirclesBackground.RegularBackground {
+                    NoteEditScreen(
+                        currentNote = note,
+                        viewModel = viewModel
+                        // noteDao = noteDao
+                        // onNavigateBack = { finish() }
+                        // onBackButtonClick = ::finish
+                    )
                 }
             }
-        } catch (e: Exception) {
-            Log.d("MainScreen", e.toString())
         }
     }
 
-    private fun getDateTime(): String {
+    /*private fun getDateTime(): String {
         val currentTime = LocalDateTime.now()
         val formatter = DateTimeFormatter.ofPattern("yyyy年MM月dd日 HH:mm")
         return currentTime.format(formatter)
-    }
+    }*/
 
-    private fun onSaveClick(noteId: Int, title: String, content: String, noteDao: NoteDao) {
+    /*private fun onSaveClick(noteId: Int, title: String, content: String, noteDao: NoteDao) {
         val formattedUpdateTime = getDateTime()
         val note = Note(
             id = if (noteId != -1) noteId else null,
@@ -110,38 +135,54 @@ class NoteEditActivity : ComponentActivity() {
         Toast.makeText(this@NoteEditActivity, "保存成功", Toast.LENGTH_SHORT).show()
         // 返回上一个屏幕
         // onNavigateBack()
-        /*val resultIntent = Intent().apply {
+        val resultIntent = Intent().apply {
             // 可以在这里放置您想要返回的数据
             putExtra("NOTE_RESULT", "Note saved successfully")
         }
         setResult(RESULT_OK, resultIntent)
-        finish()*/
+        finish()
         // }
-    }
+    }*/
 
     @Composable
     fun NoteEditScreen(
-        noteId: Int,
-        noteDao: NoteDao
+        currentNote: Note,
+        viewModel: NoteViewModel
+        // noteDao: NoteDao
         // updateTime: String
         // onNavigateBack: () -> Unit
         // onBackButtonClick: () -> Unit
     ) {
         // val context = LocalContext.current
         val scrollState = rememberScrollState()
-        val title = remember { mutableStateOf("") }
-        val content = remember { mutableStateOf("") }
+        var note by remember { mutableStateOf(currentNote) }
+        val title = remember { mutableStateOf(note.title) }
+        val content = remember { mutableStateOf(note.content) }
         var contentLength by remember { mutableIntStateOf(0) }
+        // var updateTime by remember { mutableStateOf("") }
 
-        val updateTime: String
-        if (noteId != -1) {
-            val note = noteDao.getById(noteId)!!
+        /*if (noteId != -1) {
+            val note = viewModel.getNote(noteId)
             updateTime = note.updateTime
             title.value = note.title
             content.value = note.content
         } else {
-            updateTime = getDateTime()
-        }
+            updateTime = viewModel.getDateTime()
+        }*/
+
+        /*LaunchedEffect(note) {
+            if (note.id != -1) {
+                *//*viewModel.getNote(noteId)?.let { note ->
+                    title.value = note.title
+                    content.value = note.content
+                    updateTime = note.updateTime
+                }*//*
+                title.value = note.title
+                content.value = note.content
+            } else {
+                note.updateTime = viewModel.getDateTime()
+            }
+        }*/
 
         LaunchedEffect(content.value) {
             contentLength = content.value.length // 在内容改变时计算字数
@@ -200,7 +241,26 @@ class NoteEditActivity : ComponentActivity() {
                     Spacer(modifier = Modifier.width(20.dp))
                     IconButton(
                         onClick = {
-                            onSaveClick(noteId, title.value, content.value, noteDao)
+                            // onSaveClick(noteId, title.value, content.value, noteDao)
+                            // 校验内容是否为空
+                            if (content.value.isEmpty()) {
+                                Toast.makeText(
+                                    this@NoteEditActivity,
+                                    "内容不能为空",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                                return@IconButton
+                            }
+                            viewModel.viewModelScope.launch {
+                                note.title = title.value
+                                note.content = content.value
+                                note = viewModel.saveNote(note)
+                            }
+                            Toast.makeText(
+                                this@NoteEditActivity,
+                                "保存成功",
+                                Toast.LENGTH_SHORT
+                            ).show()
                         },
                         content = {
                             Icon(
@@ -241,7 +301,7 @@ class NoteEditActivity : ComponentActivity() {
             Row {
                 Spacer(modifier = Modifier.width(16.dp))
                 Text(
-                    text = updateTime,
+                    text = note.updateTime,
                     color = Color.LightGray,
                     fontSize = 12.sp
                 )

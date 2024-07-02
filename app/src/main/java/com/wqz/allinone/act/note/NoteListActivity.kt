@@ -21,12 +21,13 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentSize
-import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -38,65 +39,71 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.room.Room
 import com.wqz.allinone.R
-import com.wqz.allinone.dao.NoteDao
-import com.wqz.allinone.database.NoteDatabase
+import com.wqz.allinone.act.note.viewmodel.NoteViewModel
 import com.wqz.allinone.entity.Note
 import com.wqz.allinone.ui.CirclesBackground
 import com.wqz.allinone.ui.ModifierExtends.clickVfx
 import com.wqz.allinone.ui.TitleBar
+import com.wqz.allinone.ui.color.BackgroundColor
+import com.wqz.allinone.ui.color.BorderColor
 import com.wqz.allinone.ui.theme.AllInOneTheme
-import com.wqz.allinone.ui.theme.BorderColors
-import com.wqz.allinone.ui.theme.DefaultBackgroundColor
-import com.wqz.allinone.ui.theme.PressedBackgroundColor
 
+/**
+ * 笔记列表
+ * Created by Wu Qizhen on 2024.6.30
+ */
 class NoteListActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val noteDatabase = Room.databaseBuilder(this, NoteDatabase::class.java, "Note").build()
-        val noteDao = noteDatabase.noteDao()
+        val viewModel = NoteViewModel(application)
 
         enableEdgeToEdge()
         setContent {
             AllInOneTheme {
                 CirclesBackground.RegularBackground {
-                    NoteListScreen(noteDao)
+                    NoteListScreen(viewModel)
                 }
             }
         }
     }
 
     @Composable
-    fun NoteListScreen(/*notes: List<Note>*/ noteDao: NoteDao) {
+    fun NoteListScreen(
+        // notes: List<Note>
+        // noteDao: NoteDao
+        viewModel: NoteViewModel
+    ) {
         val context = LocalContext.current
-        // val scrollState = rememberScrollState()
+        val scrollState = rememberScrollState()
+        val notes by viewModel.notes.observeAsState(emptyList())
 
-        /*val noteDatabase = Room.databaseBuilder(this, NoteDatabase::class.java, "Note").build()
-        val noteDao = noteDatabase.noteDao()
-        val notes = noteDao.getAll()*/
+        /*val notesState = remember { mutableStateListOf<Note>() }
+        // 使用 LaunchedEffect 确保在 Composition 时订阅 Flow，并在退出时取消订阅
+        LaunchedEffect(key1 = Unit) {
+            noteDao.getAllAsFlow().collect { notes ->
+                // 当数据库中的数据发生变化时，这个块会被调用
+                // 更新 UI 状态
+                notesState.clear()
+                notesState.addAll(notes)
+            }
+        }*/
 
-        val notesFlow = noteDao.getAllAsFlow()
-        val notes by notesFlow.collectAsState(initial = emptyList())
-
-        /*// 使用 rememberLauncherForActivityResult 来处理 Activity 的结果
-        val noteEditLauncher = rememberLauncherForActivityResult(
-            contract = ActivityResultContracts.StartActivityForResult()
-        ) { result ->
-            if (result.resultCode == RESULT_OK) {
-                // 从结果中获取数据
-                val data = result.data
-                if (data != null&& data.hasExtra("NOTE_RESULT")) {
-                    // 更新列表
-                }
+        /*val notesState = remember { mutableStateOf<List<Note>>(emptyList()) }
+        // 使用 LaunchedEffect 确保在 Composition 时订阅 Flow，并在退出时取消订阅
+        LaunchedEffect(key1 = Unit) {
+            noteDao.getAllAsFlow().collect { notes ->
+                // 当数据库中的数据发生变化时，这个块会被调用
+                // 这里您可以更新 UI，例如使用状态提升
+                notesState.value = notes
             }
         }*/
 
         Column(
             modifier = Modifier
-                .fillMaxWidth()
-                // .verticalScroll(scrollState)
+                .fillMaxSize()
+                .verticalScroll(scrollState)
                 .padding(horizontal = 20.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
@@ -107,7 +114,6 @@ class NoteListActivity : ComponentActivity() {
                     .clickVfx {
                         val intent = Intent(context, NoteEditActivity::class.java)
                         intent.putExtra("NOTE_ID", -1)
-                        // noteEditLauncher.launch(intent)
                         startActivity(intent)
                     }
                     .wrapContentSize()
@@ -124,17 +130,32 @@ class NoteListActivity : ComponentActivity() {
                     fontSize = 16.sp
                 )
             }
-            Spacer(modifier = Modifier.height(10.dp))
-            LazyColumn(
-                Modifier
-                    .fillMaxSize()
-            ) {
-                items(notes.size) { index ->
-                    val note = notes[index]
-                    NoteItem(note)
+            if (notes.isEmpty()) {
+                Spacer(modifier = Modifier.height(10.dp))
+                Image(
+                    painter = painterResource(id = R.drawable.ic_no_data),
+                    contentDescription = "无数据",
+                    modifier = Modifier
+                        .size(100.dp)
+                )
+            } else {
+                Spacer(modifier = Modifier.height(7.dp))
+                for (note in notes) {
+                    Spacer(modifier = Modifier.height(3.dp))
+                    NoteItem(note = note)
+                    Spacer(modifier = Modifier.height(3.dp))
                 }
+                /*LazyColumn(
+                    modifier = Modifier
+                        .weight(1f)
+                ) {
+                    items(notes.size) { index ->
+                        val note = notes[index]
+                        NoteItem(note)
+                    }
+                }*/
+                Spacer(modifier = Modifier.height(37.dp))
             }
-            Spacer(modifier = Modifier.height(40.dp))
         }
     }
 
@@ -143,27 +164,45 @@ class NoteListActivity : ComponentActivity() {
         val interactionSource = remember { MutableInteractionSource() }
         val isPressed = interactionSource.collectIsPressedAsState()
         val backgroundColor =
-            if (isPressed.value) PressedBackgroundColor else DefaultBackgroundColor
-        val borderColors = BorderColors
+            if (isPressed.value) BackgroundColor.PRESSED_GRAY else BackgroundColor.DEFAULT_GRAY
+        val borderColors = BorderColor.DEFAULT_GRAY
         val borderWidth = 0.4f.dp
 
-        Column(modifier = Modifier
-            .clickVfx(interactionSource, true) {}
-            .wrapContentHeight()
-            .fillMaxWidth()
-            .background(backgroundColor, RoundedCornerShape(10.dp))
-            .border(
-                width = borderWidth,
-                shape = RoundedCornerShape(10.dp),
-                brush = Brush.linearGradient(
-                    borderColors,
-                    start = Offset.Zero,
-                    end = Offset.Infinite
+        Column(
+            modifier = Modifier
+                .clickVfx(
+                    interactionSource,
+                    true
+                ) {
+                    val intent = Intent(this@NoteListActivity, NoteEditActivity::class.java)
+                    intent.putExtra("NOTE_ID", note.id)
+                    intent.putExtra("NOTE_TITLE", note.title)
+                    intent.putExtra("NOTE_CONTENT", note.content)
+                    intent.putExtra("NOTE_CREATE_TIME", note.createTime)
+                    intent.putExtra("NOTE_UPDATE_TIME", note.updateTime)
+                    startActivity(intent)
+                }
+                .wrapContentHeight()
+                .fillMaxWidth()
+                .background(backgroundColor, RoundedCornerShape(10.dp))
+                .border(
+                    width = borderWidth,
+                    shape = RoundedCornerShape(10.dp),
+                    brush = Brush.linearGradient(
+                        borderColors,
+                        start = Offset.Zero,
+                        end = Offset.Infinite
+                    )
                 )
+                .padding(10.dp)
+        ) {
+            Text(text = note.title.ifEmpty { "无标题" }, fontSize = 16.sp, maxLines = 1)
+            Text(
+                text = note.content.ifEmpty { "无附加文案" },
+                fontSize = 14.sp,
+                color = Color.Gray,
+                maxLines = 1
             )
-            .padding(10.dp)) {
-            Text(text = note.title.ifEmpty { "无标题" }, fontSize = 16.sp)
-            Text(text = note.content.ifEmpty { "无附加文案" }, fontSize = 14.sp, color = Color.Gray)
             Spacer(modifier = Modifier.height(5.dp))
             Text(text = note.updateTime, fontSize = 12.sp, color = Color.Gray)
         }

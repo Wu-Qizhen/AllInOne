@@ -22,9 +22,9 @@ interface NoteDao {
     @Insert
     fun insertAll(vararg notes: Note): List<Long> // 返回插入记录的 ID 列表
 
-    // 查询所有笔记
+    /*// 查询所有笔记
     @Query("SELECT * FROM Note ORDER BY update_time DESC")
-    fun getAll(): List<Note>
+    fun getAll(): List<Note>*/
 
     // 查询所有笔记，并使用 Flow 监听变化
     @Query("SELECT * FROM Note ORDER BY update_time DESC")
@@ -33,6 +33,9 @@ interface NoteDao {
     // 根据 ID 查询笔记
     @Query("SELECT * FROM Note WHERE id = :noteId")
     fun getById(noteId: Int): Note?
+
+    /* @Query("SELECT update_time FROM Note WHERE id = :noteId")
+     fun getUpdateTimeByIdAsFlow(noteId: Int): Flow<String>*/
 
     // 更新笔记
     @Update
@@ -44,5 +47,10 @@ interface NoteDao {
 
     // 根据 ID 删除笔记
     @Query("DELETE FROM Note WHERE id = :noteId")
-    suspend fun deleteById(noteId: Int)
+    fun deleteById(noteId: Int)
+
+    /*suspend fun updateAndFetch(note: Note): Flow<List<Note>> {
+        update(note)
+        return getAllAsFlow() // 这里会自动在 IO 调度器上执行
+    }*/
 }
