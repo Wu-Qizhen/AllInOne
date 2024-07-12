@@ -244,7 +244,7 @@ class NoteEditActivity : ComponentActivity() {
                         onClick = {
                             // onSaveClick(noteId, title.value, content.value, noteDao)
                             // 校验内容是否为空
-                            if (content.value.isEmpty() || title.value.isEmpty()) {
+                            if (content.value.isEmpty() && title.value.isEmpty()) {
                                 Toast.makeText(
                                     this@NoteEditActivity,
                                     "标题或内容不能为空",
@@ -330,7 +330,7 @@ class NoteEditActivity : ComponentActivity() {
                     )
                 }
             )
-            Spacer(modifier = Modifier.height(24.dp))
+            Spacer(modifier = Modifier.height(34.dp))
         }
     }
 

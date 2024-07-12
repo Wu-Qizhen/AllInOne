@@ -6,6 +6,11 @@ import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.expandVertically
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -44,6 +49,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewModelScope
 import com.wqz.allinone.R
 import com.wqz.allinone.act.note.viewmodel.NoteViewModel
 import com.wqz.allinone.entity.Note
@@ -54,57 +60,35 @@ import com.wqz.allinone.ui.TitleBar
 import com.wqz.allinone.ui.color.BackgroundColor
 import com.wqz.allinone.ui.color.BorderColor
 import com.wqz.allinone.ui.theme.AllInOneTheme
+import kotlinx.coroutines.launch
 
 /**
  * 笔记列表
  * Created by Wu Qizhen on 2024.6.30
  */
 class NoteListActivity : ComponentActivity() {
+    private lateinit var viewModel: NoteViewModel
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val viewModel = NoteViewModel(application)
+        viewModel = NoteViewModel(application)
 
         enableEdgeToEdge()
         setContent {
             AllInOneTheme {
                 AppBackground.CirclesBackground {
-                    NoteListScreen(viewModel)
+                    NoteListScreen()
                 }
             }
         }
     }
 
     @Composable
-    fun NoteListScreen(
-        // notes: List<Note>
-        // noteDao: NoteDao
-        viewModel: NoteViewModel
-    ) {
+    fun NoteListScreen() {
         val context = LocalContext.current
         val scrollState = rememberScrollState()
         val notes by viewModel.notes.observeAsState(emptyList())
-
-        /*val notesState = remember { mutableStateListOf<Note>() }
-        // 使用 LaunchedEffect 确保在 Composition 时订阅 Flow，并在退出时取消订阅
-        LaunchedEffect(key1 = Unit) {
-            noteDao.getAllAsFlow().collect { notes ->
-                // 当数据库中的数据发生变化时，这个块会被调用
-                // 更新 UI 状态
-                notesState.clear()
-                notesState.addAll(notes)
-            }
-        }*/
-
-        /*val notesState = remember { mutableStateOf<List<Note>>(emptyList()) }
-        // 使用 LaunchedEffect 确保在 Composition 时订阅 Flow，并在退出时取消订阅
-        LaunchedEffect(key1 = Unit) {
-            noteDao.getAllAsFlow().collect { notes ->
-                // 当数据库中的数据发生变化时，这个块会被调用
-                // 这里您可以更新 UI，例如使用状态提升
-                notesState.value = notes
-            }
-        }*/
 
         Column(
             modifier = Modifier
@@ -146,11 +130,19 @@ class NoteListActivity : ComponentActivity() {
                 )
             } else {
                 Spacer(modifier = Modifier.height(7.dp))
+                /*AnimatedContent(
+                    targetState = notes,
+                    transitionSpec = {
+                        (slideInVertically { height -> height } + fadeIn()).togetherWith(
+                            slideOutVertically { height -> -height } + fadeOut())
+                    }, label = ""
+                ) { notes ->*/
                 for (note in notes) {
                     Spacer(modifier = Modifier.height(3.dp))
                     NoteItem(note = note)
                     Spacer(modifier = Modifier.height(3.dp))
                 }
+                /*}*/
                 /*LazyColumn(
                     modifier = Modifier
                         .weight(1f)
@@ -160,14 +152,14 @@ class NoteListActivity : ComponentActivity() {
                         NoteItem(note)
                     }
                 }*/
-                Spacer(modifier = Modifier.height(37.dp))
+                Spacer(modifier = Modifier.height(47.dp))
             }
         }
     }
 
     @Composable
     fun NoteItem(
-        note: Note,
+        note: Note
     ) {
         val interactionSource = remember { MutableInteractionSource() }
         val isPressed = interactionSource.collectIsPressedAsState()
@@ -178,7 +170,7 @@ class NoteListActivity : ComponentActivity() {
 
         var showDialog by remember { mutableStateOf(false) }
 
-        if (showDialog) {
+        /*if (showDialog) {
             Column(
                 modifier = Modifier
                     .clickVfx()
@@ -210,9 +202,12 @@ class NoteListActivity : ComponentActivity() {
                     CapsuleButton.TextButton(
                         text = stringResource(R.string.btn_delete)
                     ) {
+                        showDialog = false
                         Toast.makeText(this@NoteListActivity, "删除成功", Toast.LENGTH_SHORT)
                             .show()
-                        // viewModel.deleteNote(note.id)
+                        viewModel.viewModelScope.launch {
+                            viewModel.deleteNote(note.id)
+                        }
                     }
                     Spacer(modifier = Modifier.width(10.dp))
                     CapsuleButton.TextButton(
@@ -262,6 +257,105 @@ class NoteListActivity : ComponentActivity() {
                 )
                 Spacer(modifier = Modifier.height(5.dp))
                 Text(text = note.updateTime, fontSize = 12.sp, color = Color.Gray)
+            }
+        }*/
+
+        AnimatedVisibility(
+            visible = !showDialog,
+            enter = fadeIn() + expandVertically(),
+            exit = fadeOut() + shrinkVertically()
+        ) {
+            Column(
+                modifier = Modifier
+                    .clickVfx(
+                        interactionSource = interactionSource,
+                        enabled = true,
+                        onClick = {
+                            val intent = Intent(this@NoteListActivity, NoteEditActivity::class.java)
+                            intent.putExtra("NOTE_ID", note.id)
+                            intent.putExtra("NOTE_TITLE", note.title)
+                            intent.putExtra("NOTE_CONTENT", note.content)
+                            intent.putExtra("NOTE_CREATE_TIME", note.createTime)
+                            intent.putExtra("NOTE_UPDATE_TIME", note.updateTime)
+                            startActivity(intent)
+                        },
+                        onLongClick = {
+                            showDialog = true
+                        }
+                    )
+                    .wrapContentHeight()
+                    .fillMaxWidth()
+                    .background(backgroundColor, RoundedCornerShape(10.dp))
+                    .border(
+                        width = borderWidth,
+                        shape = RoundedCornerShape(10.dp),
+                        brush = Brush.linearGradient(
+                            borderColors,
+                            start = Offset.Zero,
+                            end = Offset.Infinite
+                        )
+                    )
+                    .padding(10.dp)
+            ) {
+                Text(text = note.title.ifEmpty { "无标题" }, fontSize = 16.sp, maxLines = 1)
+                Text(
+                    text = note.content.ifEmpty { "无附加文案" },
+                    fontSize = 14.sp,
+                    color = Color.Gray,
+                    maxLines = 1
+                )
+                Spacer(modifier = Modifier.height(5.dp))
+                Text(text = note.updateTime, fontSize = 12.sp, color = Color.Gray)
+            }
+        }
+
+        AnimatedVisibility(
+            visible = showDialog,
+            enter = fadeIn() + expandVertically(),
+            exit = fadeOut() + shrinkVertically()
+        ) {
+            Column(
+                modifier = Modifier
+                    .clickVfx()
+                    .wrapContentHeight()
+                    .fillMaxWidth()
+                    .background(backgroundColor, RoundedCornerShape(10.dp))
+                    .border(
+                        width = borderWidth,
+                        shape = RoundedCornerShape(10.dp),
+                        brush = Brush.linearGradient(
+                            borderColors,
+                            start = Offset.Zero,
+                            end = Offset.Infinite
+                        )
+                    )
+                    .padding(10.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Text(
+                    text = stringResource(R.string.text_delete_confirm_hint),
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.Bold,
+                    maxLines = 1
+                )
+                Spacer(modifier = Modifier.height(5.dp))
+                Row(
+                    horizontalArrangement = Arrangement.Center
+                ) {
+                    CapsuleButton.TextButton(
+                        text = stringResource(R.string.btn_delete)
+                    ) {
+                        showDialog = false
+                        Toast.makeText(this@NoteListActivity, "删除成功", Toast.LENGTH_SHORT).show()
+                        viewModel.viewModelScope.launch {
+                            viewModel.deleteNote(note.id)
+                        }
+                    }
+                    Spacer(modifier = Modifier.width(10.dp))
+                    CapsuleButton.TextButton(
+                        text = stringResource(R.string.btn_cancel)
+                    ) { showDialog = false }
+                }
             }
         }
     }
