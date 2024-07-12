@@ -6,7 +6,7 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import com.wqz.allinone.R
 import com.wqz.allinone.act.about.ui.AboutDeveloperScreen
-import com.wqz.allinone.ui.CirclesBackground
+import com.wqz.allinone.ui.AppBackground
 import com.wqz.allinone.ui.theme.AllInOneTheme
 
 /**
@@ -23,7 +23,7 @@ class AboutDeveloperActivity : ComponentActivity() {
             intent.getIntExtra("description", R.string.wqz_desc)
         val details = intent.getIntExtra("details", R.string.text_about_wqz)
         setContent {
-            CirclesBackground.RegularBackground {
+            AppBackground.CirclesBackground {
                 AllInOneTheme {
                     AboutDeveloperScreen(
                         logo = logo,

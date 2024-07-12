@@ -49,7 +49,7 @@ object ConfirmationDialog {
 @Composable
 fun DeleteConfirmationDialogPreview() {
     AllInOneTheme {
-        CirclesBackground.RegularBackground {
+        AppBackground.CirclesBackground {
             ConfirmationDialog.DeleteConfirmationDialog(
                 onConfirm = {},
                 onDismiss = {}

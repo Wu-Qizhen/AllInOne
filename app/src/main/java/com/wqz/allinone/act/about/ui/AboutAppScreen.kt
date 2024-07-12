@@ -118,6 +118,15 @@ fun AboutAppScreen() {
             subText = R.string.open_source_desc
         ) {
             Toast.makeText(context, "施工中", Toast.LENGTH_SHORT).show()
+            /* AnimatedVisibility(
+                 visible = toastContent.isNotEmpty(),
+                 enter = fadeIn() + slideInVertically { it / 2 },
+                 exit = fadeOut() + slideOutVertically { it / 2 },
+                 modifier = Modifier
+                     .align(Alignment.BottomCenter)
+             ) {
+                 ToastUtils.ToastContent(content = toastContent)
+             }*/
         }
         ClassificationBar(icon = R.drawable.ic_team, text = R.string.participating_team)
         Spacer(modifier = Modifier.height(5.dp))

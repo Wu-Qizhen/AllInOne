@@ -43,7 +43,7 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewModelScope
 import com.wqz.allinone.act.note.viewmodel.NoteViewModel
 import com.wqz.allinone.entity.Note
-import com.wqz.allinone.ui.CirclesBackground
+import com.wqz.allinone.ui.AppBackground
 import com.wqz.allinone.ui.theme.AllInOneTheme
 import com.wqz.allinone.ui.theme.ThemeColor
 import kotlinx.coroutines.launch
@@ -93,7 +93,7 @@ class NoteEditActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             AllInOneTheme {
-                CirclesBackground.RegularBackground {
+                AppBackground.CirclesBackground {
                     NoteEditScreen(
                         currentNote = note,
                         viewModel = viewModel
@@ -158,6 +158,7 @@ class NoteEditActivity : ComponentActivity() {
         var note by remember { mutableStateOf(currentNote) }
         val title = remember { mutableStateOf(note.title) }
         val content = remember { mutableStateOf(note.content) }
+        var updateTime by remember { mutableStateOf(note.updateTime) }
         var contentLength by remember { mutableIntStateOf(0) }
         // var updateTime by remember { mutableStateOf("") }
 
@@ -243,10 +244,10 @@ class NoteEditActivity : ComponentActivity() {
                         onClick = {
                             // onSaveClick(noteId, title.value, content.value, noteDao)
                             // 校验内容是否为空
-                            if (content.value.isEmpty()) {
+                            if (content.value.isEmpty() || title.value.isEmpty()) {
                                 Toast.makeText(
                                     this@NoteEditActivity,
-                                    "内容不能为空",
+                                    "标题或内容不能为空",
                                     Toast.LENGTH_SHORT
                                 ).show()
                                 return@IconButton
@@ -255,6 +256,7 @@ class NoteEditActivity : ComponentActivity() {
                                 note.title = title.value
                                 note.content = content.value
                                 note = viewModel.saveNote(note)
+                                updateTime = note.updateTime
                             }
                             Toast.makeText(
                                 this@NoteEditActivity,
@@ -301,7 +303,7 @@ class NoteEditActivity : ComponentActivity() {
             Row {
                 Spacer(modifier = Modifier.width(16.dp))
                 Text(
-                    text = note.updateTime,
+                    text = updateTime,
                     color = Color.LightGray,
                     fontSize = 12.sp
                 )
@@ -322,7 +324,7 @@ class NoteEditActivity : ComponentActivity() {
                 textStyle = TextStyle(color = Color.White, fontSize = 14.sp),
                 placeholder = {
                     Text(
-                        text = "记点什么吧",
+                        text = "记点什么吧 (●'◡'●)",
                         color = Color.DarkGray,
                         fontSize = 14.sp
                     )

@@ -12,7 +12,7 @@ android {
         applicationId = "com.wqz.allinone"
         minSdk = 30
         targetSdk = 34
-        versionCode = 7
+        versionCode = 8
         versionName = "Bismuth"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {

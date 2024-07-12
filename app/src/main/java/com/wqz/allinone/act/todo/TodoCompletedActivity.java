@@ -1,6 +1,7 @@
 package com.wqz.allinone.act.todo;
 
 import android.animation.ValueAnimator;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
@@ -66,7 +67,7 @@ public class TodoCompletedActivity extends AppCompatActivity {
 
     private void initListView() {
         List<Todo> completedTodos = todoDBHelper.getCompletedTodos();
-        if (completedTodos != null && completedTodos.size() != 0) {
+        if (completedTodos != null && !completedTodos.isEmpty()) {
             adapter = new TodoAdapter(this, completedTodos, listView);
             listView.setAdapter(adapter);
             setListViewHeightBasedOnChildren(listView);
@@ -167,14 +168,17 @@ public class TodoCompletedActivity extends AppCompatActivity {
         dialog.show();
     }
 
+    @SuppressLint("SetTextI18n")
     private void todoDetailsDialog(int id, String name) {
         // 初始化对话框
         View view = View.inflate(this, R.layout.dialog_todo_details, null);
         Dialog dialog = new Dialog(this);
         dialog.setContentView(view);
 
-        TextView textView = dialog.findViewById(R.id.tv_name);
-        textView.setText(name);
+        TextView tvName = dialog.findViewById(R.id.tv_name);
+        tvName.setText(name);
+        TextView tvNumber = dialog.findViewById(R.id.tv_todo_number);
+        tvNumber.setText("* 这是第 " + id + " 条待办");
 
         Button confirmButton = dialog.findViewById(R.id.btn_delete);
         confirmButton.setOnClickListener(v -> {
@@ -184,6 +188,7 @@ public class TodoCompletedActivity extends AppCompatActivity {
             dialog.dismiss();
             refreshListView();
         });
+
         // 显示对话框
         dialog.show();
     }

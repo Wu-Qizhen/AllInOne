@@ -25,6 +25,7 @@ import com.wqz.allinone.database.TodoDBHelper;
 import com.wqz.allinone.entity.Todo;
 
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class TodoListActivity extends AppCompatActivity implements View.OnClickListener {
     private TodoAdapter adapter;
@@ -184,12 +185,18 @@ public class TodoListActivity extends AppCompatActivity implements View.OnClickL
         tvNumber.setText("* 这是第 " + id + " 条待办");
 
         Button confirmButton = dialog.findViewById(R.id.btn_delete);
+        AtomicInteger deleteConfirm = new AtomicInteger(3);
         confirmButton.setOnClickListener(v -> {
-            // 执行删除操作
-            todoDBHelper.deleteTodo(id);
-            Toast.makeText(this, "已删除", Toast.LENGTH_SHORT).show();
-            dialog.dismiss();
-            refreshListView();
+            int count = deleteConfirm.decrementAndGet();
+            if (count > 0) {
+                Toast.makeText(this, "再点 " + count + " 次即可删除", Toast.LENGTH_SHORT).show();
+            } else {
+                // 执行删除操作
+                todoDBHelper.deleteTodo(id);
+                Toast.makeText(this, "已删除", Toast.LENGTH_SHORT).show();
+                dialog.dismiss();
+                refreshListView();
+            }
         });
         // 显示对话框
         dialog.show();

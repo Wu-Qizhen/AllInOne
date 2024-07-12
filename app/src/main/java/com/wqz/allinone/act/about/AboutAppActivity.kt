@@ -5,7 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import com.wqz.allinone.act.about.ui.AboutAppScreen
-import com.wqz.allinone.ui.CirclesBackground
+import com.wqz.allinone.ui.AppBackground
 import com.wqz.allinone.ui.theme.AllInOneTheme
 
 /**
@@ -18,7 +18,7 @@ class AboutAppActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             AllInOneTheme {
-                CirclesBackground.RegularBackground {
+                AppBackground.CirclesBackground {
                     AboutAppScreen()
                 }
             }

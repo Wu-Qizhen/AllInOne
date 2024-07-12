@@ -5,11 +5,11 @@ import androidx.compose.animation.core.tween
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.interaction.PressInteraction
 import androidx.compose.foundation.interaction.collectIsPressedAsState
+import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.composed
 import androidx.compose.ui.draw.scale
@@ -20,16 +20,17 @@ import androidx.compose.ui.input.pointer.pointerInput
  * Created by Wu Qizhen on 2024.6.16
  */
 object ModifierExtends {
+    @Composable
     fun Modifier.clickVfx(
-        interactionSource: MutableInteractionSource = MutableInteractionSource(),
-        isEnabled: Boolean = true,
+        interactionSource: MutableInteractionSource = rememberMutableInteractionSource(),
+        enabled: Boolean = true,
         onClick: () -> Unit,
     ): Modifier = composed {
-        if (isEnabled) {
+        if (enabled) {
             val isPressed by interactionSource.collectIsPressedAsState()
             val sizePercent by animateFloatAsState(
                 targetValue = if (isPressed) 0.95f else 1f,
-                animationSpec = tween(durationMillis = 150), label = ""
+                animationSpec = tween(durationMillis = 100), label = ""
             )
             scale(sizePercent).clickable(
                 indication = null, interactionSource = interactionSource, onClick = onClick
@@ -39,23 +40,39 @@ object ModifierExtends {
         }
     }
 
+    @Composable
     fun Modifier.clickVfx(
-        // interactionSource: MutableInteractionSource = MutableInteractionSource(),
-        onClick: () -> Unit,
-        onLongClick: () -> Unit
+        interactionSource: MutableInteractionSource = rememberMutableInteractionSource(),
+        enabled: Boolean = true,
+        onClick: () -> Unit = {},
+        onLongClick: () -> Unit = {}
     ): Modifier = composed {
-        var isPressed by remember {
-            mutableStateOf(false)
+        if (enabled) {
+            val isPressed by interactionSource.collectIsPressedAsState()
+            val sizePercent by animateFloatAsState(
+                targetValue = if (isPressed) 0.95f else 1f,
+                animationSpec = tween(durationMillis = 100), label = ""
+            )
+            scale(sizePercent).pointerInput(Unit) {
+                detectTapGestures(
+                    onTap = { onClick() },
+                    onLongPress = {
+                        onLongClick()
+                    },
+                    onPress = {
+                        val press = PressInteraction.Press(it)
+                        interactionSource.emit(press)
+                        tryAwaitRelease()
+                        interactionSource.emit(PressInteraction.Release(press))
+                    })
+            }
+        } else {
+            Modifier
         }
-        val sizePercent by animateFloatAsState(
-            targetValue = if (isPressed) 0.95f else 1f,
-            animationSpec = tween(durationMillis = 150), label = ""
-        )
-        scale(sizePercent).pointerInput(Unit) {
-            detectTapGestures(
-                onTap = { onClick() },
-                onLongPress = { onLongClick() },
-                onPress = { isPressed = true })
-        }
+    }
+
+    @Composable
+    fun rememberMutableInteractionSource() = remember {
+        MutableInteractionSource()
     }
 }

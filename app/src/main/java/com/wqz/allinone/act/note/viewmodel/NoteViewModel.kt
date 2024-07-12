@@ -89,6 +89,12 @@ class NoteViewModel(application: Application) : AndroidViewModel(application) {
         return note
     }
 
+    fun deleteNote(id: Int?) {
+        if (id != null) {
+            noteDao.deleteById(id)
+        }
+    }
+
     /*suspend fun getNote(noteId: Int): Note? {
         return withContext(Dispatchers.IO) {
             noteDao.getById(noteId)
