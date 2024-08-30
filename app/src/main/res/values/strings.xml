@@ -40,6 +40,9 @@
     <string name="text_studio_describe">一个热爱开发和设计的小小工作室\n\nEvery Moment Worth Creating, \nEverywhere
         Filled with Creativity.\n\n每一刻都值得创造，\n每一处都充满创意。
     </string>
+    <string name="dept_dev">开发部</string>
+    <string name="dept_design">设计部</string>
+    <string name="dept_create">创作部</string>
 
     <string name="participating_individuals">参与成员</string>
     <string name="wqz">Wu Qizhen</string>
@@ -139,53 +142,61 @@
         \n值得一提的是，Stable Diffusion 针对人物造型做了优化。相较于 Disco Diffusion，其观感表现更优秀，但略逊于
         DALL-E2。Stable Diffusion 完全免费开源，所有代码均在 GitHub 上公开，用户可以轻松拷贝使用。
     </string>
-    <string name="text_personal_manage">个人管理</string>
-    <string name="btn_diary">生活书</string>
-    <string name="btn_note">随手记</string>
-    <string name="btn_todo">待办箱</string>
-    <string name="btn_clock_in">打卡通</string>
-    <string name="btn_schedule">日程达</string>
-    <string name="text_information_collection">信息收藏</string>
-    <string name="btn_bookmark">书签宝</string>
-    <string name="text_study">学术管理</string>
-    <string name="btn_school_timetable">课程表</string>
-    <string name="text_option">选项操作</string>
+
+    <!-- 主页 -->
+    <string name="personal_manage">个人管理</string>
+    <string name="diary">生活书</string>
+    <string name="note">随手记</string>
+    <string name="todo">待办箱</string>
+    <string name="clock_in">打卡通</string>
+    <string name="schedule">日程达</string>
+    <string name="information_collection">信息收藏</string>
+    <string name="bookmark">书签宝</string>
+    <string name="study_manage">学术管理</string>
+    <string name="school_timetable">课程表</string>
+    <string name="option">选项操作</string>
     <string name="setting">设置</string>
+
+    <!-- 通用 -->
+    <string name="name">名称</string>
+    <string name="add">添加</string>
+    <string name="delete">删除</string>
+    <string name="modify">修改</string>
+    <string name="cancel">取消</string>
+    <string name="edit">编辑</string>
+    <string name="thing">事件</string>
+    <string name="contents">内容</string>
+
+    <!-- 其它 -->
     <string name="btn_about">关于</string>
     <string name="btn_add_folder">新建收藏夹</string>
-    <string name="text_folder_search_tip">名称</string>
-    <string name="text_name">名称</string>
     <string name="text_input_name">请输入名称</string>
-    <string name="btn_add">添加</string>
     <string name="btn_add_link">添加书签</string>
     <string name="text_url">链接</string>
     <string name="text_input_url">请输入链接</string>
     <string name="title_bookmark_details">书签信息</string>
-    <string name="btn_delete">删除</string>
-    <string name="btn_modify">修改</string>
     <string name="text_url_introduce">* 点击访问，长按复制</string>
     <string name="text_delete_confirm">删除确认</string>
     <string name="text_delete_confirm_hint">确定要删除吗？</string>
-    <string name="btn_cancel">取消</string>
     <string name="text_modify_info">信息修改</string>
-    <string name="btn_edit">编辑</string>
     <string name="title_folder_details">文件夹信息</string>
     <string name="text_bookmark_number">书签数</string>
     <string name="text_completed">已完成</string>
     <string name="btn_add_todo">添加事件</string>
     <string name="text_clear">清空</string>
     <string name="title_todo_details">待办信息</string>
-    <string name="text_thing">事件</string>
-    <string name="text_contents">内容</string>
     <string name="text_input_contents">请输入内容</string>
+    <string name="text_todo_number">* 这是第 条待办</string>
+    <string name="btn_add_note">新建笔记</string>
+
+    <!-- Act -->
+    <string name="title_activity_about_studio">AboutStudioActivity</string>
+    <string name="title_activity_note_list">NoteListActivity</string>
+    <string name="title_activity_note_edit">NoteEditActivity</string>
     <string name="title_activity_about_developer">AboutDeveloperActivity</string>
     <string name="title_activity_about_app">AboutAppActivity</string>
-    <string name="dept_dev">开发部</string>
-    <string name="dept_design">设计部</string>
-    <string name="dept_create">创作部</string>
-    <string name="title_activity_about_studio">AboutStudioActivity</string>
-    <string name="text_todo_number">* 这是第 条待办</string>
-    <string name="title_activity_note_list">NoteListActivity</string>
-    <string name="btn_add_note">新建笔记</string>
-    <string name="title_activity_note_edit">NoteEditActivity</string>
+    <string name="anniversary">纪念日</string>
+    <string name="title_activity_anniversary_preview">AnniversaryPreviewActivity</string>
+    <string name="add_anniversary">添加纪念日</string>
+    <string name="title_activity_anniversary_add">AnniversaryAddActivity</string>
 </resources>

@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.activity.enableEdgeToEdge
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.expandVertically
 import androidx.compose.animation.fadeIn
@@ -74,7 +73,7 @@ class NoteListActivity : ComponentActivity() {
 
         viewModel = NoteViewModel(application)
 
-        enableEdgeToEdge()
+        // enableEdgeToEdge()
         setContent {
             AllInOneTheme {
                 AppBackground.CirclesBackground {
@@ -97,7 +96,7 @@ class NoteListActivity : ComponentActivity() {
                 .padding(horizontal = 20.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            TitleBar.TextTitleBar(title = R.string.btn_note)
+            TitleBar.TextTitleBar(title = R.string.note)
             Row(
                 verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier
@@ -200,7 +199,7 @@ class NoteListActivity : ComponentActivity() {
                     horizontalArrangement = Arrangement.Center
                 ) {
                     CapsuleButton.TextButton(
-                        text = stringResource(R.string.btn_delete)
+                        text = stringResource(R.string.delete)
                     ) {
                         showDialog = false
                         Toast.makeText(this@NoteListActivity, "删除成功", Toast.LENGTH_SHORT)
@@ -211,7 +210,7 @@ class NoteListActivity : ComponentActivity() {
                     }
                     Spacer(modifier = Modifier.width(10.dp))
                     CapsuleButton.TextButton(
-                        text = stringResource(R.string.btn_cancel)
+                        text = stringResource(R.string.cancel)
                     ) { showDialog = false }
                 }
             }
@@ -343,7 +342,7 @@ class NoteListActivity : ComponentActivity() {
                     horizontalArrangement = Arrangement.Center
                 ) {
                     CapsuleButton.TextButton(
-                        text = stringResource(R.string.btn_delete)
+                        text = stringResource(R.string.delete)
                     ) {
                         showDialog = false
                         Toast.makeText(this@NoteListActivity, "删除成功", Toast.LENGTH_SHORT).show()
@@ -353,7 +352,7 @@ class NoteListActivity : ComponentActivity() {
                     }
                     Spacer(modifier = Modifier.width(10.dp))
                     CapsuleButton.TextButton(
-                        text = stringResource(R.string.btn_cancel)
+                        text = stringResource(R.string.cancel)
                     ) { showDialog = false }
                 }
             }

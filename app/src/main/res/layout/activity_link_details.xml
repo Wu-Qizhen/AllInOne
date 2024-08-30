@@ -44,7 +44,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:text="@string/text_name"
+                        android:text="@string/name"
                         android:textSize="14sp"
                         android:textStyle="bold" />
 
@@ -100,7 +100,7 @@
                     android:layout_height="40dp"
                     android:background="@drawable/btn_submit_style"
                     android:gravity="center"
-                    android:text="@string/btn_modify"
+                    android:text="@string/modify"
                     android:textColor="@color/button_text" />
 
                 <Button
@@ -110,7 +110,7 @@
                     android:layout_marginStart="10dp"
                     android:background="@drawable/btn_submit_style"
                     android:gravity="center"
-                    android:text="@string/btn_delete"
+                    android:text="@string/delete"
                     android:textColor="@color/button_text" />
             </LinearLayout>
         </LinearLayout>

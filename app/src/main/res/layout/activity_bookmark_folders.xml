@@ -24,7 +24,7 @@
                 android:layout_marginVertical="10dp"
                 android:fontFamily="@font/fzfengrusongti_regular"
                 android:gravity="center"
-                android:text="@string/btn_bookmark"
+                android:text="@string/bookmark"
                 android:textColor="@color/theme_yellow"
                 android:textSize="20sp"
                 android:textStyle="bold"

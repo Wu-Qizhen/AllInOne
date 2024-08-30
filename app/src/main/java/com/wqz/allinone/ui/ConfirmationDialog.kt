@@ -37,9 +37,9 @@ object ConfirmationDialog {
                     .align(Alignment.BottomCenter),
                 horizontalArrangement = Arrangement.Center
             ) {
-                CapsuleButton.TextButton(text = stringResource(R.string.btn_delete), onConfirm)
+                CapsuleButton.TextButton(text = stringResource(R.string.delete), onConfirm)
                 Spacer(modifier = Modifier.width(10.dp))
-                CapsuleButton.TextButton(text = stringResource(R.string.btn_cancel), onDismiss)
+                CapsuleButton.TextButton(text = stringResource(R.string.cancel), onDismiss)
             }
         }
     }

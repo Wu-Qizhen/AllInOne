@@ -3,7 +3,6 @@ package com.wqz.allinone.act.about
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.activity.enableEdgeToEdge
 import com.wqz.allinone.act.about.ui.AboutAppScreen
 import com.wqz.allinone.ui.AppBackground
 import com.wqz.allinone.ui.theme.AllInOneTheme
@@ -15,7 +14,7 @@ import com.wqz.allinone.ui.theme.AllInOneTheme
 class AboutAppActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
+        // enableEdgeToEdge()
         setContent {
             AllInOneTheme {
                 AppBackground.CirclesBackground {

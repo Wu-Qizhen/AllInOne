@@ -11,7 +11,7 @@
       "type": "SINGLE",
       "filters": [],
       "attributes": [],
-      "versionCode": 8,
+      "versionCode": 10,
       "versionName": "Bismuth",
       "outputFile": "app-release.apk"
     }
