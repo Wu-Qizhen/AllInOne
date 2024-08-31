@@ -33,21 +33,21 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewModelScope
 import com.wqz.allinone.R
 import com.wqz.allinone.act.anniversary.viewmodel.AnniversaryViewModel
 import com.wqz.allinone.entity.Anniversary
 import com.wqz.allinone.ui.AppBackground
-import com.wqz.allinone.ui.CapsuleButton
+import com.wqz.allinone.ui.ItemX
 import com.wqz.allinone.ui.ModifierExtends.clickVfx
 import com.wqz.allinone.ui.TitleBar
 import com.wqz.allinone.ui.color.BackgroundColor
 import com.wqz.allinone.ui.color.BorderColor
 import com.wqz.allinone.ui.theme.AllInOneTheme
 import com.wqz.allinone.ui.theme.ThemeColor
-import kotlinx.coroutines.launch
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
@@ -83,7 +83,11 @@ class AnniversaryAddActivity : ComponentActivity() {
         val borderWidth = 0.4f.dp
         val scrollState = rememberScrollState()
         var content by remember { mutableStateOf("") }
-        var date by remember { mutableStateOf("") }
+        var date by remember {
+            mutableStateOf(
+                LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy.MM.dd"))
+            )
+        }
         // var showDatePicker by remember { mutableStateOf(false) }
         // var selectedDate by remember { mutableStateOf(LocalDate.now()) }
         // val datePickerState = rememberDatePickerState()
@@ -93,7 +97,11 @@ class AnniversaryAddActivity : ComponentActivity() {
             modifier = Modifier
                 .fillMaxSize()
                 .verticalScroll(scrollState)
-                .padding(horizontal = 20.dp),
+                .padding(
+                    start = 20.dp,
+                    end = 20.dp,
+                    bottom = 50.dp
+                ),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             TitleBar.TextTitleBar(title = R.string.add_anniversary)
@@ -133,7 +141,8 @@ class AnniversaryAddActivity : ComponentActivity() {
                     ),
                     textStyle = TextStyle(
                         color = Color.White,
-                        fontSize = 16.sp
+                        fontSize = 16.sp,
+                        fontFamily = FontFamily(Font(R.font.misans_regular))
                     ),
                     label = {
                         Text(
@@ -170,7 +179,6 @@ class AnniversaryAddActivity : ComponentActivity() {
                             end = Offset.Infinite
                         )
                     )
-                // .padding(10.dp)
             ) {
                 TextField(
                     modifier = Modifier.fillMaxWidth(),
@@ -187,7 +195,8 @@ class AnniversaryAddActivity : ComponentActivity() {
                     ),
                     textStyle = TextStyle(
                         color = Color.White,
-                        fontSize = 16.sp
+                        fontSize = 16.sp,
+                        fontFamily = FontFamily(Font(R.font.misans_regular))
                     ),
                     maxLines = 1,
                     label = {
@@ -198,16 +207,14 @@ class AnniversaryAddActivity : ComponentActivity() {
                 )
             }
             Spacer(modifier = Modifier.height(10.dp))
-            CapsuleButton.TextButton(text = "添加") {
+            ItemX.Button(icon = R.drawable.ic_add, text = "添加") {
                 if (content.isNotEmpty() && date.matches(Regex("\\d{4}.\\d{2}.\\d{2}"))) {
                     val anniversary = Anniversary(
                         id = null,
                         content = content,
                         date = LocalDate.parse(date, DateTimeFormatter.ofPattern("yyyy.MM.dd"))
                     )
-                    viewModel.viewModelScope.launch {
-                        viewModel.insert(anniversary)
-                    }
+                    viewModel.insertAnniversary(anniversary)
                     Toast.makeText(context, "添加成功", Toast.LENGTH_SHORT).show()
                     finish()
                 } else {

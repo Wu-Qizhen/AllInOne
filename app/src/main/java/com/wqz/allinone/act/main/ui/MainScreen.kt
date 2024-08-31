@@ -50,7 +50,7 @@ import com.wqz.allinone.act.bookmark.BookmarkFoldersActivity
 import com.wqz.allinone.act.note.NoteListActivity
 import com.wqz.allinone.act.setting.SettingActivity
 import com.wqz.allinone.act.todo.TodoListActivity
-import com.wqz.allinone.ui.CapsuleButton
+import com.wqz.allinone.ui.ItemX
 import kotlinx.coroutines.delay
 
 /**
@@ -172,42 +172,42 @@ fun MainScreen(
         }
         ClassificationBar(icon = R.drawable.ic_person, text = R.string.personal_manage)
         Spacer(modifier = Modifier.height(10.dp))
-        CapsuleButton.IconButton(
+        ItemX.Capsule(
             icon = R.drawable.ic_todo,
             text = stringResource(id = R.string.todo)
         ) {
             context.startActivity(Intent(context, TodoListActivity::class.java))
         }
         Spacer(modifier = Modifier.height(5.dp))
-        CapsuleButton.IconButton(
+        ItemX.Capsule(
             icon = R.drawable.ic_note,
             text = stringResource(id = R.string.note)
         ) {
             context.startActivity(Intent(context, NoteListActivity::class.java))
         }
         Spacer(modifier = Modifier.height(5.dp))
-        CapsuleButton.IconButton(
+        ItemX.Capsule(
             icon = R.drawable.ic_anniversary,
             text = stringResource(id = R.string.anniversary)
         ) {
             context.startActivity(Intent(context, AnniversaryPreviewActivity::class.java))
         }
         Spacer(modifier = Modifier.height(5.dp))
-        CapsuleButton.IconButton(
+        ItemX.Capsule(
             icon = R.drawable.ic_diary,
             text = stringResource(id = R.string.diary)
         ) {
             Toast.makeText(context, "施工中", Toast.LENGTH_SHORT).show()
         }
         Spacer(modifier = Modifier.height(5.dp))
-        CapsuleButton.IconButton(
+        ItemX.Capsule(
             icon = R.drawable.ic_clock_in,
             text = stringResource(id = R.string.clock_in)
         ) {
             Toast.makeText(context, "施工中", Toast.LENGTH_SHORT).show()
         }
         Spacer(modifier = Modifier.height(5.dp))
-        CapsuleButton.IconButton(
+        ItemX.Capsule(
             icon = R.drawable.ic_schedule,
             text = stringResource(id = R.string.schedule)
         ) {
@@ -216,7 +216,7 @@ fun MainScreen(
         Spacer(modifier = Modifier.height(10.dp))
         ClassificationBar(icon = R.drawable.ic_collect, text = R.string.information_collection)
         Spacer(modifier = Modifier.height(10.dp))
-        CapsuleButton.IconButton(
+        ItemX.Capsule(
             icon = R.drawable.ic_bookmark,
             text = stringResource(id = R.string.bookmark)
         ) {
@@ -225,7 +225,7 @@ fun MainScreen(
         Spacer(modifier = Modifier.height(10.dp))
         ClassificationBar(icon = R.drawable.ic_study, text = R.string.study_manage)
         Spacer(modifier = Modifier.height(10.dp))
-        CapsuleButton.IconButton(
+        ItemX.Capsule(
             icon = R.drawable.ic_school_timetable,
             text = stringResource(id = R.string.school_timetable)
         ) {
@@ -234,7 +234,7 @@ fun MainScreen(
         Spacer(modifier = Modifier.height(10.dp))
         ClassificationBar(icon = R.drawable.ic_option, text = R.string.option)
         Spacer(modifier = Modifier.height(10.dp))
-        CapsuleButton.IconButton(
+        ItemX.Capsule(
             icon = R.drawable.ic_setting,
             text = stringResource(id = R.string.setting)
         ) {

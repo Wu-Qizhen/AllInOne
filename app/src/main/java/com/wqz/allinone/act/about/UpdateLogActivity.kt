@@ -1,0 +1,245 @@
+package com.wqz.allinone.act.about
+
+import android.os.Bundle
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.expandVertically
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.shrinkVertically
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.interaction.collectIsPressedAsState
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.key
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import com.wqz.allinone.R
+import com.wqz.allinone.act.about.data.UpdateLogData
+import com.wqz.allinone.entity.UpdateLog
+import com.wqz.allinone.ui.AppBackground
+import com.wqz.allinone.ui.ModifierExtends.clickVfx
+import com.wqz.allinone.ui.TitleBar
+import com.wqz.allinone.ui.color.BackgroundColor
+import com.wqz.allinone.ui.color.BorderColor
+import com.wqz.allinone.ui.theme.AllInOneTheme
+
+/**
+ * 更新日志
+ * Created by Wu Qizhen on 2024.8.31
+ */
+class UpdateLogActivity : ComponentActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        setContent {
+            AllInOneTheme {
+                AppBackground.CirclesBackground {
+                    UpdateLogScreen(
+                        updateLogs = UpdateLogData.updateLogs
+                    )
+                }
+            }
+        }
+    }
+
+    @Composable
+    fun UpdateLogScreen(
+        updateLogs: List<UpdateLog>
+    ) {
+        val scrollState = rememberScrollState()
+
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .verticalScroll(scrollState)
+                .padding(horizontal = 20.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            TitleBar.TextTitleBar(title = R.string.title_update_log)
+
+            updateLogs.forEach {
+                key(it.version) {
+                    UpdateLogItem(it)
+                }
+            }
+
+            Spacer(modifier = Modifier.height(47.dp))
+        }
+    }
+
+    @Composable
+    fun UpdateLogItem(
+        updateLog: UpdateLog
+    ) {
+        val interactionSource = remember { MutableInteractionSource() }
+        val isPressed = interactionSource.collectIsPressedAsState()
+        val backgroundColor =
+            if (isPressed.value) BackgroundColor.PRESSED_GRAY else BackgroundColor.DEFAULT_GRAY
+        val borderColors = BorderColor.DEFAULT_GRAY
+        val borderWidth = 0.4f.dp
+        var showDetails by remember { mutableStateOf(false) }
+
+        AnimatedVisibility(
+            visible = !showDetails,
+            enter = fadeIn() + expandVertically(),
+            exit = fadeOut() + shrinkVertically()
+        ) {
+            Column {
+                Spacer(modifier = Modifier.height(3.dp))
+                Column(
+                    modifier = Modifier
+                        .clickVfx(
+                            interactionSource = interactionSource,
+                            enabled = true,
+                            onClick = {
+                                showDetails = !showDetails
+                            }
+                        )
+                        .wrapContentHeight()
+                        .fillMaxWidth()
+                        .background(backgroundColor, RoundedCornerShape(10.dp))
+                        .border(
+                            width = borderWidth,
+                            shape = RoundedCornerShape(10.dp),
+                            brush = Brush.linearGradient(
+                                borderColors,
+                                start = Offset.Zero,
+                                end = Offset.Infinite
+                            )
+                        )
+                        .padding(10.dp)
+                ) {
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Text(
+                            text = updateLog.updateTime,
+                            fontSize = 16.sp,
+                            maxLines = 1,
+                            fontWeight = FontWeight.Bold
+                        )
+                        Text(
+                            text = updateLog.version,
+                            fontSize = 16.sp,
+                            maxLines = 1,
+                            fontWeight = FontWeight.Bold
+                        )
+                    }
+                }
+                Spacer(modifier = Modifier.height(3.dp))
+            }
+        }
+
+        AnimatedVisibility(
+            visible = showDetails,
+            enter = fadeIn() + expandVertically(),
+            exit = fadeOut() + shrinkVertically()
+        )
+        {
+            Column {
+                Spacer(modifier = Modifier.height(3.dp))
+                Column(
+                    modifier = Modifier
+                        .clickVfx(
+                            interactionSource = interactionSource,
+                            enabled = true,
+                            onClick = {
+                                showDetails = !showDetails
+                            }
+                        )
+                        .wrapContentHeight()
+                        .fillMaxWidth()
+                        .background(backgroundColor, RoundedCornerShape(10.dp))
+                        .border(
+                            width = borderWidth,
+                            shape = RoundedCornerShape(10.dp),
+                            brush = Brush.linearGradient(
+                                borderColors,
+                                start = Offset.Zero,
+                                end = Offset.Infinite
+                            )
+                        )
+                        .padding(10.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Text(
+                            text = updateLog.updateTime,
+                            fontSize = 16.sp,
+                            maxLines = 1,
+                            fontWeight = FontWeight.Bold
+                        )
+                        Text(
+                            text = updateLog.version,
+                            fontSize = 16.sp,
+                            maxLines = 1,
+                            fontWeight = FontWeight.Bold
+                        )
+                    }
+                    Text(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(top = 5.dp),
+                        text = "版本介绍：",
+                        fontSize = 14.sp,
+                        maxLines = 1,
+                        fontWeight = FontWeight.Bold
+                    )
+                    Text(
+                        modifier = Modifier.fillMaxWidth(),
+                        text = updateLog.versionDesc,
+                        fontSize = 12.sp,
+                        color = Color.Gray
+                    )
+                    Text(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(top = 5.dp),
+                        text = "更新内容：",
+                        fontSize = 14.sp,
+                        maxLines = 1,
+                        fontWeight = FontWeight.Bold
+                    )
+                    Text(
+                        modifier = Modifier.fillMaxWidth(),
+                        text = updateLog.updateLog,
+                        fontSize = 12.sp,
+                        color = Color.Gray
+                    )
+                }
+                Spacer(modifier = Modifier.height(3.dp))
+            }
+        }
+    }
+}

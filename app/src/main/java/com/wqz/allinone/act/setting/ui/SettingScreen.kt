@@ -15,7 +15,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.wqz.allinone.R
 import com.wqz.allinone.act.about.AboutAppActivity
-import com.wqz.allinone.ui.CapsuleButton
+import com.wqz.allinone.ui.ItemX
 import com.wqz.allinone.ui.TitleBar
 import com.wqz.allinone.ui.theme.AllInOneTheme
 
@@ -36,7 +36,7 @@ fun SettingScreen() {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         TitleBar.TextTitleBar(title = R.string.setting)
-        CapsuleButton.IconButton(
+        ItemX.Capsule(
             icon = R.drawable.ic_about,
             text = stringResource(R.string.btn_about)
         ) {

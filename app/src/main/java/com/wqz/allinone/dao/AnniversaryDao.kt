@@ -1,11 +1,11 @@
 package com.wqz.allinone.dao
 
+import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Update
 import com.wqz.allinone.entity.Anniversary
-import kotlinx.coroutines.flow.Flow
 import java.time.LocalDate
 
 /**
@@ -28,13 +28,18 @@ interface AnniversaryDao {
 
     // 根据 ID 查询纪念日记录
     @Query("SELECT * FROM Anniversary WHERE id = :anniversaryId")
-    suspend fun getById(anniversaryId: Int): Anniversary?
+    fun getById(anniversaryId: Int): Anniversary
 
     // 获取所有纪念日记录
     @Query("SELECT * FROM Anniversary")
-    fun getAll(): Flow<List<Anniversary>>
+    fun getAll(): LiveData<List<Anniversary>>
+
+    // 获取所有纪念日记录，根据日期由小到大排序
+    // @TypeConverters(TypeConverters::class)
+    @Query("SELECT * FROM anniversary ORDER BY date ASC")
+    fun getAllSortedByDate(): LiveData<List<Anniversary>>
 
     // 根据日期查询纪念日记录
     @Query("SELECT * FROM Anniversary WHERE date = :anniversaryDate")
-    fun getByDate(anniversaryDate: LocalDate): Flow<List<Anniversary>>
+    fun getByDate(anniversaryDate: LocalDate): LiveData<List<Anniversary>>
 }

@@ -5,10 +5,11 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 /**
- * 笔记
+ * 笔记实体类
  * Created by Wu Qizhen on 2024.6.30
  */
 @Entity
+/*(tableName = "note")*/
 data class Note(
     @PrimaryKey(autoGenerate = true)
     var id: Int?,

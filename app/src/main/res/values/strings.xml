@@ -9,7 +9,7 @@
     <string name="title_about_us">关于我们</string>
     <string name="introduction">一笔一划，万象尽在掌握</string>
 
-    <string name="version">Bismuth（B）</string>
+    <string name="version">Cygnus（C）</string>
     <string name="version_desc">版本号</string>
     <string name="title_update_log">更新日志</string>
 
@@ -199,4 +199,6 @@
     <string name="title_activity_anniversary_preview">AnniversaryPreviewActivity</string>
     <string name="add_anniversary">添加纪念日</string>
     <string name="title_activity_anniversary_add">AnniversaryAddActivity</string>
+    <string name="title_activity_anniversary_details">AnniversaryDetailsActivity</string>
+    <string name="title_activity_update_log">UpdateLogActivity</string>
 </resources>

@@ -1,7 +1,6 @@
 package com.wqz.allinone.act.about.ui
 
 import android.content.Intent
-import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -33,7 +32,8 @@ import androidx.compose.ui.unit.sp
 import com.wqz.allinone.R
 import com.wqz.allinone.act.about.AboutDeveloperActivity
 import com.wqz.allinone.act.about.AboutStudioActivity
-import com.wqz.allinone.ui.CapsuleButton
+import com.wqz.allinone.act.about.UpdateLogActivity
+import com.wqz.allinone.ui.ItemX
 import com.wqz.allinone.ui.theme.AllInOneTheme
 
 /**
@@ -110,28 +110,12 @@ fun AboutAppScreen() {
             text = R.string.version,
             subText = R.string.version_desc
         ) {
-            Toast.makeText(context, "施工中", Toast.LENGTH_SHORT).show()
-        }
-        IconButtonWithTopSpacer(
-            icon = R.drawable.ic_github,
-            text = R.string.open_source,
-            subText = R.string.open_source_desc
-        ) {
-            Toast.makeText(context, "施工中", Toast.LENGTH_SHORT).show()
-            /* AnimatedVisibility(
-                 visible = toastContent.isNotEmpty(),
-                 enter = fadeIn() + slideInVertically { it / 2 },
-                 exit = fadeOut() + slideOutVertically { it / 2 },
-                 modifier = Modifier
-                     .align(Alignment.BottomCenter)
-             ) {
-                 ToastUtils.ToastContent(content = toastContent)
-             }*/
+            context.startActivity(Intent(context, UpdateLogActivity::class.java))
         }
         ClassificationBar(icon = R.drawable.ic_team, text = R.string.participating_team)
         Spacer(modifier = Modifier.height(5.dp))
-        CapsuleButton.LogoButton(
-            icon = R.drawable.logo_code_intellix,
+        ItemX.Capsule(
+            image = R.drawable.logo_code_intellix,
             text = stringResource(id = R.string.studio),
             subText = stringResource(id = R.string.studio_desc)
         ) {
@@ -140,8 +124,8 @@ fun AboutAppScreen() {
         ClassificationBar(icon = R.drawable.ic_member, text = R.string.participating_individuals)
         for ((index) in developerNames.withIndex()) {
             Spacer(modifier = Modifier.height(5.dp))
-            CapsuleButton.LogoButton(
-                icon = developerImages[index],
+            ItemX.Capsule(
+                image = developerImages[index],
                 text = stringResource(developerNames[index]),
                 subText = stringResource(developerDesc[index])
             ) {
@@ -174,7 +158,7 @@ fun AboutAppScreen() {
 @Composable
 fun IconButtonWithTopSpacer(icon: Int, text: Int, subText: Int, onClick: () -> Unit) {
     Spacer(modifier = Modifier.height(5.dp))
-    CapsuleButton.IconButton(
+    ItemX.Capsule(
         icon = icon,
         iconSize = 20,
         text = stringResource(text),

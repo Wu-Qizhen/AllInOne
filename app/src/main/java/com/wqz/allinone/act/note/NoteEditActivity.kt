@@ -36,10 +36,13 @@ import androidx.compose.ui.Alignment.Companion.Center
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewModelScope
+import com.wqz.allinone.R
 import com.wqz.allinone.act.note.viewmodel.NoteViewModel
 import com.wqz.allinone.entity.Note
 import com.wqz.allinone.ui.AppBackground
@@ -57,9 +60,7 @@ class NoteEditActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // viewModel = ViewModelProvider(this)[NoteViewModel::class.java]
         viewModel = NoteViewModel(application)
-
         val noteId = intent.getIntExtra("NOTE_ID", -1)
         val note: Note
         if (noteId != -1) {
@@ -104,44 +105,6 @@ class NoteEditActivity : ComponentActivity() {
             }
         }
     }
-
-    /*private fun getDateTime(): String {
-        val currentTime = LocalDateTime.now()
-        val formatter = DateTimeFormatter.ofPattern("yyyy年MM月dd日 HH:mm")
-        return currentTime.format(formatter)
-    }*/
-
-    /*private fun onSaveClick(noteId: Int, title: String, content: String, noteDao: NoteDao) {
-        val formattedUpdateTime = getDateTime()
-        val note = Note(
-            id = if (noteId != -1) noteId else null,
-            title = title,
-            content = content,
-            createTime = if (noteId == -1) formattedUpdateTime else null,
-            updateTime = formattedUpdateTime
-        )
-
-        // 在主线程之外执行数据库操作
-        // GlobalScope.launch(Dispatchers.IO) {
-        if (noteId == -1) {
-            // 插入新笔记
-            noteDao.insert(note)
-        } else {
-            // 更新现有笔记
-            noteDao.update(note)
-        }
-        // 弹出消息
-        Toast.makeText(this@NoteEditActivity, "保存成功", Toast.LENGTH_SHORT).show()
-        // 返回上一个屏幕
-        // onNavigateBack()
-        val resultIntent = Intent().apply {
-            // 可以在这里放置您想要返回的数据
-            putExtra("NOTE_RESULT", "Note saved successfully")
-        }
-        setResult(RESULT_OK, resultIntent)
-        finish()
-        // }
-    }*/
 
     @Composable
     fun NoteEditScreen(
@@ -288,7 +251,8 @@ class NoteEditActivity : ComponentActivity() {
                 textStyle = TextStyle(
                     color = Color.White,
                     fontSize = 20.sp,
-                    fontWeight = FontWeight.Bold
+                    fontWeight = FontWeight.Bold,
+                    fontFamily = FontFamily(Font(R.font.misans_regular))
                 ),
                 placeholder = {
                     Text(
@@ -320,7 +284,11 @@ class NoteEditActivity : ComponentActivity() {
                     focusedIndicatorColor = Color.Transparent, // 下划线颜色
                     cursorColor = ThemeColor // 光标颜色
                 ),
-                textStyle = TextStyle(color = Color.White, fontSize = 14.sp),
+                textStyle = TextStyle(
+                    color = Color.White,
+                    fontSize = 14.sp,
+                    fontFamily = FontFamily(Font(R.font.misans_regular))
+                ),
                 placeholder = {
                     Text(
                         text = "记点什么吧 (●'◡'●)",

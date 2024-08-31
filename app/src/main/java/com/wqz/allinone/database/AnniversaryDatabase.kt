@@ -9,7 +9,7 @@ import com.wqz.allinone.dao.AnniversaryDao
 import com.wqz.allinone.entity.Anniversary
 
 /**
- * 数据库
+ * 纪念日数据库
  * Created by Wu Qizhen on 2024.8.20
  */
 @Database(entities = [Anniversary::class], version = 1, exportSchema = false)

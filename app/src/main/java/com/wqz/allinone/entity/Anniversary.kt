@@ -6,10 +6,11 @@ import androidx.room.PrimaryKey
 import java.time.LocalDate
 
 /**
- * 纪念日
+ * 纪念日实体类
  * Created by Wu Qizhen on 2024.8.20
  */
 @Entity
+/*(tableName = "anniversary")*/
 data class Anniversary(
     @PrimaryKey(autoGenerate = true)
     var id: Int?,

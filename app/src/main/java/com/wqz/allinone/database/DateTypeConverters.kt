@@ -5,7 +5,7 @@ import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
 /**
- * 数据库
+ * 数据库日期转换
  * Created by Wu Qizhen on 2024.8.20
  */
 object DateTypeConverters {
