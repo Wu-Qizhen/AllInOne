@@ -262,18 +262,26 @@ class AnniversaryPreviewActivity : ComponentActivity() {
                                 )
                             }
                         )
-                        ItemX.Button(icon = R.drawable.ic_jump, text = "跳转") {
-                            if (changeDate.matches(Regex("\\d{4}.\\d{2}.\\d{2}"))) {
-                                val date = changeDate.split(".")
-                                val newDateCalendar = Calendar.getInstance().apply {
-                                    set(Calendar.YEAR, date[0].toInt())
-                                    set(Calendar.MONTH, date[1].toInt() - 1)
-                                    set(Calendar.DAY_OF_MONTH, date[2].toInt())
-                                }
-                                currentDate.value = newDateCalendar
+                        Row {
+                            ItemX.Button(icon = R.drawable.ic_locate, text = "今天") {
+                                currentDate.value = Calendar.getInstance()
                                 showJump = false
-                            } else {
-                                Toast.makeText(context, "日期格式错误", Toast.LENGTH_SHORT).show()
+                            }
+                            Spacer(modifier = Modifier.width(10.dp))
+                            ItemX.Button(icon = R.drawable.ic_jump, text = "跳转") {
+                                if (changeDate.matches(Regex("\\d{4}.\\d{2}.\\d{2}"))) {
+                                    val date = changeDate.split(".")
+                                    val newDateCalendar = Calendar.getInstance().apply {
+                                        set(Calendar.YEAR, date[0].toInt())
+                                        set(Calendar.MONTH, date[1].toInt() - 1)
+                                        set(Calendar.DAY_OF_MONTH, date[2].toInt())
+                                    }
+                                    currentDate.value = newDateCalendar
+                                    showJump = false
+                                } else {
+                                    Toast.makeText(context, "日期格式错误", Toast.LENGTH_SHORT)
+                                        .show()
+                                }
                             }
                         }
                     }
@@ -312,7 +320,7 @@ class AnniversaryPreviewActivity : ComponentActivity() {
             anniversary.date,
             currentDate.value.time.toInstant().atZone(ZoneId.systemDefault())
                 .toLocalDate()
-        ).toInt().plus(1)
+        ).toInt() // .plus(1)
         val date = anniversary.date.format(DateTimeFormatter.ofPattern("yyyy年MM月dd日"))
         val dateType = if (days < 0) "倒数日" else "纪念日"
 
@@ -428,12 +436,12 @@ class AnniversaryPreviewActivity : ComponentActivity() {
                     )
                     Text(
                         modifier = Modifier.padding(start = 10.dp),
-                        text = "${days.absoluteValue}天",
+                        text = if (days > 0) "${days.plus(1)}天" else "${days.absoluteValue}天后",
                         textAlign = TextAlign.End,
                         fontSize = 14.sp,
                         fontWeight = FontWeight.Bold,
                         maxLines = 1,
-                        color = if (days > 0) BackgroundColor.DEFAULT_YELLOW else Color(84, 145, 89)
+                        color = if (days > 0) BackgroundColor.DEFAULT_YELLOW else Color(8, 116, 196)
                     )
                 }
                 Text(
@@ -456,7 +464,7 @@ class AnniversaryPreviewActivity : ComponentActivity() {
     fun AnniversaryItemPreview() {
         AllInOneTheme {
             AnniversaryItem(
-                anniversary = Anniversary(1, "Test", LocalDate.of(2020, 8, 31)),
+                anniversary = Anniversary(1, "Test", LocalDate.of(2020, 10, 1)),
                 currentDate = remember { mutableStateOf(Calendar.getInstance()) }
             )
         }

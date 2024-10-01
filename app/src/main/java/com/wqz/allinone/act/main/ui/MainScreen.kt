@@ -5,11 +5,17 @@ package com.wqz.allinone.act.main.ui
 import android.content.Intent
 import android.widget.Toast
 import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.AnimatedVisibilityScope
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.SharedTransitionLayout
 import androidx.compose.animation.SharedTransitionScope
+import androidx.compose.animation.expandVertically
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -25,6 +31,7 @@ import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -34,6 +41,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -51,6 +59,7 @@ import com.wqz.allinone.act.note.NoteListActivity
 import com.wqz.allinone.act.setting.SettingActivity
 import com.wqz.allinone.act.todo.TodoListActivity
 import com.wqz.allinone.ui.ItemX
+import com.wqz.allinone.ui.ModifierExtends.clickVfx
 import kotlinx.coroutines.delay
 
 /**
@@ -123,6 +132,7 @@ fun MainScreen(
 ) {
     val context = LocalContext.current
     val scrollState = rememberScrollState()
+    val showBuild = remember { mutableStateOf(false) }
 
     Column(
         modifier = Modifier
@@ -241,14 +251,54 @@ fun MainScreen(
             context.startActivity(Intent(context, SettingActivity::class.java))
         }
         Spacer(modifier = Modifier.height(10.dp))
-        Text(
-            text = stringResource(id = R.string.copyright),
-            fontSize = 10.sp,
-            fontWeight = FontWeight.Bold,
-            textAlign = TextAlign.Center,
-            modifier = Modifier
-                .fillMaxWidth()
-        )
+        AnimatedVisibility(
+            visible = showBuild.value,
+            enter = fadeIn() + expandVertically(),
+            exit = fadeOut() + shrinkVertically()
+        ) {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    // .padding(vertical = 10.dp)
+                    .clickVfx {
+                        showBuild.value = false
+                    },
+                horizontalArrangement = Arrangement.Center,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Icon(
+                    painter = painterResource(id = R.drawable.logo_aethex_matrix),
+                    contentDescription = null,
+                    modifier = Modifier
+                        .size(25.dp)
+                        .padding(end = 5.dp),
+                    tint = Color.White
+                )
+                Text(
+                    text = stringResource(id = R.string.built_with),
+                    fontSize = 10.sp,
+                    fontWeight = FontWeight.Bold,
+                    textAlign = TextAlign.Center,
+                )
+            }
+        }
+        AnimatedVisibility(
+            visible = !showBuild.value,
+            enter = fadeIn() + expandVertically(),
+            exit = fadeOut() + shrinkVertically()
+        ) {
+            Text(
+                text = stringResource(id = R.string.copyright),
+                fontSize = 10.sp,
+                fontWeight = FontWeight.Bold,
+                textAlign = TextAlign.Center,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clickVfx {
+                        showBuild.value = true
+                    }
+            )
+        }
         Spacer(modifier = Modifier.height(20.dp))
     }
 }

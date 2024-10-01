@@ -1,5 +1,6 @@
 package com.wqz.allinone.ui
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -13,6 +14,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -31,6 +33,28 @@ import com.wqz.allinone.ui.theme.ThemeColor
  * Created by Wu Qizhen on 2024.6.23
  */
 object TitleBar {
+    @Composable
+    fun TextTitleBar(
+        title: String = "主页",
+        color: Color = ThemeColor,
+        @SuppressLint("ModifierParameter") modifier: Modifier = Modifier
+    ) {
+        Text(
+            text = title,
+            fontSize = 20.sp,
+            fontWeight = FontWeight.Bold,
+            fontFamily = FontFamily(
+                Font(R.font.fzfengrusongti_regular, FontWeight.Normal)
+            ),
+            maxLines = 1,
+            color = color,
+            textAlign = TextAlign.Center,
+            modifier = modifier
+                .fillMaxWidth()
+                .padding(vertical = 10.dp)
+        )
+    }
+
     @Composable
     fun TextTitleBar(title: Int) {
         Text(

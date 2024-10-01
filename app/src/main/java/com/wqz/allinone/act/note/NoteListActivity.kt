@@ -175,10 +175,10 @@ class NoteListActivity : ComponentActivity() {
                                 val intent =
                                     Intent(this@NoteListActivity, NoteEditActivity::class.java)
                                 intent.putExtra("NOTE_ID", note.id)
-                                intent.putExtra("NOTE_TITLE", note.title)
+                                /*intent.putExtra("NOTE_TITLE", note.title)
                                 intent.putExtra("NOTE_CONTENT", note.content)
                                 intent.putExtra("NOTE_CREATE_TIME", note.createTime)
-                                intent.putExtra("NOTE_UPDATE_TIME", note.updateTime)
+                                intent.putExtra("NOTE_UPDATE_TIME", note.updateTime)*/
                                 startActivity(intent)
                             },
                             onLongClick = {

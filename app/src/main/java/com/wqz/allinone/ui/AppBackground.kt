@@ -24,6 +24,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.wqz.allinone.R
+import com.wqz.allinone.ui.theme.AllInOneTheme
 
 /**
  * 通用背景
@@ -38,12 +39,15 @@ object AppBackground {
         var bottomWidth by remember { mutableStateOf(0.dp) }
         var topWidth by remember { mutableStateOf(0.dp) }
         val localDensity = LocalDensity.current
-        Box(Modifier.fillMaxSize()) {
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(Color.Black)
+        ) {
             Row(
                 Modifier
                     .align(Alignment.BottomStart)
                     .fillMaxSize()
-                    .background(Color.Black)
             ) {
                 Image(
                     painter = painterResource(id = R.drawable.bg_circle_left),
@@ -91,10 +95,47 @@ object AppBackground {
             }
         }
     }
+
+    @Composable
+    fun BreathingBackground(title: String, content: @Composable () -> Unit) {
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(Color.Black)
+        ) {
+            Image(
+                painter = painterResource(id = R.drawable.bg_breathing_top),
+                contentDescription = null,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .align(Alignment.TopCenter),
+                contentScale = ContentScale.FillWidth
+            )
+            TitleBar.TextTitleBar(
+                title = title,
+                color = Color.White,
+                modifier = Modifier.align(Alignment.TopCenter)
+            )
+            Column(
+                Modifier
+                    .fillMaxSize()
+            ) {
+                content()
+            }
+        }
+    }
 }
 
 @Preview
 @Composable
 fun CirclesBackgroundPreview() {
     AppBackground.CirclesBackground {}
+}
+
+@Preview
+@Composable
+fun BreathingBackgroundPreview() {
+    AllInOneTheme {
+        AppBackground.BreathingBackground("主页") {}
+    }
 }

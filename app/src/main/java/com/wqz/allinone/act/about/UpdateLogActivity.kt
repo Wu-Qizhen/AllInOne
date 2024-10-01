@@ -195,13 +195,13 @@ class UpdateLogActivity : ComponentActivity() {
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Text(
-                            text = updateLog.updateTime,
+                            text = updateLog.version,
                             fontSize = 16.sp,
                             maxLines = 1,
                             fontWeight = FontWeight.Bold
                         )
                         Text(
-                            text = updateLog.version,
+                            text = updateLog.updateTime,
                             fontSize = 16.sp,
                             maxLines = 1,
                             fontWeight = FontWeight.Bold

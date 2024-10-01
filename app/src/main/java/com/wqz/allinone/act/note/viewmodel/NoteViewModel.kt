@@ -41,6 +41,12 @@ class NoteViewModel(application: Application) : AndroidViewModel(application) {
         return note
     }
 
+    suspend fun getNote(id: Int): Note {
+        return withContext(Dispatchers.IO) {
+            noteDao.getById(id)
+        }
+    }
+
     fun deleteNoteWithDelay(id: Int?) = viewModelScope.launch {
         delay(1000)
         if (id != null) {

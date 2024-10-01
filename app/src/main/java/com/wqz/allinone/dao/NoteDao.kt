@@ -28,7 +28,7 @@ interface NoteDao {
 
     // 根据 ID 查询笔记
     @Query("SELECT * FROM Note WHERE id = :noteId")
-    fun getById(noteId: Int): LiveData<Note>
+    fun getById(noteId: Int): Note
 
     // 更新笔记
     @Update

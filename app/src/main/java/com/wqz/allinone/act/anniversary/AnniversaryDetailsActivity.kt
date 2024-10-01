@@ -158,7 +158,7 @@ class AnniversaryDetailsActivity : ComponentActivity() {
             anniversary.date,
             currentDate.time.toInstant().atZone(ZoneId.systemDefault())
                 .toLocalDate()
-        ).toInt().plus(1)
+        ).toInt() // .plus(1)
         val isAnniversary =
             anniversary.date.month == currentDate.toInstant().atZone(ZoneId.systemDefault())
                 .toLocalDate().month &&
@@ -168,6 +168,31 @@ class AnniversaryDetailsActivity : ComponentActivity() {
             anniversary.date,
             currentDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate()
         ).toInt()
+        val background: Brush
+        val textColor: Color
+        if (isAnniversary) {
+            background = Brush.horizontalGradient(
+                listOf(
+                    // Color(253, 7, 35),
+                    Color(236, 74, 49),
+                    Color(236, 74, 49),
+                    Color(248, 71, 97)
+                    // Color(254, 223, 124)
+                )
+            )
+            textColor = Color(255, 251, 221)
+        } else {
+            background = Brush.horizontalGradient(
+                if (days > 0) listOf(
+                    Color(240, 175, 57),
+                    Color(241, 126, 45)
+                ) else listOf(
+                    Color(141, 147, 250),
+                    Color(96, 103, 228)
+                )
+            )
+            textColor = Color.White
+        }
 
         val interactionSource = remember { MutableInteractionSource() }
         Column(
@@ -180,12 +205,8 @@ class AnniversaryDetailsActivity : ComponentActivity() {
                 .wrapContentHeight()
                 .fillMaxWidth()
                 .background(
-                    brush = Brush.horizontalGradient(
-                        listOf(
-                            Color(240, 175, 57),
-                            Color(241, 126, 45),
-                        )
-                    ), shape = RoundedCornerShape(10.dp)
+                    brush = background,
+                    shape = RoundedCornerShape(10.dp)
                 )
                 .padding(20.dp)
         ) {
@@ -194,12 +215,14 @@ class AnniversaryDetailsActivity : ComponentActivity() {
                 text = anniversary.date.year.toString(),
                 fontSize = 22.sp,
                 fontFamily = fontFamily,
+                color = textColor,
                 maxLines = 1
             )
             Text(
                 text = "${anniversary.date.month.value} / ${anniversary.date.dayOfMonth}",
                 fontSize = 18.sp,
                 fontFamily = fontFamily,
+                color = textColor,
                 maxLines = 1
             )
             Text(
@@ -214,6 +237,7 @@ class AnniversaryDetailsActivity : ComponentActivity() {
                     else -> "周一"
                 },
                 fontSize = 16.sp,
+                color = textColor,
                 maxLines = 1
             )
             Spacer(modifier = Modifier.height(30.dp))
@@ -224,6 +248,7 @@ class AnniversaryDetailsActivity : ComponentActivity() {
                         fontSize = 80.sp,
                         fontWeight = FontWeight.Bold,
                         fontFamily = fontFamily,
+                        color = textColor,
                         maxLines = 1
                     )
                     Spacer(modifier = Modifier.width(5.dp))
@@ -231,23 +256,26 @@ class AnniversaryDetailsActivity : ComponentActivity() {
                         modifier = Modifier.padding(bottom = 10.dp),
                         text = "周年",
                         fontSize = 30.sp,
+                        color = textColor,
                         maxLines = 1
                     )
                 }
             } else {
                 Row(verticalAlignment = Alignment.Bottom) {
                     Text(
-                        text = "${days.absoluteValue}",
+                        text = if (days > 0) "${days.plus(1)}" else "${days.absoluteValue}",
                         fontSize = 50.sp,
                         fontWeight = FontWeight.Bold,
                         fontFamily = fontFamily,
+                        color = textColor,
                         maxLines = 1
                     )
                     Spacer(modifier = Modifier.width(5.dp))
                     Text(
                         modifier = Modifier.padding(bottom = 5.dp),
-                        text = "天",
+                        text = if (days > 0) "天" else "天后",
                         fontSize = 20.sp,
+                        color = textColor,
                         maxLines = 1
                     )
                 }
@@ -260,6 +288,7 @@ class AnniversaryDetailsActivity : ComponentActivity() {
                 text = anniversary.content,
                 textAlign = TextAlign.Start,
                 fontSize = 20.sp,
+                color = textColor,
                 maxLines = 1
             )
         }

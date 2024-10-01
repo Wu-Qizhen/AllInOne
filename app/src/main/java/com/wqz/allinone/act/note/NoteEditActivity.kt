@@ -62,7 +62,7 @@ class NoteEditActivity : ComponentActivity() {
 
         viewModel = NoteViewModel(application)
         val noteId = intent.getIntExtra("NOTE_ID", -1)
-        val note: Note
+        /*val note: Note
         if (noteId != -1) {
             val noteTitle = intent.getStringExtra("NOTE_TITLE")
             val noteContent = intent.getStringExtra("NOTE_CONTENT")
@@ -83,24 +83,24 @@ class NoteEditActivity : ComponentActivity() {
                 createTime = viewModel.getDateTime(),
                 updateTime = viewModel.getDateTime()
             )
-        }
+        }*/
 
-        /*val noteDatabase =
-            Room.databaseBuilder(this@NoteEditActivity, NoteDatabase::class.java, "Note")
-                .build()
-        val noteDao = noteDatabase.noteDao()*/
-
-        // enableEdgeToEdge()
-        setContent {
-            AllInOneTheme {
-                AppBackground.CirclesBackground {
-                    NoteEditScreen(
-                        currentNote = note,
-                        viewModel = viewModel
-                        // noteDao = noteDao
-                        // onNavigateBack = { finish() }
-                        // onBackButtonClick = ::finish
-                    )
+        viewModel.viewModelScope.launch {
+            val note = if (noteId != -1) viewModel.getNote(noteId) else Note(
+                id = -1,
+                title = "",
+                content = "",
+                createTime = viewModel.getDateTime(),
+                updateTime = viewModel.getDateTime()
+            )
+            setContent {
+                AllInOneTheme {
+                    AppBackground.CirclesBackground {
+                        NoteEditScreen(
+                            currentNote = note,
+                            viewModel = viewModel
+                        )
+                    }
                 }
             }
         }
@@ -110,42 +110,13 @@ class NoteEditActivity : ComponentActivity() {
     fun NoteEditScreen(
         currentNote: Note,
         viewModel: NoteViewModel
-        // noteDao: NoteDao
-        // updateTime: String
-        // onNavigateBack: () -> Unit
-        // onBackButtonClick: () -> Unit
     ) {
-        // val context = LocalContext.current
         val scrollState = rememberScrollState()
         var note by remember { mutableStateOf(currentNote) }
         val title = remember { mutableStateOf(note.title) }
         val content = remember { mutableStateOf(note.content) }
         var updateTime by remember { mutableStateOf(note.updateTime) }
         var contentLength by remember { mutableIntStateOf(0) }
-        // var updateTime by remember { mutableStateOf("") }
-
-        /*if (noteId != -1) {
-            val note = viewModel.getNote(noteId)
-            updateTime = note.updateTime
-            title.value = note.title
-            content.value = note.content
-        } else {
-            updateTime = viewModel.getDateTime()
-        }*/
-
-        /*LaunchedEffect(note) {
-            if (note.id != -1) {
-                *//*viewModel.getNote(noteId)?.let { note ->
-                    title.value = note.title
-                    content.value = note.content
-                    updateTime = note.updateTime
-                }*//*
-                title.value = note.title
-                content.value = note.content
-            } else {
-                note.updateTime = viewModel.getDateTime()
-            }
-        }*/
 
         LaunchedEffect(content.value) {
             contentLength = content.value.length // 在内容改变时计算字数
