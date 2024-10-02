@@ -97,6 +97,25 @@ object AppBackground {
     }
 
     @Composable
+    fun BreathingBackground(content: @Composable () -> Unit) {
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(Color.Black)
+        ) {
+            Image(
+                painter = painterResource(id = R.drawable.bg_breathing_large),
+                contentDescription = null,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .align(Alignment.TopCenter),
+                contentScale = ContentScale.FillWidth
+            )
+            content()
+        }
+    }
+
+    @Composable
     fun BreathingBackground(title: String, content: @Composable () -> Unit) {
         Box(
             modifier = Modifier
@@ -104,7 +123,7 @@ object AppBackground {
                 .background(Color.Black)
         ) {
             Image(
-                painter = painterResource(id = R.drawable.bg_breathing_top),
+                painter = painterResource(id = R.drawable.bg_breathing_large),
                 contentDescription = null,
                 modifier = Modifier
                     .fillMaxWidth()

@@ -35,6 +35,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.wqz.allinone.R
@@ -146,7 +147,8 @@ class AnniversaryAddActivity : ComponentActivity() {
                     ),
                     label = {
                         Text(
-                            text = "纪念内容"
+                            text = "纪念内容",
+                            fontWeight = FontWeight.Bold
                         )
                     }
                     /*placeholder = {
@@ -201,7 +203,8 @@ class AnniversaryAddActivity : ComponentActivity() {
                     maxLines = 1,
                     label = {
                         Text(
-                            text = "纪念日期"
+                            text = "纪念日期",
+                            fontWeight = FontWeight.Bold
                         )
                     }
                 )

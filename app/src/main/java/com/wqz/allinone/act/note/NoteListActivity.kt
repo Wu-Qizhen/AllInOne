@@ -96,7 +96,7 @@ class NoteListActivity : ComponentActivity() {
             TitleBar.TextTitleBar(title = R.string.note)
             ItemX.Button(
                 icon = R.drawable.ic_add,
-                text = stringResource(id = R.string.btn_add_note)
+                text = stringResource(id = R.string.add_note)
             ) {
                 val intent = Intent(context, NoteEditActivity::class.java)
                 intent.putExtra("NOTE_ID", -1)
@@ -120,7 +120,7 @@ class NoteListActivity : ComponentActivity() {
                 )
                 Spacer(modifier = Modifier.width(3.dp))
                 Text(
-                    text = stringResource(R.string.btn_add_note),
+                    text = stringResource(R.string.add_note),
                     fontSize = 16.sp
                 )
             }*/

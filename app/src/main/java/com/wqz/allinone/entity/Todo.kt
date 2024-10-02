@@ -1,78 +1,19 @@
-package com.wqz.allinone.entity;
+package com.wqz.allinone.entity
 
-public class Todo {
-    private int id;
-    private String title;
-    private boolean completed;
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 
-    public Todo() {
-    }
-
-    public Todo(int id, String title, boolean completed) {
-        this.id = id;
-        this.title = title;
-        this.completed = completed;
-    }
-
-    /**
-     * 获取
-     *
-     * @return id
-     */
-    public int getId() {
-        return id;
-    }
-
-    /**
-     * 设置
-     *
-     * @param id
-     */
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    /**
-     * 获取
-     *
-     * @return title
-     */
-    public String getTitle() {
-        return title;
-    }
-
-    /**
-     * 设置
-     *
-     * @param title
-     */
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    /**
-     * 获取
-     *
-     * @return completed
-     */
-    public boolean isCompleted() {
-        return completed;
-    }
-
-    /**
-     * 设置
-     *
-     * @param completed
-     */
-    public void setCompleted(boolean completed) {
-        this.completed = completed;
-    }
-
-    public String toString() {
-        return "Todo{id = " + id + ", title = " + title + ", completed = " + completed + "}";
-    }
-
-    public void toggleCompleted() {
-        this.completed = !this.completed; // 切换 completed 的状态
-    }
-}
+/**
+ * 待办实体类
+ * Created by Wu Qizhen on 2024.10.1
+ */
+@Entity(tableName = "todos")
+data class Todo(
+    @PrimaryKey(autoGenerate = true)
+    var id: Int? = 0,
+    @ColumnInfo(name = "title")
+    var title: String,
+    @ColumnInfo(name = "completed")
+    var completed: Boolean
+)

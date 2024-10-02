@@ -1,6 +1,11 @@
 package com.wqz.allinone.act.about.ui
 
 import android.content.Intent
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.expandVertically
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -14,8 +19,11 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -34,6 +42,7 @@ import com.wqz.allinone.act.about.AboutDeveloperActivity
 import com.wqz.allinone.act.about.AboutStudioActivity
 import com.wqz.allinone.act.about.UpdateLogActivity
 import com.wqz.allinone.ui.ItemX
+import com.wqz.allinone.ui.ModifierExtends.clickVfx
 import com.wqz.allinone.ui.theme.AllInOneTheme
 
 /**
@@ -44,6 +53,7 @@ import com.wqz.allinone.ui.theme.AllInOneTheme
 fun AboutAppScreen() {
     val context = LocalContext.current
     val scrollState = rememberScrollState()
+    val showBuild = remember { mutableStateOf(false) }
     val developerNames = listOf(
         R.string.wqz,
         R.string.chatglm,
@@ -83,7 +93,7 @@ fun AboutAppScreen() {
     ) {
         Spacer(modifier = Modifier.height(40.dp))
         Text(
-            text = stringResource(id = R.string.title_about_us),
+            text = stringResource(id = R.string.about_us),
             fontSize = 20.sp,
             fontWeight = FontWeight.Bold,
             color = Color.White
@@ -138,14 +148,54 @@ fun AboutAppScreen() {
             }
         }
         Spacer(modifier = Modifier.height(10.dp))
-        Text(
-            text = stringResource(id = R.string.copyright),
-            fontSize = 10.sp,
-            fontWeight = FontWeight.Bold,
-            textAlign = TextAlign.Center,
-            modifier = Modifier
-                .fillMaxWidth()
-        )
+        AnimatedVisibility(
+            visible = showBuild.value,
+            enter = fadeIn() + expandVertically(),
+            exit = fadeOut() + shrinkVertically()
+        ) {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    // .padding(vertical = 10.dp)
+                    .clickVfx {
+                        showBuild.value = false
+                    },
+                horizontalArrangement = Arrangement.Center,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Icon(
+                    painter = painterResource(id = R.drawable.logo_aethex_matrix),
+                    contentDescription = null,
+                    modifier = Modifier
+                        .size(25.dp)
+                        .padding(end = 5.dp),
+                    tint = Color.White
+                )
+                Text(
+                    text = stringResource(id = R.string.built_with),
+                    fontSize = 10.sp,
+                    fontWeight = FontWeight.Bold,
+                    textAlign = TextAlign.Center,
+                )
+            }
+        }
+        AnimatedVisibility(
+            visible = !showBuild.value,
+            enter = fadeIn() + expandVertically(),
+            exit = fadeOut() + shrinkVertically()
+        ) {
+            Text(
+                text = stringResource(id = R.string.copyright),
+                fontSize = 10.sp,
+                fontWeight = FontWeight.Bold,
+                textAlign = TextAlign.Center,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clickVfx {
+                        showBuild.value = true
+                    }
+            )
+        }
         Spacer(modifier = Modifier.height(20.dp))
         /*VerticalScrollbar(
             adapter = rememberScrollbarAdapter(scrollState),

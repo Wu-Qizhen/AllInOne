@@ -1,52 +1,161 @@
-package com.wqz.allinone.act.todo;
+package com.wqz.allinone.act.todo
 
-import androidx.appcompat.app.AppCompatActivity;
+import android.os.Bundle
+import android.widget.Toast
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.interaction.collectIsPressedAsState
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
+import androidx.compose.material3.TextFieldDefaults
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import com.wqz.allinone.R
+import com.wqz.allinone.act.todo.viewmodel.TodoViewModel
+import com.wqz.allinone.entity.Todo
+import com.wqz.allinone.ui.AppBackground
+import com.wqz.allinone.ui.ItemX
+import com.wqz.allinone.ui.ModifierExtends.clickVfx
+import com.wqz.allinone.ui.TitleBar
+import com.wqz.allinone.ui.color.BackgroundColor
+import com.wqz.allinone.ui.color.BorderColor
+import com.wqz.allinone.ui.theme.AllInOneTheme
+import com.wqz.allinone.ui.theme.ThemeColor
 
-import android.app.Activity;
-import android.content.Intent;
-import android.os.Bundle;
-import android.widget.EditText;
-import android.widget.Toast;
+/**
+ * 待办添加
+ * Created by Wu Qizhen on 2024.10.1
+ */
+class TodoAddActivity : ComponentActivity() {
+    private lateinit var viewModel: TodoViewModel
 
-import com.wqz.allinone.R;
-import com.wqz.allinone.database.TodoDBHelper;
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
 
-public class TodoAddActivity extends AppCompatActivity {
-    private EditText etName;
-    private TodoDBHelper todoDBHelper;
+        viewModel = TodoViewModel(application)
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_todo_add);
-
-        todoDBHelper = new TodoDBHelper(this);
-        etName = findViewById(R.id.et_name);
-        findViewById(R.id.btn_add).setOnClickListener(v -> addTodo());
+        setContent {
+            AllInOneTheme {
+                AppBackground.CirclesBackground {
+                    TodoAddScreen()
+                }
+            }
+        }
     }
 
-    private void addTodo() {
-        String name = etName.getText().toString().trim();
-        if (name.isEmpty()) {
-            Toast.makeText(this, "请输入内容", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        if (name.length() > 50) {
-            Toast.makeText(this, "内容过长", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        /* if (name.contains("\n")) {
-            Toast.makeText(this, "名称不符合要求", Toast.LENGTH_SHORT).show();
-            return;
-        } */
+    @Composable
+    fun TodoAddScreen() {
+        val context = LocalContext.current
+        val interactionSource = remember { MutableInteractionSource() }
+        val isPressed = interactionSource.collectIsPressedAsState()
+        val backgroundColor =
+            if (isPressed.value) BackgroundColor.PRESSED_GRAY else BackgroundColor.DEFAULT_GRAY
+        val borderColors = BorderColor.DEFAULT_GRAY
+        val borderWidth = 0.4f.dp
+        val scrollState = rememberScrollState()
+        var content by remember { mutableStateOf("") }
 
-        todoDBHelper.addTodo(name);
-        Toast.makeText(this, "添加成功", Toast.LENGTH_SHORT).show();
-        Intent intent = new Intent();
-        Bundle bundle = new Bundle();
-        bundle.putInt("is_change", 1);
-        intent.putExtras(bundle);
-        setResult(Activity.RESULT_OK, intent);
-        finish();
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .verticalScroll(scrollState)
+                .padding(
+                    start = 20.dp,
+                    end = 20.dp,
+                    bottom = 50.dp
+                ),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            TitleBar.TextTitleBar(title = R.string.add_todo)
+            Column(
+                modifier = Modifier
+                    .clickVfx(
+                        interactionSource = interactionSource,
+                        enabled = true,
+                        onClick = { }
+                    )
+                    .wrapContentHeight()
+                    .fillMaxWidth()
+                    .background(backgroundColor, RoundedCornerShape(10.dp))
+                    .border(
+                        width = borderWidth,
+                        shape = RoundedCornerShape(10.dp),
+                        brush = Brush.linearGradient(
+                            borderColors,
+                            start = Offset.Zero,
+                            end = Offset.Infinite
+                        )
+                    )
+            ) {
+                TextField(
+                    modifier = Modifier.fillMaxWidth(),
+                    value = content,
+                    onValueChange = { content = it },
+                    colors = TextFieldDefaults.colors(
+                        unfocusedContainerColor = Color.Transparent, // 背景颜色
+                        focusedContainerColor = Color.Transparent, // 背景颜色
+                        unfocusedIndicatorColor = Color.Transparent, // 下划线颜色
+                        focusedIndicatorColor = Color.Transparent, // 下划线颜色
+                        cursorColor = ThemeColor, // 光标颜色
+                        focusedLabelColor = Color.White,
+                        unfocusedLabelColor = Color.Gray
+                    ),
+                    textStyle = TextStyle(
+                        color = Color.White,
+                        fontSize = 16.sp,
+                        fontFamily = FontFamily(Font(R.font.misans_regular))
+                    ),
+                    label = {
+                        Text(
+                            text = "待办内容",
+                            fontWeight = FontWeight.Bold
+                        )
+                    }
+                )
+            }
+            Spacer(modifier = Modifier.height(10.dp))
+            ItemX.Button(icon = R.drawable.ic_add, text = "添加") {
+                if (content.trim().isNotEmpty()) {
+                    val todo = Todo(
+                        id = null,
+                        title = content.trim(),
+                        completed = false
+                    )
+                    viewModel.insertTodo(todo)
+                    Toast.makeText(context, "添加成功", Toast.LENGTH_SHORT).show()
+                    finish()
+                } else {
+                    Toast.makeText(context, "请输入待办内容", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
     }
 }

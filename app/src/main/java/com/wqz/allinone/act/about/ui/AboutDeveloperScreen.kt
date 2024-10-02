@@ -45,7 +45,7 @@ fun AboutDeveloperScreen(logo: Int, name: Int, description: Int, details: Int) {
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        TitleBar.TextTitleBar(title = R.string.title_about_developer)
+        TitleBar.TextTitleBar(title = R.string.about_developer)
 
         Row(
             verticalAlignment = Alignment.CenterVertically,

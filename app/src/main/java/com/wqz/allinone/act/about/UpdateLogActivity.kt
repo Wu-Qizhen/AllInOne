@@ -80,7 +80,7 @@ class UpdateLogActivity : ComponentActivity() {
                 .padding(horizontal = 20.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            TitleBar.TextTitleBar(title = R.string.title_update_log)
+            TitleBar.TextTitleBar(title = R.string.update_log)
 
             updateLogs.forEach {
                 key(it.version) {

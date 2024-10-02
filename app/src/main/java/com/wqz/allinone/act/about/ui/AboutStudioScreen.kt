@@ -55,7 +55,7 @@ fun AboutStudioScreen() {
             .padding(horizontal = 20.dp),
         verticalArrangement = Arrangement.Top,
     ) {
-        TitleBar.TextTitleBar(title = R.string.title_about_studio)
+        TitleBar.TextTitleBar(title = R.string.about_studio)
 
         Image(
             painter = painterResource(id = R.drawable.logo_code_intellix_poster),

@@ -38,7 +38,7 @@ fun SettingScreen() {
         TitleBar.TextTitleBar(title = R.string.setting)
         ItemX.Capsule(
             icon = R.drawable.ic_about,
-            text = stringResource(R.string.btn_about)
+            text = stringResource(R.string.about)
         ) {
             context.startActivity(Intent(context, AboutAppActivity::class.java))
         }

@@ -11,8 +11,8 @@
       "type": "SINGLE",
       "filters": [],
       "attributes": [],
-      "versionCode": 11,
-      "versionName": "Cygnus",
+      "versionCode": 12,
+      "versionName": "Dorado",
       "outputFile": "app-release.apk"
     }
   ],

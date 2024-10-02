@@ -15,6 +15,7 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -41,6 +42,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
@@ -133,18 +135,24 @@ fun MainScreen(
     val context = LocalContext.current
     val scrollState = rememberScrollState()
     val showBuild = remember { mutableStateOf(false) }
+    val backgroundColor = Brush.verticalGradient(
+        colors = listOf(
+            Color.Transparent,  // 顶部颜色：全透明
+            Color.Black.copy(alpha = 0.65f)  // 底部颜色：黑色
+        )
+    )
 
     Column(
         modifier = Modifier
             .fillMaxSize()
             .verticalScroll(scrollState)
-            .padding(horizontal = 20.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        // TitleBar.LogoTitleBar()
         Column(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalAlignment = Alignment.CenterHorizontally,
+            modifier = Modifier
+                .fillMaxWidth()
+                .background(backgroundColor)
+                .padding(horizontal = 20.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Row(
                 modifier = Modifier
@@ -179,127 +187,127 @@ fun MainScreen(
                     )
                 }
             }
-        }
-        ClassificationBar(icon = R.drawable.ic_person, text = R.string.personal_manage)
-        Spacer(modifier = Modifier.height(10.dp))
-        ItemX.Capsule(
-            icon = R.drawable.ic_todo,
-            text = stringResource(id = R.string.todo)
-        ) {
-            context.startActivity(Intent(context, TodoListActivity::class.java))
-        }
-        Spacer(modifier = Modifier.height(5.dp))
-        ItemX.Capsule(
-            icon = R.drawable.ic_note,
-            text = stringResource(id = R.string.note)
-        ) {
-            context.startActivity(Intent(context, NoteListActivity::class.java))
-        }
-        Spacer(modifier = Modifier.height(5.dp))
-        ItemX.Capsule(
-            icon = R.drawable.ic_anniversary,
-            text = stringResource(id = R.string.anniversary)
-        ) {
-            context.startActivity(Intent(context, AnniversaryPreviewActivity::class.java))
-        }
-        Spacer(modifier = Modifier.height(5.dp))
-        ItemX.Capsule(
-            icon = R.drawable.ic_diary,
-            text = stringResource(id = R.string.diary)
-        ) {
-            Toast.makeText(context, "施工中", Toast.LENGTH_SHORT).show()
-        }
-        Spacer(modifier = Modifier.height(5.dp))
-        ItemX.Capsule(
-            icon = R.drawable.ic_clock_in,
-            text = stringResource(id = R.string.clock_in)
-        ) {
-            Toast.makeText(context, "施工中", Toast.LENGTH_SHORT).show()
-        }
-        Spacer(modifier = Modifier.height(5.dp))
-        ItemX.Capsule(
-            icon = R.drawable.ic_schedule,
-            text = stringResource(id = R.string.schedule)
-        ) {
-            Toast.makeText(context, "施工中", Toast.LENGTH_SHORT).show()
-        }
-        Spacer(modifier = Modifier.height(10.dp))
-        ClassificationBar(icon = R.drawable.ic_collect, text = R.string.information_collection)
-        Spacer(modifier = Modifier.height(10.dp))
-        ItemX.Capsule(
-            icon = R.drawable.ic_bookmark,
-            text = stringResource(id = R.string.bookmark)
-        ) {
-            context.startActivity(Intent(context, BookmarkFoldersActivity::class.java))
-        }
-        Spacer(modifier = Modifier.height(10.dp))
-        ClassificationBar(icon = R.drawable.ic_study, text = R.string.study_manage)
-        Spacer(modifier = Modifier.height(10.dp))
-        ItemX.Capsule(
-            icon = R.drawable.ic_school_timetable,
-            text = stringResource(id = R.string.school_timetable)
-        ) {
-            Toast.makeText(context, "施工中", Toast.LENGTH_SHORT).show()
-        }
-        Spacer(modifier = Modifier.height(10.dp))
-        ClassificationBar(icon = R.drawable.ic_option, text = R.string.option)
-        Spacer(modifier = Modifier.height(10.dp))
-        ItemX.Capsule(
-            icon = R.drawable.ic_setting,
-            text = stringResource(id = R.string.setting)
-        ) {
-            context.startActivity(Intent(context, SettingActivity::class.java))
-        }
-        Spacer(modifier = Modifier.height(10.dp))
-        AnimatedVisibility(
-            visible = showBuild.value,
-            enter = fadeIn() + expandVertically(),
-            exit = fadeOut() + shrinkVertically()
-        ) {
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    // .padding(vertical = 10.dp)
-                    .clickVfx {
-                        showBuild.value = false
-                    },
-                horizontalArrangement = Arrangement.Center,
-                verticalAlignment = Alignment.CenterVertically
+            ClassificationBar(icon = R.drawable.ic_person, text = R.string.personal_manage)
+            Spacer(modifier = Modifier.height(10.dp))
+            ItemX.Capsule(
+                icon = R.drawable.ic_todo,
+                text = stringResource(id = R.string.todo)
             ) {
-                Icon(
-                    painter = painterResource(id = R.drawable.logo_aethex_matrix),
-                    contentDescription = null,
+                context.startActivity(Intent(context, TodoListActivity::class.java))
+            }
+            Spacer(modifier = Modifier.height(5.dp))
+            ItemX.Capsule(
+                icon = R.drawable.ic_note,
+                text = stringResource(id = R.string.note)
+            ) {
+                context.startActivity(Intent(context, NoteListActivity::class.java))
+            }
+            Spacer(modifier = Modifier.height(5.dp))
+            ItemX.Capsule(
+                icon = R.drawable.ic_anniversary,
+                text = stringResource(id = R.string.anniversary)
+            ) {
+                context.startActivity(Intent(context, AnniversaryPreviewActivity::class.java))
+            }
+            Spacer(modifier = Modifier.height(5.dp))
+            ItemX.Capsule(
+                icon = R.drawable.ic_diary,
+                text = stringResource(id = R.string.diary)
+            ) {
+                Toast.makeText(context, "施工中", Toast.LENGTH_SHORT).show()
+            }
+            Spacer(modifier = Modifier.height(5.dp))
+            ItemX.Capsule(
+                icon = R.drawable.ic_clock_in,
+                text = stringResource(id = R.string.clock_in)
+            ) {
+                Toast.makeText(context, "施工中", Toast.LENGTH_SHORT).show()
+            }
+            Spacer(modifier = Modifier.height(5.dp))
+            ItemX.Capsule(
+                icon = R.drawable.ic_schedule,
+                text = stringResource(id = R.string.schedule)
+            ) {
+                Toast.makeText(context, "施工中", Toast.LENGTH_SHORT).show()
+            }
+            Spacer(modifier = Modifier.height(10.dp))
+            ClassificationBar(icon = R.drawable.ic_collect, text = R.string.information_collection)
+            Spacer(modifier = Modifier.height(10.dp))
+            ItemX.Capsule(
+                icon = R.drawable.ic_bookmark,
+                text = stringResource(id = R.string.bookmark)
+            ) {
+                context.startActivity(Intent(context, BookmarkFoldersActivity::class.java))
+            }
+            Spacer(modifier = Modifier.height(10.dp))
+            ClassificationBar(icon = R.drawable.ic_study, text = R.string.study_manage)
+            Spacer(modifier = Modifier.height(10.dp))
+            ItemX.Capsule(
+                icon = R.drawable.ic_school_timetable,
+                text = stringResource(id = R.string.school_timetable)
+            ) {
+                Toast.makeText(context, "施工中", Toast.LENGTH_SHORT).show()
+            }
+            Spacer(modifier = Modifier.height(10.dp))
+            ClassificationBar(icon = R.drawable.ic_option, text = R.string.option)
+            Spacer(modifier = Modifier.height(10.dp))
+            ItemX.Capsule(
+                icon = R.drawable.ic_setting,
+                text = stringResource(id = R.string.setting)
+            ) {
+                context.startActivity(Intent(context, SettingActivity::class.java))
+            }
+            Spacer(modifier = Modifier.height(10.dp))
+            AnimatedVisibility(
+                visible = showBuild.value,
+                enter = fadeIn() + expandVertically(),
+                exit = fadeOut() + shrinkVertically()
+            ) {
+                Row(
                     modifier = Modifier
-                        .size(25.dp)
-                        .padding(end = 5.dp),
-                    tint = Color.White
-                )
+                        .fillMaxWidth()
+                        // .padding(vertical = 10.dp)
+                        .clickVfx {
+                            showBuild.value = false
+                        },
+                    horizontalArrangement = Arrangement.Center,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Icon(
+                        painter = painterResource(id = R.drawable.logo_aethex_matrix),
+                        contentDescription = null,
+                        modifier = Modifier
+                            .size(25.dp)
+                            .padding(end = 5.dp),
+                        tint = Color.White
+                    )
+                    Text(
+                        text = stringResource(id = R.string.built_with),
+                        fontSize = 10.sp,
+                        fontWeight = FontWeight.Bold,
+                        textAlign = TextAlign.Center,
+                    )
+                }
+            }
+            AnimatedVisibility(
+                visible = !showBuild.value,
+                enter = fadeIn() + expandVertically(),
+                exit = fadeOut() + shrinkVertically()
+            ) {
                 Text(
-                    text = stringResource(id = R.string.built_with),
+                    text = stringResource(id = R.string.copyright),
                     fontSize = 10.sp,
                     fontWeight = FontWeight.Bold,
                     textAlign = TextAlign.Center,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clickVfx {
+                            showBuild.value = true
+                        }
                 )
             }
+            Spacer(modifier = Modifier.height(20.dp))
         }
-        AnimatedVisibility(
-            visible = !showBuild.value,
-            enter = fadeIn() + expandVertically(),
-            exit = fadeOut() + shrinkVertically()
-        ) {
-            Text(
-                text = stringResource(id = R.string.copyright),
-                fontSize = 10.sp,
-                fontWeight = FontWeight.Bold,
-                textAlign = TextAlign.Center,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .clickVfx {
-                        showBuild.value = true
-                    }
-            )
-        }
-        Spacer(modifier = Modifier.height(20.dp))
     }
 }
 

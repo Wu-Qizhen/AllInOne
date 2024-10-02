@@ -12,8 +12,8 @@ android {
         applicationId = "com.wqz.allinone"
         minSdk = 30
         targetSdk = 34
-        versionCode = 11
-        versionName = "Cygnus"
+        versionCode = 12
+        versionName = "Dorado"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
             useSupportLibrary = true
