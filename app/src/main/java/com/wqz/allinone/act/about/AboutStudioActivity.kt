@@ -17,7 +17,7 @@ class AboutStudioActivity : ComponentActivity() {
         // enableEdgeToEdge()
         setContent {
             AllInOneTheme {
-                AppBackground.CirclesBackground {
+                AppBackground.BreathingBackground {
                     AboutStudioScreen()
                 }
             }

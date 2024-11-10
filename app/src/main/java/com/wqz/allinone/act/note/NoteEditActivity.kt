@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -35,6 +36,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment.Companion.Center
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
@@ -46,6 +48,7 @@ import com.wqz.allinone.R
 import com.wqz.allinone.act.note.viewmodel.NoteViewModel
 import com.wqz.allinone.entity.Note
 import com.wqz.allinone.ui.AppBackground
+import com.wqz.allinone.ui.ModifierExtends.clickVfx
 import com.wqz.allinone.ui.theme.AllInOneTheme
 import com.wqz.allinone.ui.theme.ThemeColor
 import kotlinx.coroutines.launch
@@ -91,11 +94,12 @@ class NoteEditActivity : ComponentActivity() {
                 title = "",
                 content = "",
                 createTime = viewModel.getDateTime(),
-                updateTime = viewModel.getDateTime()
+                updateTime = viewModel.getDateTime(),
+                isLocked = false
             )
             setContent {
                 AllInOneTheme {
-                    AppBackground.CirclesBackground {
+                    AppBackground.BreathingBackground {
                         NoteEditScreen(
                             currentNote = note,
                             viewModel = viewModel
@@ -113,6 +117,7 @@ class NoteEditActivity : ComponentActivity() {
     ) {
         val scrollState = rememberScrollState()
         var note by remember { mutableStateOf(currentNote) }
+        var isLocked by remember { mutableStateOf(note.isLocked) }
         val title = remember { mutableStateOf(note.title) }
         val content = remember { mutableStateOf(note.content) }
         var updateTime by remember { mutableStateOf(note.updateTime) }
@@ -160,7 +165,6 @@ class NoteEditActivity : ComponentActivity() {
                     )*/
                     IconButton(
                         onClick = {
-                            // onNavigateBack() // 直接调用返回逻辑
                             finish()
                         },
                         content = {
@@ -172,7 +176,41 @@ class NoteEditActivity : ComponentActivity() {
                         },
                         modifier = Modifier.size(25.dp)
                     )
-                    Spacer(modifier = Modifier.width(20.dp))
+                    Spacer(modifier = Modifier.width(10.dp))
+                    if (note.id != -1) {
+                        Image(
+                            painter = painterResource(id = if (isLocked) R.drawable.ic_lock else R.drawable.ic_unlock),
+                            contentDescription = "锁定",
+                            modifier = Modifier
+                                .size(20.dp)
+                                .clickVfx {
+                                    isLocked = !isLocked
+                                    note.id?.let { viewModel.updateLockStatus(it, isLocked) }
+                                    Toast
+                                        .makeText(
+                                            this@NoteEditActivity,
+                                            "已${if (isLocked) "锁定" else "解锁"}笔记",
+                                            Toast.LENGTH_SHORT
+                                        )
+                                        .show()
+                                }
+                        )
+                        /*IconButton(
+                            onClick = {
+                                note.isLocked = !note.isLocked
+                                note.id?.let { viewModel.updateLockStatus(it, note.isLocked) }
+                            },
+                            content = {
+                                Icon(
+                                    painter = painterResource(id = if (note.isLocked) R.drawable.ic_lock else R.drawable.ic_unlock),
+                                    contentDescription = "锁定",
+                                    tint = Color.White
+                                )
+                            },
+                            modifier = Modifier.size(25.dp)
+                        )*/
+                        Spacer(modifier = Modifier.width(10.dp))
+                    }
                     IconButton(
                         onClick = {
                             // onSaveClick(noteId, title.value, content.value, noteDao)

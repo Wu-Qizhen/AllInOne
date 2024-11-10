@@ -2,11 +2,9 @@ package com.wqz.allinone.act.about.ui
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -89,20 +87,10 @@ fun AboutDeveloperScreen(logo: Int, name: Int, description: Int, details: Int) {
 @Preview
 @Composable
 fun AboutDeveloperScreenPreview() {
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
-    ) {
-        Image(
-            painter = painterResource(id = R.drawable.background),
-            contentDescription = null,
-            modifier = Modifier.fillMaxSize()
-        )
-        AboutDeveloperScreen(
-            logo = R.drawable.logo_wqz,
-            name = R.string.wqz,
-            description = R.string.wqz_desc,
-            details = R.string.text_about_wqz
-        )
-    }
+    AboutDeveloperScreen(
+        logo = R.drawable.logo_wqz,
+        name = R.string.wqz,
+        description = R.string.wqz_desc,
+        details = R.string.text_about_wqz
+    )
 }

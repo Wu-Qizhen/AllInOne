@@ -73,7 +73,7 @@ class NoteListActivity : ComponentActivity() {
 
         setContent {
             AllInOneTheme {
-                AppBackground.CirclesBackground {
+                AppBackground.BreathingBackground {
                     NoteListScreen()
                 }
             }
@@ -239,7 +239,7 @@ class NoteListActivity : ComponentActivity() {
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     Text(
-                        text = stringResource(R.string.text_delete_confirm_hint),
+                        text = stringResource(R.string.delete_confirm_hint),
                         fontSize = 20.sp,
                         fontWeight = FontWeight.Bold,
                         maxLines = 1
@@ -251,10 +251,23 @@ class NoteListActivity : ComponentActivity() {
                         ItemX.Button(
                             text = stringResource(R.string.delete)
                         ) {
-                            showDialog = 2
-                            Toast.makeText(this@NoteListActivity, "删除成功", Toast.LENGTH_SHORT)
-                                .show()
-                            viewModel.deleteNoteWithDelay(note.id)
+                            if (!note.isLocked) {
+                                showDialog = 2
+                                Toast.makeText(
+                                    this@NoteListActivity,
+                                    "删除成功",
+                                    Toast.LENGTH_SHORT
+                                )
+                                    .show()
+                                viewModel.deleteNoteWithDelay(note.id)
+                            } else {
+                                Toast.makeText(
+                                    this@NoteListActivity,
+                                    "该笔记已锁定",
+                                    Toast.LENGTH_SHORT
+                                )
+                                    .show()
+                            }
                         }
                         Spacer(modifier = Modifier.width(10.dp))
                         ItemX.Button(

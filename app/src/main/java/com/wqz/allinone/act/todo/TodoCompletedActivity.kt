@@ -80,7 +80,7 @@ class TodoCompletedActivity : ComponentActivity() {
 
         setContent {
             AllInOneTheme {
-                AppBackground.CirclesBackground {
+                AppBackground.BreathingBackground {
                     TodoCompletedListScreen()
                 }
             }

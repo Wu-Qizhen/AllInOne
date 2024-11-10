@@ -10,7 +10,7 @@ import java.time.LocalDate
  * Created by Wu Qizhen on 2024.8.20
  */
 @Entity
-/*(tableName = "anniversary")*/
+(tableName = "Anniversary")
 data class Anniversary(
     @PrimaryKey(autoGenerate = true)
     var id: Int?,

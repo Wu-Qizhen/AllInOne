@@ -79,7 +79,7 @@ class TodoListActivity : ComponentActivity() {
 
         setContent {
             AllInOneTheme {
-                AppBackground.CirclesBackground {
+                AppBackground.BreathingBackground {
                     TodoListScreen()
                 }
             }

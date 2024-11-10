@@ -51,7 +51,7 @@ object ItemX {
     private val BACKGROUND_DEFAULT_YELLOW = BackgroundColor.DEFAULT_YELLOW
     private val BACKGROUND_PRESSED_YELLOW = BackgroundColor.PRESSED_YELLOW
     private val BORDER_DEFAULT_GRAY = BorderColor.DEFAULT_GRAY
-    private val BORDER_Width = 0.4f.dp
+    private val BORDER_WIDTH = 0.4f.dp
 
     @Composable
     fun Button(
@@ -151,7 +151,7 @@ object ItemX {
                 .background(backgroundColor, RoundedCornerShape(50.dp))
                 // .border(1.dp, color = borderColor, shape = RoundedCornerShape(50.dp))
                 .border(
-                    width = BORDER_Width,
+                    width = BORDER_WIDTH,
                     shape = RoundedCornerShape(50.dp),
                     brush = Brush.linearGradient(
                         BORDER_DEFAULT_GRAY,
@@ -214,7 +214,7 @@ object ItemX {
                 .background(backgroundColor, RoundedCornerShape(50.dp))
                 // .border(1.dp, color = borderColor, shape = RoundedCornerShape(50.dp))
                 .border(
-                    width = BORDER_Width,
+                    width = BORDER_WIDTH,
                     shape = RoundedCornerShape(50.dp),
                     brush = Brush.linearGradient(
                         BORDER_DEFAULT_GRAY,
@@ -281,7 +281,7 @@ object ItemX {
                 .background(backgroundColor, RoundedCornerShape(50.dp))
                 // .border(1.dp, color = borderColor, shape = RoundedCornerShape(50.dp))
                 .border(
-                    width = BORDER_Width,
+                    width = BORDER_WIDTH,
                     shape = RoundedCornerShape(50.dp),
                     brush = Brush.linearGradient(
                         BORDER_DEFAULT_GRAY,
@@ -313,7 +313,7 @@ object ItemX {
                     .align(Alignment.CenterVertically),
                 text = text,
                 fontWeight = FontWeight.Bold,
-                fontSize = 16.sp,
+                fontSize = 20.sp,
                 maxLines = 1
             )
         }

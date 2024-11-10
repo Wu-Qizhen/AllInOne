@@ -66,7 +66,7 @@ class AnniversaryAddActivity : ComponentActivity() {
 
         setContent {
             AllInOneTheme {
-                AppBackground.CirclesBackground {
+                AppBackground.BreathingBackground {
                     AnniversaryAddScreen(viewModel)
                 }
             }

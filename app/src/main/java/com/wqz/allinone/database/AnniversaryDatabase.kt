@@ -13,7 +13,7 @@ import com.wqz.allinone.entity.Anniversary
  * Created by Wu Qizhen on 2024.8.20
  */
 @Database(entities = [Anniversary::class], version = 1, exportSchema = false)
-@TypeConverters(DateTypeConverters::class)
+@TypeConverters(DateConverter::class)
 abstract class AnniversaryDatabase : RoomDatabase() {
     /**
      * 获取 AnniversaryDao 的实例

@@ -19,37 +19,37 @@ interface TodoDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(todo: Todo): Long
 
-    @Query("INSERT INTO todos (title, completed) VALUES (:title, :completed)")
+    @Query("INSERT INTO Todo (title, completed) VALUES (:title, :completed)")
     suspend fun insert(title: String, completed: Boolean)
 
-    @Query("SELECT * FROM todos")
+    @Query("SELECT * FROM Todo")
     @Transaction
     fun getAll(): LiveData<List<Todo>>
 
-    @Query("SELECT * FROM todos WHERE completed = 1")
+    @Query("SELECT * FROM Todo WHERE completed = 1")
     @Transaction
     fun getCompletedTodos(): LiveData<List<Todo>>
 
-    @Query("SELECT * FROM todos WHERE completed = 0")
+    @Query("SELECT * FROM Todo WHERE completed = 0")
     @Transaction
     fun getUncompletedTodos(): LiveData<List<Todo>>
 
     @Update
     suspend fun update(todo: Todo)
 
-    @Query("UPDATE todos SET completed = :completed WHERE id = :id")
+    @Query("UPDATE Todo SET completed = :completed WHERE id = :id")
     suspend fun update(id: Int, completed: Boolean)
 
     @Delete
     suspend fun delete(todo: Todo)
 
-    @Query("DELETE FROM todos WHERE id = :id")
+    @Query("DELETE FROM Todo WHERE id = :id")
     suspend fun deleteById(id: Int)
 
-    @Query("DELETE FROM todos WHERE completed = 1")
+    @Query("DELETE FROM Todo WHERE completed = 1")
     suspend fun deleteCompletedTodos()
 
-    @Query("SELECT * FROM todos WHERE id = :id")
+    @Query("SELECT * FROM Todo WHERE id = :id")
     @Transaction
     fun getById(id: Int): Todo
 }

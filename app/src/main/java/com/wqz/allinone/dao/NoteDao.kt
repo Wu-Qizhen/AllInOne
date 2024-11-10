@@ -41,4 +41,8 @@ interface NoteDao {
     // 根据 ID 删除笔记
     @Query("DELETE FROM Note WHERE id = :noteId")
     suspend fun deleteById(noteId: Int)
+
+    // 锁定状态转换
+    @Query("UPDATE Note SET is_locked = :isLocked WHERE id = :noteId")
+    suspend fun updateLockStatus(noteId: Int, isLocked: Boolean)
 }

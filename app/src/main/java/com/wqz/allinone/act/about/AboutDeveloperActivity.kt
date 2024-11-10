@@ -23,7 +23,7 @@ class AboutDeveloperActivity : ComponentActivity() {
         val details = intent.getIntExtra("details", R.string.text_about_wqz)
         setContent {
                 AllInOneTheme {
-                    AppBackground.CirclesBackground {
+                    AppBackground.BreathingBackground {
                     AboutDeveloperScreen(
                         logo = logo,
                         name = name,

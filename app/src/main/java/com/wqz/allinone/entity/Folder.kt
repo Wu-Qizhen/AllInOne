@@ -1,54 +1,14 @@
-package com.wqz.allinone.entity;
+package com.wqz.allinone.entity
 
-public class Folder {
-    private int id;
-    private String name;
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 
-    public Folder() {
-    }
-
-    public Folder(int id, String name) {
-        this.id = id;
-        this.name = name;
-    }
-
-    /**
-     * 获取
-     *
-     * @return id
-     */
-    public int getId() {
-        return id;
-    }
-
-    /**
-     * 设置
-     *
-     * @param id
-     */
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    /**
-     * 获取
-     *
-     * @return name
-     */
-    public String getName() {
-        return name;
-    }
-
-    /**
-     * 设置
-     *
-     * @param name
-     */
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String toString() {
-        return "Folder{id = " + id + ", name = " + name + "}";
-    }
-}
+/**
+ * 文件夹实体类
+ * Created by Wu Qizhen on 2024.11.3
+ */
+@Entity(tableName = "Folder")
+data class Folder(
+    @PrimaryKey(autoGenerate = true) val id: Int? = 0,
+    val name: String
+)

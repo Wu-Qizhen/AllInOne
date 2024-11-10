@@ -15,6 +15,36 @@
         android:theme="@style/Theme.AllInOne"
         tools:targetApi="31">
         <activity
+            android:name=".act.diary.PasswordChangeActivity"
+            android:exported="false"
+            android:label="@string/title_activity_password_change"
+            android:theme="@style/Theme.AllInOne" />
+        <activity
+            android:name=".act.diary.MoodSelectActivity"
+            android:exported="false"
+            android:label="@string/title_activity_mood_select"
+            android:theme="@style/Theme.AllInOne" />
+        <activity
+            android:name=".act.diary.WeatherSelectActivity"
+            android:exported="false"
+            android:label="@string/title_activity_weather_selection"
+            android:theme="@style/Theme.AllInOne" />
+        <activity
+            android:name=".act.diary.DiaryEditActivity"
+            android:exported="false"
+            android:label="@string/title_activity_diary_edit"
+            android:theme="@style/Theme.AllInOne" />
+        <activity
+            android:name=".act.diary.DiaryPreviewActivity"
+            android:exported="false"
+            android:label="@string/title_activity_diary_preview"
+            android:theme="@style/Theme.AllInOne" />
+        <activity
+            android:name=".act.diary.PasswordCheckActivity"
+            android:exported="false"
+            android:label="@string/title_activity_password_check"
+            android:theme="@style/Theme.AllInOne" />
+        <activity
             android:name=".act.todo.TodoDetailsActivity"
             android:exported="false"
             android:label="@string/title_activity_todo_details"
@@ -82,13 +112,13 @@
             android:name=".act.bookmark.LinkAddActivity"
             android:exported="false" />
         <activity
-            android:name=".act.bookmark.BookmarkLinksActivity"
+            android:name=".act.bookmark.LinkListActivity"
             android:exported="false" />
         <activity
             android:name=".act.bookmark.FolderAddActivity"
             android:exported="false" />
         <activity
-            android:name=".act.bookmark.BookmarkFoldersActivity"
+            android:name=".act.bookmark.FolderListActivity"
             android:exported="false" />
         <activity
             android:name=".act.setting.SettingActivity"
@@ -103,4 +133,5 @@
             </intent-filter>
         </activity>
     </application>
+
 </manifest>

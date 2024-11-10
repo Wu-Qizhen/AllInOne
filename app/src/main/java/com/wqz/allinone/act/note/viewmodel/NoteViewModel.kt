@@ -54,6 +54,11 @@ class NoteViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
+    // 锁定状态转换
+    fun updateLockStatus(noteId: Int, isLocked: Boolean) = viewModelScope.launch {
+        noteDao.updateLockStatus(noteId, isLocked)
+    }
+
     fun getDateTime(): String {
         val currentTime = LocalDateTime.now()
         val formatter = DateTimeFormatter.ofPattern("yyyy年MM月dd日 HH:mm")

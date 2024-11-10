@@ -97,7 +97,7 @@ class AnniversaryPreviewActivity : ComponentActivity() {
 
         setContent {
             AllInOneTheme {
-                AppBackground.CirclesBackground {
+                AppBackground.BreathingBackground {
                     AnniversaryPreviewScreen(viewModel)
                 }
             }
@@ -251,7 +251,8 @@ class AnniversaryPreviewActivity : ComponentActivity() {
                             textStyle = TextStyle(
                                 color = Color.White,
                                 fontSize = 16.sp,
-                                fontFamily = FontFamily(Font(R.font.misans_regular))
+                                fontFamily = FontFamily(Font(R.font.misans_regular)),
+                                textAlign = TextAlign.Center
                             ),
                             placeholder = {
                                 Text(
@@ -296,6 +297,7 @@ class AnniversaryPreviewActivity : ComponentActivity() {
                     modifier = Modifier
                         .size(100.dp)
                 )
+                Spacer(modifier = Modifier.height(50.dp))
             } else {
                 Spacer(modifier = Modifier.height(7.dp))
                 anniversaries.forEach {
@@ -330,6 +332,10 @@ class AnniversaryPreviewActivity : ComponentActivity() {
             val intent =
                 Intent(this@AnniversaryPreviewActivity, AnniversaryDetailsActivity::class.java)
             intent.putExtra("ANNIVERSARY_ID", anniversary.id)
+            // 传递当前的年月日
+            intent.putExtra("YEAR", currentDate.value.get(Calendar.YEAR))
+            intent.putExtra("MONTH", currentDate.value.get(Calendar.MONTH) + 1)
+            intent.putExtra("DAY", currentDate.value.get(Calendar.DAY_OF_MONTH))
             startActivity(intent)
         }
 

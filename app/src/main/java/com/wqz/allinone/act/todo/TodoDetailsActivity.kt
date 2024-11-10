@@ -76,7 +76,7 @@ class TodoDetailsActivity : ComponentActivity() {
 
         setContent {
             AllInOneTheme {
-                AppBackground.CirclesBackground {
+                AppBackground.BreathingBackground {
                     TodoDetailsScreen(
                         todo = Todo(
                             id = todoId,
@@ -240,6 +240,11 @@ class TodoDetailsActivity : ComponentActivity() {
                         viewModel.viewModelScope.launch {
                             viewModel.updateTodo(todo)
                         }
+                        Toast.makeText(
+                            this@TodoDetailsActivity,
+                            "已保存",
+                            Toast.LENGTH_SHORT
+                        ).show()
                         finish()
                     } else {
                         Toast.makeText(

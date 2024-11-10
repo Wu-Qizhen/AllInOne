@@ -40,7 +40,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.wqz.allinone.R
 import com.wqz.allinone.act.about.data.UpdateLogData
-import com.wqz.allinone.entity.UpdateLog
+import com.wqz.allinone.act.about.data.UpdateLog
 import com.wqz.allinone.ui.AppBackground
 import com.wqz.allinone.ui.ModifierExtends.clickVfx
 import com.wqz.allinone.ui.TitleBar
@@ -58,7 +58,7 @@ class UpdateLogActivity : ComponentActivity() {
 
         setContent {
             AllInOneTheme {
-                AppBackground.CirclesBackground {
+                AppBackground.BreathingBackground {
                     UpdateLogScreen(
                         updateLogs = UpdateLogData.updateLogs
                     )
@@ -140,13 +140,13 @@ class UpdateLogActivity : ComponentActivity() {
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Text(
-                            text = updateLog.updateTime,
+                            text = updateLog.version,
                             fontSize = 16.sp,
                             maxLines = 1,
                             fontWeight = FontWeight.Bold
                         )
                         Text(
-                            text = updateLog.version,
+                            text = updateLog.updateTime,
                             fontSize = 16.sp,
                             maxLines = 1,
                             fontWeight = FontWeight.Bold

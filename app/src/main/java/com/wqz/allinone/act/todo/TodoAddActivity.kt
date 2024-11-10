@@ -64,7 +64,7 @@ class TodoAddActivity : ComponentActivity() {
 
         setContent {
             AllInOneTheme {
-                AppBackground.CirclesBackground {
+                AppBackground.BreathingBackground {
                     TodoAddScreen()
                 }
             }

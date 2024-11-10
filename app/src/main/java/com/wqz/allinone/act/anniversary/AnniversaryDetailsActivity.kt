@@ -8,6 +8,7 @@ import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.basicMarquee
 import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -18,11 +19,12 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Close
+import androidx.compose.material.icons.rounded.ArrowBack
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
@@ -33,11 +35,12 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.Alignment.Companion.Center
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
@@ -48,7 +51,6 @@ import com.wqz.allinone.R
 import com.wqz.allinone.act.anniversary.viewmodel.AnniversaryViewModel
 import com.wqz.allinone.entity.Anniversary
 import com.wqz.allinone.ui.AppBackground
-import com.wqz.allinone.ui.ItemX
 import com.wqz.allinone.ui.ModifierExtends.clickVfx
 import com.wqz.allinone.ui.theme.AllInOneTheme
 import java.time.ZoneId
@@ -68,14 +70,22 @@ class AnniversaryDetailsActivity : ComponentActivity() {
 
         viewModel = AnniversaryViewModel(application)
         val anniversaryId = intent.getIntExtra("ANNIVERSARY_ID", -1)
+        val year = intent.getIntExtra("YEAR", 2020)
+        val month = intent.getIntExtra("MONTH", 1)
+        val day = intent.getIntExtra("DAY", 1)
+        val date = Calendar.getInstance().apply {
+            set(year, month - 1, day)
+        }
+
         // val dao = AnniversaryDatabase.getInstance(application).anniversaryDao()
         // val anniversary = dao.getById(anniversaryId)
 
         setContent {
             AllInOneTheme {
-                AppBackground.CirclesBackground {
+                AppBackground.BreathingBackground {
                     AnniversaryDetailsScreen(
                         anniversaryId = anniversaryId,
+                        date = date,
                         viewModel = viewModel
                     )
                 }
@@ -86,6 +96,7 @@ class AnniversaryDetailsActivity : ComponentActivity() {
     @Composable
     fun AnniversaryDetailsScreen(
         anniversaryId: Int,
+        date: Calendar,
         viewModel: AnniversaryViewModel
     ) {
         val context = LocalContext.current
@@ -110,12 +121,57 @@ class AnniversaryDetailsActivity : ComponentActivity() {
                 modifier = Modifier
                     .fillMaxSize()
                     .verticalScroll(scrollState)
-                    .padding(start = 20.dp, end = 20.dp, bottom = 50.dp),
+                    .padding(start = 20.dp, end = 20.dp, bottom = 70.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 // TitleBar.TextTitleBar(title = R.string.anniversary)
                 Spacer(modifier = Modifier.height(15.dp))
-                IconButton(
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .wrapContentHeight(),
+                    contentAlignment = Center
+                ) {
+                    Row(modifier = Modifier.wrapContentSize()) {
+                        IconButton(
+                            onClick = {
+                                finish()
+                            },
+                            content = {
+                                Icon(
+                                    imageVector = Icons.Rounded.ArrowBack,
+                                    contentDescription = "返回",
+                                    tint = Color.White
+                                )
+                            },
+                            modifier = Modifier.size(25.dp)
+                        )
+                        Spacer(modifier = Modifier.width(10.dp))
+                        IconButton(
+                            onClick = {
+                                if (deleteConfirm) {
+                                    viewModel.deleteAnniversary(anniversaryId)
+                                    Toast.makeText(context, "删除成功", Toast.LENGTH_SHORT).show()
+                                    finish()
+                                } else {
+                                    Toast.makeText(context, "再次点击即可删除", Toast.LENGTH_SHORT)
+                                        .show()
+                                    deleteConfirm = true
+                                }
+                            },
+                            content = {
+                                Icon(
+                                    painter = painterResource(id = R.drawable.ic_delete),
+                                    contentDescription = "删除",
+                                    tint = Color.White,
+                                    modifier = Modifier.size(20.dp)
+                                )
+                            },
+                            modifier = Modifier.size(25.dp)
+                        )
+                    }
+                }
+                /*IconButton(
                     onClick = {
                         finish()
                     },
@@ -127,11 +183,13 @@ class AnniversaryDetailsActivity : ComponentActivity() {
                         )
                     },
                     modifier = Modifier.size(25.dp)
+                )*/
+                Spacer(modifier = Modifier.height(15.dp))
+                AnniversaryCard(
+                    anniversary = anniversary!!,
+                    date
                 )
-                Spacer(modifier = Modifier.height(15.dp))
-                AnniversaryCard(anniversary = anniversary!!)
-                Spacer(modifier = Modifier.height(15.dp))
-                ItemX.Button(
+                /*ItemX.Button(
                     icon = R.drawable.ic_delete,
                     text = if (deleteConfirm) "确认删除" else stringResource(id = R.string.delete)
                 ) {
@@ -143,7 +201,7 @@ class AnniversaryDetailsActivity : ComponentActivity() {
                         Toast.makeText(context, "再次点击即可删除", Toast.LENGTH_SHORT).show()
                         deleteConfirm = true
                     }
-                }
+                }*/
             }
         }
     }
@@ -151,9 +209,10 @@ class AnniversaryDetailsActivity : ComponentActivity() {
     @OptIn(ExperimentalFoundationApi::class)
     @Composable
     fun AnniversaryCard(
-        anniversary: Anniversary
+        anniversary: Anniversary,
+        currentDate: Calendar
     ) {
-        val currentDate = Calendar.getInstance()
+        // val currentDate = Calendar.getInstance()
         val days = ChronoUnit.DAYS.between(
             anniversary.date,
             currentDate.time.toInstant().atZone(ZoneId.systemDefault())

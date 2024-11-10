@@ -10,7 +10,7 @@
     <string name="about_us">关于我们</string>
     <string name="introduction">一笔一划，万象尽在掌握</string>
 
-    <string name="version">Dorado（D）</string>
+    <string name="version">Emerald（E）</string>
     <string name="version_desc">版本号</string>
     <string name="update_log">更新日志</string>
 
@@ -161,22 +161,26 @@
     <string name="anniversary">纪念日</string>
     <string name="add_anniversary">添加纪念日</string>
 
+    <!-- 日记 -->
+    <string name="mood_select">心情选择</string>
+    <string name="weather_select">天气选择</string>
+    <string name="record">记录</string>
+    <string name="edit_diary">编辑日记</string>
+
     <!-- 书签 -->
-    <string name="title_bookmark_details">书签信息</string>
-    <string name="title_folder_details">文件夹信息</string>
-    <string name="btn_add_folder">新建收藏夹</string>
-    <string name="btn_add_link">添加书签</string>
-    <string name="text_input_name">请输入名称</string>
-    <string name="text_url">链接</string>
-    <string name="text_input_url">请输入链接</string>
-    <string name="text_url_introduce">* 点击访问，长按复制</string>
-    <string name="text_delete_confirm">删除确认</string>
-    <string name="text_delete_confirm_hint">确定要删除吗？</string>
-    <string name="text_bookmark_number">书签数</string>
-    <string name="text_modify_info">信息修改</string>
+    <string name="folder_details">文件夹信息</string>
+    <string name="add_folder">新建收藏夹</string>
+    <string name="add_link">添加书签</string>
+    <string name="link_details">书签信息</string>
 
     <!-- 其它 -->
     <string name="about">关于</string>
+    <string name="password_check">密码校验</string>
+    <string name="password">密码</string>
+    <string name="password_change">密码修改</string>
+    <string name="visit">访问</string>
+    <string name="delete_confirm_hint">确认要删除吗？</string>
+    <string name="copy">复制</string>
 
     <!-- Act -->
     <string name="title_activity_about_studio">AboutStudioActivity</string>
@@ -190,4 +194,10 @@
     <string name="title_activity_update_log">UpdateLogActivity</string>
     <string name="title_activity_todo_list">TodoListActivity</string>
     <string name="title_activity_todo_details">TodoDetailsActivity</string>
+    <string name="title_activity_password_check">PasswordCheckActivity</string>
+    <string name="title_activity_diary_preview">DiaryPreviewActivity</string>
+    <string name="title_activity_diary_edit">DiaryEditActivity</string>
+    <string name="title_activity_weather_selection">WeatherSelectionActivity</string>
+    <string name="title_activity_mood_select">MoodSelectActivity</string>
+    <string name="title_activity_password_change">PasswordChangeActivity</string>
 </resources>

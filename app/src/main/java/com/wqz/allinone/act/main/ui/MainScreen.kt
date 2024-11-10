@@ -56,7 +56,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.wqz.allinone.R
 import com.wqz.allinone.act.anniversary.AnniversaryPreviewActivity
-import com.wqz.allinone.act.bookmark.BookmarkFoldersActivity
+import com.wqz.allinone.act.bookmark.FolderListActivity
+import com.wqz.allinone.act.diary.PasswordCheckActivity
 import com.wqz.allinone.act.note.NoteListActivity
 import com.wqz.allinone.act.setting.SettingActivity
 import com.wqz.allinone.act.todo.TodoListActivity
@@ -134,7 +135,7 @@ fun MainScreen(
 ) {
     val context = LocalContext.current
     val scrollState = rememberScrollState()
-    val showBuild = remember { mutableStateOf(false) }
+    val showBuild = remember { mutableStateOf(true) }
     val backgroundColor = Brush.verticalGradient(
         colors = listOf(
             Color.Transparent,  // 顶部颜色：全透明
@@ -214,7 +215,7 @@ fun MainScreen(
                 icon = R.drawable.ic_diary,
                 text = stringResource(id = R.string.diary)
             ) {
-                Toast.makeText(context, "施工中", Toast.LENGTH_SHORT).show()
+                context.startActivity(Intent(context, PasswordCheckActivity::class.java))
             }
             Spacer(modifier = Modifier.height(5.dp))
             ItemX.Capsule(
@@ -237,7 +238,7 @@ fun MainScreen(
                 icon = R.drawable.ic_bookmark,
                 text = stringResource(id = R.string.bookmark)
             ) {
-                context.startActivity(Intent(context, BookmarkFoldersActivity::class.java))
+                context.startActivity(Intent(context, FolderListActivity::class.java))
             }
             Spacer(modifier = Modifier.height(10.dp))
             ClassificationBar(icon = R.drawable.ic_study, text = R.string.study_manage)

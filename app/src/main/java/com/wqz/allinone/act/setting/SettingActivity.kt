@@ -17,7 +17,7 @@ class SettingActivity : ComponentActivity() {
         // enableEdgeToEdge()
         setContent {
             AllInOneTheme {
-                AppBackground.CirclesBackground {
+                AppBackground.BreathingBackground {
                     SettingScreen()
                 }
             }

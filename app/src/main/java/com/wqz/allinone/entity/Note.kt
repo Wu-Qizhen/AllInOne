@@ -9,7 +9,7 @@ import androidx.room.PrimaryKey
  * Created by Wu Qizhen on 2024.6.30
  */
 @Entity
-/*(tableName = "note")*/
+    (tableName = "Note")
 data class Note(
     @PrimaryKey(autoGenerate = true)
     var id: Int?,
@@ -20,5 +20,7 @@ data class Note(
     @ColumnInfo(name = "create_time")
     val createTime: String?,
     @ColumnInfo(name = "update_time")
-    var updateTime: String
+    var updateTime: String,
+    @ColumnInfo(name = "is_locked")
+    var isLocked: Boolean = false
 )

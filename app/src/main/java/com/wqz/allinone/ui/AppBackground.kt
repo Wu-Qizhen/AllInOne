@@ -104,7 +104,7 @@ object AppBackground {
                 .background(Color.Black)
         ) {
             Image(
-                painter = painterResource(id = R.drawable.bg_breathing_large),
+                painter = painterResource(id = R.drawable.bg_breathing_medium),
                 contentDescription = null,
                 modifier = Modifier
                     .fillMaxWidth()
@@ -148,7 +148,7 @@ object AppBackground {
 @Preview
 @Composable
 fun CirclesBackgroundPreview() {
-    AppBackground.CirclesBackground {}
+    AppBackground.BreathingBackground {}
 }
 
 @Preview
