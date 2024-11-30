@@ -3,6 +3,7 @@ package com.wqz.allinone.act.setting
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import com.wqz.allinone.R
 import com.wqz.allinone.act.setting.ui.SettingScreen
 import com.wqz.allinone.ui.AppBackground
 import com.wqz.allinone.ui.theme.AllInOneTheme
@@ -14,10 +15,10 @@ import com.wqz.allinone.ui.theme.AllInOneTheme
 class SettingActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        // enableEdgeToEdge()
+
         setContent {
             AllInOneTheme {
-                AppBackground.BreathingBackground {
+                AppBackground.BreathingBackground(title = R.string.setting) {
                     SettingScreen()
                 }
             }

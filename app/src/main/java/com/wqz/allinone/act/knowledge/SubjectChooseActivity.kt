@@ -1,0 +1,62 @@
+package com.wqz.allinone.act.knowledge
+
+import android.content.Intent
+import android.os.Bundle
+import android.widget.Toast
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.material3.Divider
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.dp
+import com.wqz.allinone.R
+import com.wqz.allinone.act.knowledge.ui.SelectItem
+import com.wqz.allinone.ui.AppBackground
+import com.wqz.allinone.ui.XCard
+import com.wqz.allinone.ui.property.BorderWidth
+import com.wqz.allinone.ui.theme.AllInOneTheme
+
+/**
+ * 科目选择
+ * Created by Wu Qizhen on 2024.11.30
+ */
+class SubjectChooseActivity : ComponentActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        setContent {
+            AllInOneTheme {
+                AppBackground.BreathingBackground(R.string.smart_box) {
+                    SubjectChooseScreen()
+                }
+            }
+        }
+    }
+
+    @Composable
+    fun SubjectChooseScreen() {
+        XCard.SurfaceCard {
+            SelectItem.SubjectItem(text = R.string.chinese) {
+                Toast.makeText(this@SubjectChooseActivity, "施工中", Toast.LENGTH_SHORT).show()
+                // startActivity(Intent(this@SubjectChooseActivity, ChineseActivity::class.java))
+            }
+
+            Divider(
+                modifier = Modifier
+                    .fillMaxWidth(),
+                thickness = BorderWidth.DEFAULT_WIDTH,
+                color = Color(54, 54, 54)
+            )
+
+            SelectItem.SubjectItem(text = R.string.english) {
+                startActivity(Intent(this@SubjectChooseActivity, EnglishActivity::class.java))
+            }
+        }
+
+        Spacer(modifier = Modifier.height(50.dp))
+    }
+}

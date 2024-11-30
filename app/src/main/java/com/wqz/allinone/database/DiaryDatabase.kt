@@ -12,7 +12,7 @@ import com.wqz.allinone.entity.Diary
  * 日记数据库
  * Created by Wu Qizhen on 2024.10.3
  */
-@Database(entities = [Diary::class], version = 1, exportSchema = false)
+@Database(entities = [Diary::class], version = 1, exportSchema = true)
 @TypeConverters(DateConverter::class)
 abstract class DiaryDatabase : RoomDatabase() {
     abstract fun diaryDao(): DiaryDao

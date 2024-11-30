@@ -21,16 +21,13 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.KeyboardArrowLeft
 import androidx.compose.material.icons.rounded.KeyboardArrowRight
@@ -67,11 +64,12 @@ import com.wqz.allinone.R
 import com.wqz.allinone.act.anniversary.viewmodel.AnniversaryViewModel
 import com.wqz.allinone.entity.Anniversary
 import com.wqz.allinone.ui.AppBackground
-import com.wqz.allinone.ui.ItemX
 import com.wqz.allinone.ui.ModifierExtends.clickVfx
-import com.wqz.allinone.ui.TitleBar
+import com.wqz.allinone.ui.XCard
+import com.wqz.allinone.ui.XItem
 import com.wqz.allinone.ui.color.BackgroundColor
 import com.wqz.allinone.ui.color.BorderColor
+import com.wqz.allinone.ui.property.BorderWidth
 import com.wqz.allinone.ui.theme.AllInOneTheme
 import com.wqz.allinone.ui.theme.ThemeColor
 import java.text.SimpleDateFormat
@@ -86,6 +84,7 @@ import kotlin.math.absoluteValue
 /**
  * 纪念日预览
  * Created by Wu Qizhen on 2024.8.20
+ * Refactored by Wu Qizhen on 2024.11.30
  */
 class AnniversaryPreviewActivity : ComponentActivity() {
     private lateinit var viewModel: AnniversaryViewModel
@@ -97,7 +96,7 @@ class AnniversaryPreviewActivity : ComponentActivity() {
 
         setContent {
             AllInOneTheme {
-                AppBackground.BreathingBackground {
+                AppBackground.BreathingBackground(title = R.string.anniversary) {
                     AnniversaryPreviewScreen(viewModel)
                 }
             }
@@ -117,198 +116,169 @@ class AnniversaryPreviewActivity : ComponentActivity() {
                     .format(DateTimeFormatter.ofPattern("yyyy.MM.dd"))
             )
         }
-        val scrollState = rememberScrollState()
 
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .verticalScroll(scrollState)
-                .padding(horizontal = 20.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
+        XItem.Button(
+            icon = R.drawable.ic_add,
+            text = stringResource(R.string.add_anniversary)
         ) {
-            TitleBar.TextTitleBar(title = R.string.anniversary)
-            ItemX.Button(
-                icon = R.drawable.ic_add,
-                text = stringResource(R.string.add_anniversary)
-            ) {
-                startActivity(Intent(context, AnniversaryAddActivity::class.java))
-            }
-            /*Row(
-                verticalAlignment = Alignment.CenterVertically,
+            startActivity(Intent(context, AnniversaryAddActivity::class.java))
+        }
+
+        Spacer(modifier = Modifier.height(10.dp))
+
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Center
+        ) {
+            IconButton(
+                onClick = {
+                    // 更新 Calendar 实例中的日期
+                    val newDate = Calendar.getInstance().apply {
+                        time = currentDate.value.time
+                        add(Calendar.DAY_OF_MONTH, -1)
+                    }
+                    currentDate.value = newDate
+                },
+                content = {
+                    Icon(
+                        imageVector = Icons.Rounded.KeyboardArrowLeft,
+                        contentDescription = "前一天",
+                        tint = Color.White
+                    )
+                },
+                modifier = Modifier.size(25.dp)
+            )
+
+            Spacer(modifier = Modifier.width(5.dp))
+
+            Text(
+                text = dateFormat.format(currentDate.value.time),
+                textAlign = TextAlign.Center,
                 modifier = Modifier
+                    .width(110.dp)
                     .clickVfx {
-                        startActivity(Intent(context, AnniversaryAddActivity::class.java))
+                        showJump = !showJump
+                    },
+                maxLines = 1
+            )
+
+            Spacer(modifier = Modifier.width(5.dp))
+
+            IconButton(
+                onClick = {
+                    // 更新 Calendar 实例中的日期
+                    val newDate = Calendar.getInstance().apply {
+                        time = currentDate.value.time
+                        add(Calendar.DAY_OF_MONTH, 1)
                     }
-                    .wrapContentSize()
-            ) {
-                Image(
-                    painter = painterResource(id = R.drawable.ic_add),
-                    contentDescription = "添加纪念日",
-                    modifier = Modifier
-                        .size(25.dp)
-                )
-                Spacer(modifier = Modifier.width(3.dp))
-                Text(
-                    text = stringResource(R.string.add_anniversary),
-                    fontSize = 16.sp
-                )
-            }*/
+                    currentDate.value = newDate
+                },
+                content = {
+                    Icon(
+                        imageVector = Icons.Rounded.KeyboardArrowRight,
+                        contentDescription = "后一天",
+                        tint = Color.White
+                    )
+                },
+                modifier = Modifier.size(25.dp)
+            )
+        }
 
-            Spacer(modifier = Modifier.height(10.dp))
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.Center
-            ) {
-                IconButton(
-                    onClick = {
-                        // 更新 Calendar 实例中的日期
-                        val newDate = Calendar.getInstance().apply {
-                            time = currentDate.value.time
-                            add(Calendar.DAY_OF_MONTH, -1)
-                        }
-                        currentDate.value = newDate
-                    },
-                    content = {
-                        Icon(
-                            imageVector = Icons.Rounded.KeyboardArrowLeft,
-                            contentDescription = "前一天",
-                            tint = Color.White
-                        )
-                    },
-                    modifier = Modifier.size(25.dp)
-                )
-                Spacer(modifier = Modifier.width(5.dp))
-                Text(
-                    text = dateFormat.format(currentDate.value.time),
-                    textAlign = TextAlign.Center,
-                    modifier = Modifier
-                        .width(110.dp)
-                        .clickVfx {
-                            showJump = !showJump
-                        },
-                    maxLines = 1
-                )
-                Spacer(modifier = Modifier.width(5.dp))
-                IconButton(
-                    onClick = {
-                        // 更新 Calendar 实例中的日期
-                        val newDate = Calendar.getInstance().apply {
-                            time = currentDate.value.time
-                            add(Calendar.DAY_OF_MONTH, 1)
-                        }
-                        currentDate.value = newDate
-                    },
-                    content = {
-                        Icon(
-                            imageVector = Icons.Rounded.KeyboardArrowRight,
-                            contentDescription = "后一天",
-                            tint = Color.White
-                        )
-                    },
-                    modifier = Modifier.size(25.dp)
-                )
-            }
-
-            AnimatedVisibility(
-                visible = showJump,
-                enter = fadeIn() + expandVertically(),
-                exit = fadeOut() + shrinkVertically()
-            ) {
-                Column {
-                    Spacer(modifier = Modifier.height(10.dp))
-                    Column(
-                        modifier = Modifier
-                            .clickVfx()
-                            .wrapContentHeight()
-                            .fillMaxWidth()
-                            .background(
-                                color = BackgroundColor.DEFAULT_GRAY,
-                                shape = RoundedCornerShape(10.dp)
-                            )
-                            .border(
-                                width = 0.4f.dp,
-                                shape = RoundedCornerShape(10.dp),
-                                brush = Brush.linearGradient(
-                                    BorderColor.DEFAULT_GRAY,
-                                    start = Offset.Zero,
-                                    end = Offset.Infinite
-                                )
-                            )
-                            .padding(bottom = 10.dp),
-                        horizontalAlignment = Alignment.CenterHorizontally
-                    ) {
-                        TextField(
-                            modifier = Modifier.fillMaxWidth(),
-                            value = changeDate,
-                            onValueChange = { changeDate = it },
-                            colors = TextFieldDefaults.colors(
-                                unfocusedContainerColor = Color.Transparent, // 背景颜色
-                                focusedContainerColor = Color.Transparent, // 背景颜色
-                                unfocusedIndicatorColor = Color.Transparent, // 下划线颜色
-                                focusedIndicatorColor = Color.Transparent, // 下划线颜色
-                                cursorColor = ThemeColor // 光标颜色
-                            ),
-                            textStyle = TextStyle(
-                                color = Color.White,
-                                fontSize = 16.sp,
-                                fontFamily = FontFamily(Font(R.font.misans_regular)),
-                                textAlign = TextAlign.Center
-                            ),
-                            placeholder = {
-                                Text(
-                                    text = "2000.01.01",
-                                    color = Color.DarkGray,
-                                    fontSize = 16.sp,
-                                    fontWeight = FontWeight.Bold
-                                )
-                            }
-                        )
-                        Row {
-                            ItemX.Button(icon = R.drawable.ic_locate, text = "今天") {
-                                currentDate.value = Calendar.getInstance()
-                                showJump = false
-                            }
-                            Spacer(modifier = Modifier.width(10.dp))
-                            ItemX.Button(icon = R.drawable.ic_jump, text = "跳转") {
-                                if (changeDate.matches(Regex("\\d{4}.\\d{2}.\\d{2}"))) {
-                                    val date = changeDate.split(".")
-                                    val newDateCalendar = Calendar.getInstance().apply {
-                                        set(Calendar.YEAR, date[0].toInt())
-                                        set(Calendar.MONTH, date[1].toInt() - 1)
-                                        set(Calendar.DAY_OF_MONTH, date[2].toInt())
-                                    }
-                                    currentDate.value = newDateCalendar
-                                    showJump = false
-                                } else {
-                                    Toast.makeText(context, "日期格式错误", Toast.LENGTH_SHORT)
-                                        .show()
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-
-            if (anniversaries.isEmpty()) {
+        AnimatedVisibility(
+            visible = showJump,
+            enter = fadeIn() + expandVertically(),
+            exit = fadeOut() + shrinkVertically()
+        ) {
+            Column {
                 Spacer(modifier = Modifier.height(10.dp))
-                Image(
-                    painter = painterResource(id = R.drawable.ic_no_data),
-                    contentDescription = "无数据",
-                    modifier = Modifier
-                        .size(100.dp)
-                )
-                Spacer(modifier = Modifier.height(50.dp))
-            } else {
-                Spacer(modifier = Modifier.height(7.dp))
-                anniversaries.forEach {
-                    key(it.id) {
-                        Spacer(modifier = Modifier.height(3.dp))
-                        AnniversaryItem(anniversary = it, currentDate = currentDate)
-                        Spacer(modifier = Modifier.height(3.dp))
+
+                XCard.LivelyCard {
+                    TextField(
+                        modifier = Modifier.fillMaxWidth(),
+                        value = changeDate,
+                        onValueChange = { changeDate = it },
+                        colors = TextFieldDefaults.colors(
+                            unfocusedContainerColor = Color.Transparent, // 背景颜色
+                            focusedContainerColor = Color.Transparent, // 背景颜色
+                            unfocusedIndicatorColor = Color.Transparent, // 下划线颜色
+                            focusedIndicatorColor = Color.Transparent, // 下划线颜色
+                            cursorColor = ThemeColor // 光标颜色
+                        ),
+                        textStyle = TextStyle(
+                            color = Color.White,
+                            fontSize = 16.sp,
+                            fontFamily = FontFamily(Font(R.font.misans_regular)),
+                            textAlign = TextAlign.Center
+                        ),
+                        placeholder = {
+                            Text(
+                                text = "2000.01.01",
+                                color = Color.DarkGray,
+                                fontSize = 16.sp,
+                                fontWeight = FontWeight.Bold,
+                                textAlign = TextAlign.Center,
+                                modifier = Modifier.fillMaxWidth()
+                            )
+                        }
+                    )
+
+                    Row {
+                        XItem.Button(icon = R.drawable.ic_locate, text = "今天") {
+                            currentDate.value = Calendar.getInstance()
+                            showJump = false
+                        }
+
+                        Spacer(modifier = Modifier.width(10.dp))
+
+                        XItem.Button(icon = R.drawable.ic_jump, text = "跳转") {
+                            if (changeDate.matches(Regex("\\d{4}.\\d{2}.\\d{2}"))) {
+                                val date = changeDate.split(".")
+                                val newDateCalendar = Calendar.getInstance().apply {
+                                    set(Calendar.YEAR, date[0].toInt())
+                                    set(Calendar.MONTH, date[1].toInt() - 1)
+                                    set(Calendar.DAY_OF_MONTH, date[2].toInt())
+                                }
+                                currentDate.value = newDateCalendar
+                                showJump = false
+                            } else {
+                                Toast.makeText(
+                                    context,
+                                    R.string.invalid_date,
+                                    Toast.LENGTH_SHORT
+                                )
+                                    .show()
+                            }
+                        }
                     }
+
+                    Spacer(modifier = Modifier.height(10.dp))
                 }
-                Spacer(modifier = Modifier.height(47.dp))
             }
+        }
+
+        if (anniversaries.isEmpty()) {
+            Spacer(modifier = Modifier.height(10.dp))
+
+            Image(
+                painter = painterResource(id = R.drawable.ic_no_data),
+                contentDescription = "无数据",
+                modifier = Modifier
+                    .size(100.dp)
+            )
+
+            Spacer(modifier = Modifier.height(50.dp))
+        } else {
+            Spacer(modifier = Modifier.height(7.dp))
+
+            anniversaries.forEach {
+                key(it.id) {
+                    Spacer(modifier = Modifier.height(3.dp))
+                    AnniversaryItem(anniversary = it, currentDate = currentDate)
+                    Spacer(modifier = Modifier.height(3.dp))
+                }
+            }
+
+            Spacer(modifier = Modifier.height(47.dp))
         }
     }
 
@@ -384,6 +354,7 @@ class AnniversaryPreviewActivity : ComponentActivity() {
                         fontSize = 14.sp,
                         maxLines = 1
                     )
+
                     Text(
                         modifier = Modifier.padding(start = 10.dp),
                         text = "${anniversaryCount}周年",
@@ -393,6 +364,7 @@ class AnniversaryPreviewActivity : ComponentActivity() {
                         maxLines = 1,
                     )
                 }
+
                 Text(
                     text = "$dateType | $date",
                     fontSize = 12.sp,
@@ -403,7 +375,7 @@ class AnniversaryPreviewActivity : ComponentActivity() {
             val backgroundColor =
                 if (isPressed.value) BackgroundColor.PRESSED_GRAY else BackgroundColor.DEFAULT_GRAY
             val borderColors = BorderColor.DEFAULT_GRAY
-            val borderWidth = 0.4f.dp
+            val borderWidth = BorderWidth.DEFAULT_WIDTH
 
             Column(
                 modifier = Modifier
@@ -440,6 +412,7 @@ class AnniversaryPreviewActivity : ComponentActivity() {
                         fontSize = 14.sp,
                         maxLines = 1
                     )
+
                     Text(
                         modifier = Modifier.padding(start = 10.dp),
                         text = if (days > 0) "${days.plus(1)}天" else "${days.absoluteValue}天后",
@@ -450,6 +423,7 @@ class AnniversaryPreviewActivity : ComponentActivity() {
                         color = if (days > 0) BackgroundColor.DEFAULT_YELLOW else Color(8, 116, 196)
                     )
                 }
+
                 Text(
                     text = "$dateType | $date",
                     fontSize = 12.sp,

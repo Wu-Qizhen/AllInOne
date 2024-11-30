@@ -16,9 +16,9 @@ import java.time.LocalDate
 @Dao
 interface DiaryDao {
     @Query("SELECT * FROM Diary ORDER BY date DESC")
-    fun getAll(): LiveData<List<Diary>>
+    fun getAll(): List<Diary>
 
-    @Query("SELECT * FROM Diary WHERE date BETWEEN :startOfMonth AND :endOfMonth")
+    @Query("SELECT * FROM Diary WHERE date BETWEEN :startOfMonth AND :endOfMonth ORDER BY date DESC")
     fun getByMonth(startOfMonth: LocalDate, endOfMonth: LocalDate): LiveData<List<Diary>>
 
     @Query("SELECT * FROM Diary WHERE id = :id")

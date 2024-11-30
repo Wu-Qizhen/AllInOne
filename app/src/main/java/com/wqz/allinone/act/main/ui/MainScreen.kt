@@ -57,17 +57,19 @@ import androidx.compose.ui.unit.sp
 import com.wqz.allinone.R
 import com.wqz.allinone.act.anniversary.AnniversaryPreviewActivity
 import com.wqz.allinone.act.bookmark.FolderListActivity
-import com.wqz.allinone.act.diary.PasswordCheckActivity
+import com.wqz.allinone.act.knowledge.SubjectChooseActivity
 import com.wqz.allinone.act.note.NoteListActivity
+import com.wqz.allinone.act.password.PasswordCheckActivity
 import com.wqz.allinone.act.setting.SettingActivity
 import com.wqz.allinone.act.todo.TodoListActivity
-import com.wqz.allinone.ui.ItemX
 import com.wqz.allinone.ui.ModifierExtends.clickVfx
+import com.wqz.allinone.ui.XItem
 import kotlinx.coroutines.delay
 
 /**
  * 主界面
  * Created by Wu Qizhen on 2024.6.29
+ * Refactored by Wu Qizhen on 2024.11.30
  */
 @Composable
 fun LaunchScreen(
@@ -182,83 +184,123 @@ fun MainScreen(
                                 rememberSharedContentState(key = "text"),
                                 animatedVisibilityScope = animatedVisibilityScope
                             )
+                            .clickVfx()
                             .width(100.dp)
                             .height(23.dp),
                         contentScale = ContentScale.Fit
                     )
                 }
             }
+
             ClassificationBar(icon = R.drawable.ic_person, text = R.string.personal_manage)
+
             Spacer(modifier = Modifier.height(10.dp))
-            ItemX.Capsule(
+
+            XItem.Capsule(
                 icon = R.drawable.ic_todo,
                 text = stringResource(id = R.string.todo)
             ) {
                 context.startActivity(Intent(context, TodoListActivity::class.java))
             }
+
             Spacer(modifier = Modifier.height(5.dp))
-            ItemX.Capsule(
+
+            XItem.Capsule(
                 icon = R.drawable.ic_note,
                 text = stringResource(id = R.string.note)
             ) {
                 context.startActivity(Intent(context, NoteListActivity::class.java))
             }
+
             Spacer(modifier = Modifier.height(5.dp))
-            ItemX.Capsule(
+
+            XItem.Capsule(
                 icon = R.drawable.ic_anniversary,
                 text = stringResource(id = R.string.anniversary)
             ) {
                 context.startActivity(Intent(context, AnniversaryPreviewActivity::class.java))
             }
+
             Spacer(modifier = Modifier.height(5.dp))
-            ItemX.Capsule(
+
+            XItem.Capsule(
                 icon = R.drawable.ic_diary,
                 text = stringResource(id = R.string.diary)
             ) {
-                context.startActivity(Intent(context, PasswordCheckActivity::class.java))
+                val intent = Intent(context, PasswordCheckActivity::class.java)
+                intent.putExtra("REQUEST_CODE", 1)
+                context.startActivity(intent)
             }
+
             Spacer(modifier = Modifier.height(5.dp))
-            ItemX.Capsule(
+
+            XItem.Capsule(
                 icon = R.drawable.ic_clock_in,
                 text = stringResource(id = R.string.clock_in)
             ) {
                 Toast.makeText(context, "施工中", Toast.LENGTH_SHORT).show()
             }
+
             Spacer(modifier = Modifier.height(5.dp))
-            ItemX.Capsule(
+
+            XItem.Capsule(
                 icon = R.drawable.ic_schedule,
                 text = stringResource(id = R.string.schedule)
             ) {
                 Toast.makeText(context, "施工中", Toast.LENGTH_SHORT).show()
             }
+
             Spacer(modifier = Modifier.height(10.dp))
+
             ClassificationBar(icon = R.drawable.ic_collect, text = R.string.information_collection)
+
             Spacer(modifier = Modifier.height(10.dp))
-            ItemX.Capsule(
+
+            XItem.Capsule(
                 icon = R.drawable.ic_bookmark,
                 text = stringResource(id = R.string.bookmark)
             ) {
                 context.startActivity(Intent(context, FolderListActivity::class.java))
             }
+
             Spacer(modifier = Modifier.height(10.dp))
-            ClassificationBar(icon = R.drawable.ic_study, text = R.string.study_manage)
+
+            ClassificationBar(icon = R.drawable.ic_jump, text = R.string.study_manage)
+
             Spacer(modifier = Modifier.height(10.dp))
-            ItemX.Capsule(
+
+            XItem.Capsule(
                 icon = R.drawable.ic_school_timetable,
                 text = stringResource(id = R.string.school_timetable)
             ) {
                 Toast.makeText(context, "施工中", Toast.LENGTH_SHORT).show()
             }
+
+            Spacer(modifier = Modifier.height(5.dp))
+
+            XItem.Capsule(
+                icon = R.drawable.ic_smart_box,
+                text = stringResource(id = R.string.smart_box)
+            ) {
+                context.startActivity(Intent(context, SubjectChooseActivity::class.java))
+            }
+
             Spacer(modifier = Modifier.height(10.dp))
+
             ClassificationBar(icon = R.drawable.ic_option, text = R.string.option)
+
             Spacer(modifier = Modifier.height(10.dp))
-            ItemX.Capsule(
+
+            XItem.Capsule(
                 icon = R.drawable.ic_setting,
                 text = stringResource(id = R.string.setting)
             ) {
                 context.startActivity(Intent(context, SettingActivity::class.java))
+
             }
+
             Spacer(modifier = Modifier.height(10.dp))
+
             AnimatedVisibility(
                 visible = showBuild.value,
                 enter = fadeIn() + expandVertically(),
@@ -267,12 +309,12 @@ fun MainScreen(
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        // .padding(vertical = 10.dp)
+                        .height(30.dp)
                         .clickVfx {
                             showBuild.value = false
                         },
                     horizontalArrangement = Arrangement.Center,
-                    verticalAlignment = Alignment.CenterVertically
+                    verticalAlignment = Alignment.Bottom
                 ) {
                     Icon(
                         painter = painterResource(id = R.drawable.logo_aethex_matrix),
@@ -282,31 +324,40 @@ fun MainScreen(
                             .padding(end = 5.dp),
                         tint = Color.White
                     )
+
                     Text(
-                        text = stringResource(id = R.string.built_with),
+                        text = stringResource(id = R.string.powered_by),
                         fontSize = 10.sp,
                         fontWeight = FontWeight.Bold,
                         textAlign = TextAlign.Center,
                     )
                 }
             }
+
             AnimatedVisibility(
                 visible = !showBuild.value,
                 enter = fadeIn() + expandVertically(),
                 exit = fadeOut() + shrinkVertically()
             ) {
-                Text(
-                    text = stringResource(id = R.string.copyright),
-                    fontSize = 10.sp,
-                    fontWeight = FontWeight.Bold,
-                    textAlign = TextAlign.Center,
+                Row(
                     modifier = Modifier
                         .fillMaxWidth()
+                        .height(30.dp)
                         .clickVfx {
                             showBuild.value = true
-                        }
-                )
+                        },
+                    horizontalArrangement = Arrangement.Center,
+                    verticalAlignment = Alignment.Bottom
+                ) {
+                    Text(
+                        text = stringResource(id = R.string.copyright),
+                        fontSize = 10.sp,
+                        fontWeight = FontWeight.Bold,
+                        textAlign = TextAlign.Center,
+                    )
+                }
             }
+
             Spacer(modifier = Modifier.height(20.dp))
         }
     }
@@ -315,13 +366,16 @@ fun MainScreen(
 @Composable
 fun ClassificationBar(icon: Int, text: Int) {
     Row(
-        modifier = Modifier.wrapContentWidth(),
+        modifier = Modifier
+            .clickVfx()
+            .wrapContentWidth(),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        Image(
+        Icon(
             painter = painterResource(id = icon),
             contentDescription = stringResource(id = text),
-            modifier = Modifier.size(20.dp)
+            modifier = Modifier.size(20.dp),
+            tint = Color.White
         )
 
         Spacer(modifier = Modifier.width(5.dp))

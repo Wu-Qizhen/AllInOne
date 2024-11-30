@@ -12,24 +12,18 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.collectIsPressedAsState
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.CheckboxDefaults
 import androidx.compose.material3.Divider
@@ -43,8 +37,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -56,11 +48,10 @@ import com.wqz.allinone.R
 import com.wqz.allinone.act.todo.viewmodel.TodoViewModel
 import com.wqz.allinone.entity.Todo
 import com.wqz.allinone.ui.AppBackground
-import com.wqz.allinone.ui.ItemX
 import com.wqz.allinone.ui.ModifierExtends.clickVfx
-import com.wqz.allinone.ui.TitleBar
-import com.wqz.allinone.ui.color.BackgroundColor
-import com.wqz.allinone.ui.color.BorderColor
+import com.wqz.allinone.ui.XCard
+import com.wqz.allinone.ui.XItem
+import com.wqz.allinone.ui.property.BorderWidth
 import com.wqz.allinone.ui.theme.AllInOneTheme
 import com.wqz.allinone.ui.theme.ThemeColor
 import kotlinx.coroutines.delay
@@ -69,6 +60,7 @@ import kotlinx.coroutines.launch
 /**
  * 待办完成列表
  * Created by Wu Qizhen on 2024.10.1
+ * Refactored by Wu Qizhen on 2024.11.30
  */
 class TodoCompletedActivity : ComponentActivity() {
     private lateinit var viewModel: TodoViewModel
@@ -80,7 +72,7 @@ class TodoCompletedActivity : ComponentActivity() {
 
         setContent {
             AllInOneTheme {
-                AppBackground.BreathingBackground {
+                AppBackground.BreathingBackground(title = R.string.completed) {
                     TodoCompletedListScreen()
                 }
             }
@@ -89,80 +81,55 @@ class TodoCompletedActivity : ComponentActivity() {
 
     @Composable
     fun TodoCompletedListScreen() {
-        val scrollState = rememberScrollState()
         val todos by viewModel.completedTodos.observeAsState(listOf())
         var deleteConfirm by remember { mutableStateOf(false) }
 
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .verticalScroll(scrollState)
-                .padding(horizontal = 20.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
+        XItem.Button(
+            icon = R.drawable.ic_delete,
+            text = if (deleteConfirm) "确认操作" else stringResource(id = R.string.clear)
         ) {
-            TitleBar.TextTitleBar(title = R.string.completed)
-
-            ItemX.Button(
-                icon = R.drawable.ic_delete,
-                text = if (deleteConfirm) "确认操作" else stringResource(id = R.string.clear)
-            ) {
-                if (deleteConfirm) {
-                    viewModel.viewModelScope.launch {
-                        viewModel.clearCompleted()
-                        Toast.makeText(this@TodoCompletedActivity, "已清空", Toast.LENGTH_SHORT)
-                            .show()
-                        finish()
-                    }
-                } else {
-                    deleteConfirm = true
+            if (deleteConfirm) {
+                viewModel.viewModelScope.launch {
+                    viewModel.clearCompleted()
+                    Toast.makeText(this@TodoCompletedActivity, R.string.cleared, Toast.LENGTH_SHORT)
+                        .show()
+                    finish()
                 }
-            }
-
-            Spacer(modifier = Modifier.height(10.dp))
-
-            if (todos.isEmpty()) {
-                Image(
-                    painter = painterResource(id = R.drawable.ic_no_data),
-                    contentDescription = "无数据",
-                    modifier = Modifier
-                        .size(100.dp)
-                )
             } else {
-                Column(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .background(
-                            BackgroundColor.DEFAULT_GRAY, RoundedCornerShape(10.dp)
+                deleteConfirm = true
+            }
+        }
+
+        Spacer(modifier = Modifier.height(10.dp))
+
+        if (todos.isEmpty()) {
+            Image(
+                painter = painterResource(id = R.drawable.ic_no_data),
+                contentDescription = "无数据",
+                modifier = Modifier
+                    .size(100.dp)
+            )
+        } else {
+            XCard.SurfaceCard {
+                todos.forEach {
+                    key(it.id) {
+                        TodoItem(
+                            todo = it
                         )
-                        .border(
-                            width = 0.4f.dp,
-                            shape = RoundedCornerShape(10.dp),
-                            brush = Brush.linearGradient(
-                                BorderColor.DEFAULT_GRAY,
-                                start = Offset.Zero,
-                                end = Offset.Infinite
+                        // 分如果不是最后一个绘制割线
+                        if (it != todos.last()) {
+                            Divider(
+                                modifier = Modifier
+                                    .fillMaxWidth(),
+                                thickness = BorderWidth.DEFAULT_WIDTH,
+                                color = Color(54, 54, 54)
                             )
-                        )
-                ) {
-                    todos.forEach {
-                        key(it.id) {
-                            TodoItem(
-                                todo = it
-                            )
-                            // 分如果不是最后一个绘制割线
-                            if (it != todos.last()) {
-                                Divider(
-                                    modifier = Modifier
-                                        .fillMaxWidth(),
-                                    thickness = 0.5f.dp,
-                                    color = Color(54, 54, 54)
-                                )
-                            }
                         }
                     }
                 }
-                Spacer(modifier = Modifier.height(50.dp))
             }
+
+            Spacer(modifier = Modifier.height(50.dp))
         }
     }
 
@@ -227,7 +194,9 @@ class TodoCompletedActivity : ComponentActivity() {
                             }
                         }
                     )
+
                     Spacer(modifier = Modifier.width(15.dp))
+
                     Text(
                         text = todo.title.ifEmpty { "无附加内容" },
                         fontSize = 16.sp,

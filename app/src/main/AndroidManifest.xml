@@ -3,6 +3,13 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        android:maxSdkVersion="34"
+        tools:ignore="ScopedStorage" />
+    <uses-permission
+        android:name="android.permission.READ_EXTERNAL_STORAGE"
+        android:maxSdkVersion="32" />
 
     <application
         android:allowBackup="true"
@@ -15,7 +22,42 @@
         android:theme="@style/Theme.AllInOne"
         tools:targetApi="31">
         <activity
-            android:name=".act.diary.PasswordChangeActivity"
+            android:name=".act.knowledge.SmartBoxActivity"
+            android:exported="false"
+            android:label="@string/title_activity_smart_box"
+            android:theme="@style/Theme.AllInOne" />
+        <activity
+            android:name=".act.knowledge.ChineseActivity"
+            android:exported="false"
+            android:label="@string/title_activity_chinese"
+            android:theme="@style/Theme.AllInOne" />
+        <activity
+            android:name=".act.knowledge.EnglishActivity"
+            android:exported="false"
+            android:label="@string/title_activity_english"
+            android:theme="@style/Theme.AllInOne" />
+        <activity
+            android:name=".act.knowledge.SubjectChooseActivity"
+            android:exported="false"
+            android:label="@string/title_activity_subject_choose"
+            android:theme="@style/Theme.AllInOne" />
+        <activity
+            android:name=".act.anniversary.AnniversaryFullDisplayActivity"
+            android:exported="false"
+            android:label="@string/title_activity_anniversary_full_display"
+            android:theme="@style/Theme.AllInOne" />
+        <activity
+            android:name=".act.bookmark.LinkImportActivity"
+            android:exported="false"
+            android:label="@string/title_activity_link_import"
+            android:theme="@style/Theme.AllInOne" />
+        <activity
+            android:name=".act.backup.BackupActivity"
+            android:exported="false"
+            android:label="@string/title_activity_backup"
+            android:theme="@style/Theme.AllInOne" />
+        <activity
+            android:name=".act.password.PasswordChangeActivity"
             android:exported="false"
             android:label="@string/title_activity_password_change"
             android:theme="@style/Theme.AllInOne" />
@@ -40,7 +82,7 @@
             android:label="@string/title_activity_diary_preview"
             android:theme="@style/Theme.AllInOne" />
         <activity
-            android:name=".act.diary.PasswordCheckActivity"
+            android:name=".act.password.PasswordCheckActivity"
             android:exported="false"
             android:label="@string/title_activity_password_check"
             android:theme="@style/Theme.AllInOne" />
@@ -98,31 +140,40 @@
             android:label="@string/title_activity_about_developer" />
         <activity
             android:name=".act.todo.TodoCompletedActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:label="@string/title_activity_todo_completed" />
         <activity
             android:name=".act.todo.TodoAddActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:label="@string/title_activity_todo_add" />
         <activity
             android:name=".act.bookmark.FolderDetailsActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:label="@string/title_activity_folder_details" />
         <activity
             android:name=".act.bookmark.LinkDetailsActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:label="@string/title_activity_link_details" />
         <activity
             android:name=".act.bookmark.LinkAddActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:label="@string/title_activity_link_add" />
         <activity
             android:name=".act.bookmark.LinkListActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:label="@string/title_activity_link_list" />
         <activity
             android:name=".act.bookmark.FolderAddActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:label="@string/title_activity_folder_add" />
         <activity
             android:name=".act.bookmark.FolderListActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:label="@string/title_activity_folder_list" />
         <activity
             android:name=".act.setting.SettingActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:label="@string/title_activity_setting" />
         <activity
             android:name=".act.main.MainActivity"
             android:exported="true">

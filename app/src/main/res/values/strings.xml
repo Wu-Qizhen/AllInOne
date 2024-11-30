@@ -3,14 +3,14 @@
     <string name="app_name">万象归一</string>
     <string name="slogan">点滴记忆，万象收纳</string>
     <string name="copyright">Copyright © 2024 Code IntelliX.\nAll rights reserved.</string>
-    <string name="built_with">Built with\nAethex Matrix ®</string>
+    <string name="powered_by">Powered by\nAethex Matrix ®</string>
     <string name="studio">Code IntelliX</string>
 
     <!-- 关于我们 -->
     <string name="about_us">关于我们</string>
     <string name="introduction">一笔一划，万象尽在掌握</string>
 
-    <string name="version">Emerald（E）</string>
+    <string name="version">Flint（F）</string>
     <string name="version_desc">版本号</string>
     <string name="update_log">更新日志</string>
 
@@ -124,17 +124,19 @@
     </string>
 
     <!-- 主页 -->
-    <string name="personal_manage">个人管理</string>
+    <string name="personal_manage">日常</string>
     <string name="diary">生活书</string>
     <string name="note">随手记</string>
+    <string name="anniversary">纪念日</string>
     <string name="todo">待办箱</string>
     <string name="clock_in">打卡通</string>
     <string name="schedule">日程达</string>
-    <string name="information_collection">信息收藏</string>
+    <string name="information_collection">收藏</string>
     <string name="bookmark">书签宝</string>
-    <string name="study_manage">学术管理</string>
+    <string name="study_manage">学术</string>
+    <string name="smart_box">智慧盒</string>
     <string name="school_timetable">课程表</string>
-    <string name="option">选项操作</string>
+    <string name="option">操作</string>
     <string name="setting">设置</string>
 
     <!-- 通用 -->
@@ -148,39 +150,85 @@
     <string name="contents">内容</string>
     <string name="clear">清空</string>
     <string name="save">保存</string>
+    <string name="copy">复制</string>
+    <string name="visit">访问</string>
+    <string name="execute">执行</string>
 
-    <!-- 待办 -->
+    <!-- 待办箱 -->
     <string name="completed">已完成</string>
     <string name="add_todo">添加事件</string>
     <string name="todo_details">待办信息</string>
 
-    <!-- 笔记 -->
+    <!-- 随手记 -->
     <string name="add_note">新建笔记</string>
 
     <!-- 纪念日 -->
-    <string name="anniversary">纪念日</string>
     <string name="add_anniversary">添加纪念日</string>
 
-    <!-- 日记 -->
+    <!-- 生活书 -->
     <string name="mood_select">心情选择</string>
     <string name="weather_select">天气选择</string>
     <string name="record">记录</string>
     <string name="edit_diary">编辑日记</string>
 
-    <!-- 书签 -->
+    <!-- 书签宝 -->
     <string name="folder_details">文件夹信息</string>
     <string name="add_folder">新建收藏夹</string>
     <string name="add_link">添加书签</string>
     <string name="link_details">书签信息</string>
 
+    <!-- 智慧盒-->
+    <string name="chinese">语文</string>
+    <string name="english">英语</string>
+    <string name="english_practical_writing">应用文写作</string>
+    <string name="english_ending_writing">结尾升华</string>
+    <string name="english_emotional_writing">情感描写</string>
+
+    <!-- Toast -->
+    <string name="cleared">已清空</string>
+    <string name="copied">已复制链接</string>
+
+    <string name="added">添加成功</string>
+    <string name="deleted">删除成功</string>
+    <string name="saved">保存成功</string>
+    <string name="modified">修改成功</string>
+    <string name="imported">导入成功</string>
+
+    <string name="backup_diary_success">日记备份成功</string>
+    <string name="backup_diary_failed">日记备份失败</string>
+    <string name="backup_bookmark_failed">书签备份失败</string>
+    <string name="backup_bookmark_success">书签备份成功</string>
+
+    <string name="invalid_date">无效日期</string>
+    <string name="invalid_url">无效链接</string>
+    <string name="invalid_content">无效内容</string>
+
+    <string name="input_empty">请输入内容</string>
+    <string name="input_todo_empty">请输入待办内容</string>
+    <string name="input_folder_name_empty">请输入文件夹名称</string>
+    <string name="input_anniversary_empty">请输入纪念内容和日期</string>
+    <string name="input_link_empty">请输入链接名称和 URL</string>
+
+    <string name="password_error">密码错误</string>
+    <string name="password_empty">密码不能为空</string>
+    <string name="password_not_match">两次密码不一致</string>
+
+    <string name="permission_denied">存储权限被拒绝</string>
+    <string name="permission_granted">存储权限已获取</string>
+
+    <string name="open_error">打开失败</string>
+    <string name="note_locked">该笔记已锁定</string>
+
     <!-- 其它 -->
     <string name="about">关于</string>
-    <string name="password_check">密码校验</string>
+    <string name="security">隐私与安全</string>
+    <string name="backup">备份与导出</string>
+
     <string name="password">密码</string>
+    <string name="password_check">身份校验</string>
     <string name="password_change">密码修改</string>
-    <string name="visit">访问</string>
+    <string name="batch_import">批量导入</string>
     <string name="delete_confirm_hint">确认要删除吗？</string>
-    <string name="copy">复制</string>
 
     <!-- Act -->
     <string name="title_activity_about_studio">AboutStudioActivity</string>
@@ -200,4 +248,20 @@
     <string name="title_activity_weather_selection">WeatherSelectionActivity</string>
     <string name="title_activity_mood_select">MoodSelectActivity</string>
     <string name="title_activity_password_change">PasswordChangeActivity</string>
+    <string name="title_activity_backup">BackupActivity</string>
+    <string name="title_activity_link_import">LinkImportActivity</string>
+    <string name="title_activity_todo_completed">TodoCompletedActivity</string>
+    <string name="title_activity_todo_add">TodoAddActivity</string>
+    <string name="title_activity_folder_details">FolderDetailsActivity</string>
+    <string name="title_activity_link_details">LinkDetailsActivity</string>
+    <string name="title_activity_link_add">LinkAddActivity</string>
+    <string name="title_activity_link_list">LinkListActivity</string>
+    <string name="title_activity_folder_add">FolderAddActivity</string>
+    <string name="title_activity_folder_list">FolderListActivity</string>
+    <string name="title_activity_setting">SettingActivity</string>
+    <string name="title_activity_anniversary_full_display">AnniversaryFullDisplayActivity</string>
+    <string name="title_activity_subject_choose">SubjectChooseActivity</string>
+    <string name="title_activity_english">EnglishActivity</string>
+    <string name="title_activity_chinese">ChineseActivity</string>
+    <string name="title_activity_smart_box">SmartBoxActivity</string>
 </resources>

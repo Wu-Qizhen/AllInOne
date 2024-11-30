@@ -56,6 +56,7 @@ import kotlinx.coroutines.launch
 /**
  * 笔记编辑
  * Created by Wu Qizhen on 2024.7.1
+ * Refactored by Wu Qizhen on 2024.11.30
  */
 class NoteEditActivity : ComponentActivity() {
     private lateinit var viewModel: NoteViewModel
@@ -65,28 +66,6 @@ class NoteEditActivity : ComponentActivity() {
 
         viewModel = NoteViewModel(application)
         val noteId = intent.getIntExtra("NOTE_ID", -1)
-        /*val note: Note
-        if (noteId != -1) {
-            val noteTitle = intent.getStringExtra("NOTE_TITLE")
-            val noteContent = intent.getStringExtra("NOTE_CONTENT")
-            val noteCreateTime = intent.getStringExtra("NOTE_CREATE_TIME")
-            val noteUpdateTime = intent.getStringExtra("NOTE_UPDATE_TIME")
-            note = Note(
-                id = noteId,
-                title = noteTitle ?: "",
-                content = noteContent ?: "",
-                createTime = noteCreateTime ?: viewModel.getDateTime(),
-                updateTime = noteUpdateTime ?: viewModel.getDateTime()
-            )
-        } else {
-            note = Note(
-                id = -1,
-                title = "",
-                content = "",
-                createTime = viewModel.getDateTime(),
-                updateTime = viewModel.getDateTime()
-            )
-        }*/
 
         viewModel.viewModelScope.launch {
             val note = if (noteId != -1) viewModel.getNote(noteId) else Note(
@@ -97,12 +76,12 @@ class NoteEditActivity : ComponentActivity() {
                 updateTime = viewModel.getDateTime(),
                 isLocked = false
             )
+
             setContent {
                 AllInOneTheme {
                     AppBackground.BreathingBackground {
                         NoteEditScreen(
-                            currentNote = note,
-                            viewModel = viewModel
+                            currentNote = note
                         )
                     }
                 }
@@ -112,8 +91,7 @@ class NoteEditActivity : ComponentActivity() {
 
     @Composable
     fun NoteEditScreen(
-        currentNote: Note,
-        viewModel: NoteViewModel
+        currentNote: Note
     ) {
         val scrollState = rememberScrollState()
         var note by remember { mutableStateOf(currentNote) }
@@ -218,7 +196,7 @@ class NoteEditActivity : ComponentActivity() {
                             if (content.value.isEmpty() && title.value.isEmpty()) {
                                 Toast.makeText(
                                     this@NoteEditActivity,
-                                    "标题或内容不能为空",
+                                    R.string.input_empty,
                                     Toast.LENGTH_SHORT
                                 ).show()
                                 return@IconButton
@@ -231,7 +209,7 @@ class NoteEditActivity : ComponentActivity() {
                             }
                             Toast.makeText(
                                 this@NoteEditActivity,
-                                "保存成功",
+                                R.string.saved,
                                 Toast.LENGTH_SHORT
                             ).show()
                         },

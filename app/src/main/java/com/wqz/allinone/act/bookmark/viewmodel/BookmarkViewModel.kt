@@ -79,6 +79,14 @@ class BookmarkViewModel(application: Application) : AndroidViewModel(application
         }
     }
 
+    fun insertLinks(links: List<Link>) {
+        viewModelScope.launch {
+            withContext(Dispatchers.IO) {
+                linkDao.insertLinks(links)
+            }
+        }
+    }
+
     fun updateLink(link: Link) {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {

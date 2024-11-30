@@ -13,8 +13,6 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -24,10 +22,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ArrowBack
@@ -47,8 +43,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -66,10 +60,10 @@ import com.wqz.allinone.act.diary.data.OptionData
 import com.wqz.allinone.act.diary.viewmodel.DiaryViewModel
 import com.wqz.allinone.entity.Diary
 import com.wqz.allinone.ui.AppBackground
-import com.wqz.allinone.ui.ItemX
 import com.wqz.allinone.ui.ModifierExtends.clickVfx
-import com.wqz.allinone.ui.color.BackgroundColor
-import com.wqz.allinone.ui.color.BorderColor
+import com.wqz.allinone.ui.XCard
+import com.wqz.allinone.ui.XItem
+import com.wqz.allinone.ui.property.BorderWidth
 import com.wqz.allinone.ui.theme.AllInOneTheme
 import com.wqz.allinone.ui.theme.ThemeColor
 import kotlinx.coroutines.launch
@@ -81,6 +75,7 @@ import java.util.Locale
 /**
  * 编辑日记
  * Created by Wu Qizhen on 2024.10.13
+ * Refactored by Wu Qizhen on 2024.11.30
  */
 class DiaryEditActivity : ComponentActivity() {
     private lateinit var viewModel: DiaryViewModel
@@ -132,7 +127,7 @@ class DiaryEditActivity : ComponentActivity() {
             setContent {
                 AllInOneTheme {
                     AppBackground.BreathingBackground {
-                        DiaryEditScreen(diary, viewModel)
+                        DiaryEditScreen(diary)
                     }
                 }
             }
@@ -141,8 +136,7 @@ class DiaryEditActivity : ComponentActivity() {
 
     @Composable
     fun DiaryEditScreen(
-        currentDiary: Diary,
-        viewModel: DiaryViewModel
+        currentDiary: Diary
     ) {
         val context = LocalContext.current
         val scrollState = rememberScrollState()
@@ -153,7 +147,8 @@ class DiaryEditActivity : ComponentActivity() {
         var selectedDate by remember { mutableStateOf(if (currentDiary.id >= 0) currentDiary.date else LocalDate.now()) }
         val formatter = DateTimeFormatter.ofPattern("yyyy年MM月dd日", Locale.CHINA)
         var showDateSelect by remember { mutableStateOf(false) }
-        var inputDate by remember { mutableStateOf(selectedDate.format(DateTimeFormatter.ofPattern("yyyy.MM.dd"))) }
+        // var inputDate by remember { mutableStateOf(selectedDate.format(DateTimeFormatter.ofPattern("yyyy.MM.dd"))) }
+        var inputDate by remember { mutableStateOf("") }
 
         val selectedWeather by viewModel.selectedWeather.collectAsStateWithLifecycle(/*if (currentDiary.id >= 0) OptionData.weatherOptions[currentDiary.weather] else */
             null
@@ -202,6 +197,7 @@ class DiaryEditActivity : ComponentActivity() {
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Spacer(modifier = Modifier.height(15.dp))
+
             Row(modifier = Modifier.wrapContentSize()) {
                 IconButton(
                     onClick = {
@@ -216,13 +212,15 @@ class DiaryEditActivity : ComponentActivity() {
                     },
                     modifier = Modifier.size(25.dp)
                 )
+
                 Spacer(modifier = Modifier.width(20.dp))
+
                 IconButton(
                     onClick = {
                         if (content.isEmpty()) {
                             Toast.makeText(
                                 this@DiaryEditActivity,
-                                "内容不能为空",
+                                R.string.input_empty,
                                 Toast.LENGTH_SHORT
                             ).show()
                             return@IconButton
@@ -251,7 +249,7 @@ class DiaryEditActivity : ComponentActivity() {
                         }
                         Toast.makeText(
                             this@DiaryEditActivity,
-                            "保存成功",
+                            R.string.saved,
                             Toast.LENGTH_SHORT
                         ).show()
                         finish()
@@ -266,24 +264,10 @@ class DiaryEditActivity : ComponentActivity() {
                     modifier = Modifier.size(25.dp)
                 )
             }
+
             Spacer(modifier = Modifier.height(15.dp))
 
-            Column(
-                modifier = Modifier
-                    .clickVfx()
-                    .wrapContentHeight()
-                    .fillMaxWidth()
-                    .background(BackgroundColor.DEFAULT_GRAY, RoundedCornerShape(10.dp))
-                    .border(
-                        width = 0.5f.dp,
-                        shape = RoundedCornerShape(10.dp),
-                        brush = Brush.linearGradient(
-                            BorderColor.DEFAULT_GRAY,
-                            start = Offset.Zero,
-                            end = Offset.Infinite
-                        )
-                    )
-            ) {
+            XCard.LivelyCard {
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
                     modifier = Modifier
@@ -295,6 +279,7 @@ class DiaryEditActivity : ComponentActivity() {
                         fontWeight = FontWeight.Bold,
                         fontSize = 16.sp
                     )
+
                     Text(
                         text = "${selectedDate.format(formatter)}\n${
                             selectedDate.dayOfWeek.getDisplayName(
@@ -321,9 +306,10 @@ class DiaryEditActivity : ComponentActivity() {
                         Divider(
                             modifier = Modifier
                                 .fillMaxWidth(),
-                            thickness = 0.5f.dp,
+                            thickness = BorderWidth.DEFAULT_WIDTH,
                             color = Color(54, 54, 54)
                         )
+
                         TextField(
                             modifier = Modifier.fillMaxWidth(),
                             value = inputDate,
@@ -346,17 +332,22 @@ class DiaryEditActivity : ComponentActivity() {
                                     text = "2000.01.01",
                                     color = Color.DarkGray,
                                     fontSize = 16.sp,
-                                    fontWeight = FontWeight.Bold
+                                    fontWeight = FontWeight.Bold,
+                                    textAlign = TextAlign.Center,
+                                    modifier = Modifier.fillMaxWidth()
                                 )
                             }
                         )
+
                         Row {
-                            ItemX.Button(icon = R.drawable.ic_locate, text = "今天") {
+                            XItem.Button(icon = R.drawable.ic_locate, text = "今天") {
                                 selectedDate = LocalDate.now()
                                 showDateSelect = false
                             }
+
                             Spacer(modifier = Modifier.width(10.dp))
-                            ItemX.Button(icon = R.drawable.ic_jump, text = "跳转") {
+
+                            XItem.Button(icon = R.drawable.ic_jump, text = "跳转") {
                                 if (inputDate.matches(Regex("\\d{4}.\\d{2}.\\d{2}"))) {
                                     val parts = inputDate.split(".")
                                     val year = parts[0].toInt()
@@ -365,16 +356,25 @@ class DiaryEditActivity : ComponentActivity() {
                                     try {
                                         selectedDate = LocalDate.of(year, month, day)
                                     } catch (e: DateTimeException) {
-                                        Toast.makeText(context, "日期超出范围", Toast.LENGTH_SHORT)
+                                        Toast.makeText(
+                                            context,
+                                            R.string.invalid_date,
+                                            Toast.LENGTH_SHORT
+                                        )
                                             .show()
                                     }
                                     showDateSelect = false
                                 } else {
-                                    Toast.makeText(context, "日期格式错误", Toast.LENGTH_SHORT)
+                                    Toast.makeText(
+                                        context,
+                                        R.string.invalid_date,
+                                        Toast.LENGTH_SHORT
+                                    )
                                         .show()
                                 }
                             }
                         }
+
                         Spacer(modifier = Modifier.height(15.dp))
                     }
                 }
@@ -382,7 +382,7 @@ class DiaryEditActivity : ComponentActivity() {
                 Divider(
                     modifier = Modifier
                         .fillMaxWidth(),
-                    thickness = 0.5f.dp,
+                    thickness = BorderWidth.DEFAULT_WIDTH,
                     color = Color(54, 54, 54)
                 )
 
@@ -430,7 +430,9 @@ class DiaryEditActivity : ComponentActivity() {
                                     contentDescription = option.text,
                                     modifier = Modifier.size(30.dp)
                                 )
+
                                 Spacer(modifier = Modifier.width(5.dp))
+
                                 Text(text = option.text, fontSize = 16.sp)
                             }
                         }
@@ -440,7 +442,7 @@ class DiaryEditActivity : ComponentActivity() {
                 Divider(
                     modifier = Modifier
                         .fillMaxWidth(),
-                    thickness = 0.5f.dp,
+                    thickness = BorderWidth.DEFAULT_WIDTH,
                     color = Color(54, 54, 54)
                 )
 
@@ -455,6 +457,7 @@ class DiaryEditActivity : ComponentActivity() {
                         fontWeight = FontWeight.Bold,
                         fontSize = 16.sp
                     )
+
                     if (selectedMood == null) {
                         Text(
                             text = "选择心情",
@@ -487,7 +490,9 @@ class DiaryEditActivity : ComponentActivity() {
                                     contentDescription = option.text,
                                     modifier = Modifier.size(30.dp)
                                 )
+
                                 Spacer(modifier = Modifier.width(5.dp))
+
                                 Text(text = option.text, fontSize = 16.sp)
                             }
                         }
@@ -497,7 +502,7 @@ class DiaryEditActivity : ComponentActivity() {
                 Divider(
                     modifier = Modifier
                         .fillMaxWidth(),
-                    thickness = 0.5f.dp,
+                    thickness = BorderWidth.DEFAULT_WIDTH,
                     color = Color(54, 54, 54)
                 )
 

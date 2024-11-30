@@ -18,6 +18,9 @@ interface FolderDao {
     @Query("SELECT * FROM Folder")
     fun getAllFolders(): LiveData<List<Folder>>
 
+    @Query("SELECT * FROM Folder")
+    fun getAllFoldersForExport(): List<Folder>
+
     @Query("SELECT * FROM Folder WHERE id = :folderId")
     fun getFolder(folderId: Int): Folder?
 

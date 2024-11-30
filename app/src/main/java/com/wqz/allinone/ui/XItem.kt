@@ -38,21 +38,28 @@ import com.wqz.allinone.ui.ModifierExtends.clickVfx
 import com.wqz.allinone.ui.color.BackgroundColor
 import com.wqz.allinone.ui.color.BorderColor
 import com.wqz.allinone.ui.color.ContentColor
+import com.wqz.allinone.ui.property.BorderWidth
 import com.wqz.allinone.ui.theme.AllInOneTheme
 
 /**
  * 胶囊按钮 -> 项目按钮
  * Created by Wu Qizhen on 2024.6.16
  * Updated by Wu Qizhen on 2024.8.31
+ * Refactored by Wu Qizhen on 2024.11.30
  */
-object ItemX {
+object XItem {
     private val BACKGROUND_DEFAULT_GRAY = BackgroundColor.DEFAULT_GRAY
     private val BACKGROUND_PRESSED_GRAY = BackgroundColor.PRESSED_GRAY
     private val BACKGROUND_DEFAULT_YELLOW = BackgroundColor.DEFAULT_YELLOW
     private val BACKGROUND_PRESSED_YELLOW = BackgroundColor.PRESSED_YELLOW
     private val BORDER_DEFAULT_GRAY = BorderColor.DEFAULT_GRAY
-    private val BORDER_WIDTH = 0.4f.dp
+    private val BORDER_WIDTH = BorderWidth.DEFAULT_WIDTH
 
+    /**
+     * 文本按钮
+     * @param text 按钮文字
+     * @param onClick 点击事件
+     */
     @Composable
     fun Button(
         text: String,
@@ -79,6 +86,12 @@ object ItemX {
         }
     }
 
+    /**
+     * 图标按钮
+     * @param icon 图标
+     * @param text 按钮文字
+     * @param onClick 点击事件
+     */
     @Composable
     fun Button(
         icon: Int,
@@ -104,7 +117,9 @@ object ItemX {
                 modifier = Modifier.size(20.dp),
                 contentDescription = null,
             )
+
             Spacer(modifier = Modifier.size(5.dp))
+
             Text(
                 text = text,
                 fontSize = 16.sp,
@@ -114,6 +129,13 @@ object ItemX {
         }
     }
 
+    /**
+     * 胶囊按钮
+     * @param image 图标
+     * @param text 按钮文字
+     * @param subText 副标题
+     * @param onClick 点击事件
+     */
     @Composable
     fun Capsule(
         image: Int,
@@ -125,31 +147,13 @@ object ItemX {
         val isPressed = interactionSource.collectIsPressedAsState()
         val backgroundColor =
             if (isPressed.value) BACKGROUND_PRESSED_GRAY else BACKGROUND_DEFAULT_GRAY
-        /*val borderColorsBrush = remember {
-            Brush.linearGradient(
-                borderColors
-            )
-        }*/
 
-        /*Button(
-            onClick = { },
-            contentPadding = PaddingValues(0.dp),
-            shape = RoundedCornerShape(50.dp),
-            colors = ButtonDefaults.buttonColors(
-                containerColor = backgroundColor
-            ),
-            border = BorderStroke(1.dp, color = borderColor),
-            modifier = Modifier
-                .height(50.dp),
-            interactionSource = interactionSource
-        ) {*/
         Row(
             modifier = Modifier
                 .clickVfx(interactionSource, true, onClick)
                 .wrapContentHeight()
                 .fillMaxWidth()
                 .background(backgroundColor, RoundedCornerShape(50.dp))
-                // .border(1.dp, color = borderColor, shape = RoundedCornerShape(50.dp))
                 .border(
                     width = BORDER_WIDTH,
                     shape = RoundedCornerShape(50.dp),
@@ -169,6 +173,7 @@ object ItemX {
                     .clip(CircleShape),
                 contentDescription = null,
             )
+
             Column(
                 modifier = Modifier
                     .padding(start = 8.dp)
@@ -180,19 +185,25 @@ object ItemX {
                     fontSize = 14.sp,
                     maxLines = 1
                 )
-                // Spacer(modifier = Modifier.height(2.dp))
+
                 Text(
                     text = subText,
                     fontSize = 12.sp,
                     color = Color.Gray,
                     maxLines = 1
-                    // modifier = Modifier.alpha(ContentAlpha.medium)
                 )
             }
         }
-        /*}*/
     }
 
+    /**
+     * 胶囊按钮
+     * @param icon 图标
+     * @param iconSize 图标大小
+     * @param text 按钮文字
+     * @param subText 副标题
+     * @param onClick 点击事件
+     */
     @Composable
     fun Capsule(
         icon: Int,
@@ -212,7 +223,6 @@ object ItemX {
                 .wrapContentHeight()
                 .fillMaxWidth()
                 .background(backgroundColor, RoundedCornerShape(50.dp))
-                // .border(1.dp, color = borderColor, shape = RoundedCornerShape(50.dp))
                 .border(
                     width = BORDER_WIDTH,
                     shape = RoundedCornerShape(50.dp),
@@ -240,6 +250,7 @@ object ItemX {
                     .padding(iconPadding),
                 contentDescription = null,
             )
+
             Column(
                 modifier = Modifier
                     .padding(start = 8.dp)
@@ -251,6 +262,7 @@ object ItemX {
                     fontSize = 14.sp,
                     maxLines = 1
                 )
+
                 Text(
                     text = subText,
                     fontSize = 12.sp,
@@ -261,6 +273,13 @@ object ItemX {
         }
     }
 
+    /**
+     * 胶囊按钮
+     * @param icon 图标
+     * @param iconSize 图标大小
+     * @param text 按钮文字
+     * @param onClick 点击事件
+     */
     @Composable
     fun Capsule(
         icon: Int,
@@ -279,7 +298,6 @@ object ItemX {
                 .wrapContentHeight()
                 .fillMaxWidth()
                 .background(backgroundColor, RoundedCornerShape(50.dp))
-                // .border(1.dp, color = borderColor, shape = RoundedCornerShape(50.dp))
                 .border(
                     width = BORDER_WIDTH,
                     shape = RoundedCornerShape(50.dp),
@@ -307,6 +325,7 @@ object ItemX {
                     .padding(iconPadding),
                 contentDescription = null,
             )
+
             Text(
                 modifier = Modifier
                     .padding(start = 8.dp)
@@ -322,23 +341,27 @@ object ItemX {
 
 @Preview
 @Composable
-fun ItemXPreview() {
+fun XItemPreview() {
     AllInOneTheme {
         Column {
-            ItemX.Capsule(
+            XItem.Capsule(
                 image = R.drawable.logo_wqz,
                 text = "Wu Qizhen",
                 subText = "Developer"
             ) { }
+
             Spacer(modifier = Modifier.height(10.dp))
-            ItemX.Capsule(
+
+            XItem.Capsule(
                 icon = R.drawable.ic_version,
                 iconSize = 20,
                 text = "Released 1.0.0",
                 subText = "Version"
             ) { }
+
             Spacer(modifier = Modifier.height(10.dp))
-            ItemX.Button(text = "Text Button") { }
+
+            XItem.Button(text = "Text Button") { }
         }
     }
 }

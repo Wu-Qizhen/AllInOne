@@ -29,12 +29,13 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.wqz.allinone.R
 import com.wqz.allinone.ui.ModifierExtends.clickVfx
-import com.wqz.allinone.ui.TitleBar
+import com.wqz.allinone.ui.XTitleBar
 import com.wqz.allinone.ui.theme.AllInOneTheme
 
 /**
  * 关于组织
  * Created by Wu Qizhen on 2024.6.22
+ * Refactored by Wu Qizhen on 2024.11.30
  */
 @Composable
 fun AboutStudioScreen() {
@@ -55,7 +56,7 @@ fun AboutStudioScreen() {
             .padding(horizontal = 20.dp),
         verticalArrangement = Arrangement.Top,
     ) {
-        TitleBar.TextTitleBar(title = R.string.about_studio)
+        XTitleBar.TextTitleBar(title = R.string.about_studio)
 
         Image(
             painter = painterResource(id = R.drawable.logo_code_intellix_poster),
@@ -123,7 +124,7 @@ fun AboutStudioScreen() {
             contentScale = ContentScale.Crop
         )
 
-        Spacer(modifier = Modifier.height(40.dp))
+        Spacer(modifier = Modifier.height(50.dp))
     }
 }
 

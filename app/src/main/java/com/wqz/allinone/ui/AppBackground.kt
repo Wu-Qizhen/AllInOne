@@ -9,6 +9,9 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -21,6 +24,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.wqz.allinone.R
@@ -29,16 +33,21 @@ import com.wqz.allinone.ui.theme.AllInOneTheme
 /**
  * 通用背景
  * Created by Wu Qizhen on 2024.6.16
+ * Refactored by Wu Qizhen on 2024.11.30
  */
 object AppBackground {
     @Composable
     fun titleBackgroundHorizontalPadding() = if (isRound()) 24.dp else 12.dp
 
+    /**
+     * 圆形背景
+     */
     @Composable
     fun CirclesBackground(content: @Composable () -> Unit) {
         var bottomWidth by remember { mutableStateOf(0.dp) }
         var topWidth by remember { mutableStateOf(0.dp) }
         val localDensity = LocalDensity.current
+
         Box(
             modifier = Modifier
                 .fillMaxSize()
@@ -62,14 +71,17 @@ object AppBackground {
                         },
                     contentScale = ContentScale.FillWidth
                 )
+
                 Spacer(Modifier.weight(50f))
             }
+
             Row(
                 Modifier
                     .align(Alignment.TopEnd)
                     .fillMaxSize()
             ) {
                 Spacer(Modifier.weight(50f))
+
                 Image(
                     painter = painterResource(id = R.drawable.bg_circle_right),
                     contentDescription = null,
@@ -84,18 +96,19 @@ object AppBackground {
                     contentScale = ContentScale.Fit
                 )
             }
+
             Column(
                 Modifier
                     .fillMaxSize()
-                /*.padding(horizontal = 20.dp)*/
             ) {
-                // Spacer(Modifier.width(8.dp))
                 content()
-                // Spacer(Modifier.width(8.dp))
             }
         }
     }
 
+    /**
+     * 呼吸背景
+     */
     @Composable
     fun BreathingBackground(content: @Composable () -> Unit) {
         Box(
@@ -111,10 +124,14 @@ object AppBackground {
                     .align(Alignment.TopCenter),
                 contentScale = ContentScale.FillWidth
             )
+
             content()
         }
     }
 
+    /**
+     * 呼吸背景
+     */
     @Composable
     fun BreathingBackground(title: String, content: @Composable () -> Unit) {
         Box(
@@ -130,15 +147,53 @@ object AppBackground {
                     .align(Alignment.TopCenter),
                 contentScale = ContentScale.FillWidth
             )
-            TitleBar.TextTitleBar(
-                title = title,
-                color = Color.White,
-                modifier = Modifier.align(Alignment.TopCenter)
-            )
+
+            val scrollState = rememberScrollState()
+
             Column(
-                Modifier
+                modifier = Modifier
                     .fillMaxSize()
+                    .verticalScroll(scrollState)
+                    .padding(horizontal = 20.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
+                XTitleBar.TextTitleBar(title = title)
+
+                content()
+            }
+        }
+    }
+
+    /**
+     * 呼吸背景
+     */
+    @Composable
+    fun BreathingBackground(title: Int, content: @Composable () -> Unit) {
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(Color.Black)
+        ) {
+            Image(
+                painter = painterResource(id = R.drawable.bg_breathing_large),
+                contentDescription = null,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .align(Alignment.TopCenter),
+                contentScale = ContentScale.FillWidth
+            )
+
+            val scrollState = rememberScrollState()
+
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .verticalScroll(scrollState)
+                    .padding(horizontal = 20.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                XTitleBar.TextTitleBar(title = stringResource(id = title))
+
                 content()
             }
         }
@@ -148,7 +203,9 @@ object AppBackground {
 @Preview
 @Composable
 fun CirclesBackgroundPreview() {
-    AppBackground.BreathingBackground {}
+    AllInOneTheme {
+        AppBackground.BreathingBackground {}
+    }
 }
 
 @Preview

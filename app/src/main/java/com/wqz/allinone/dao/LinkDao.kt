@@ -4,10 +4,10 @@ import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
+import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
 import com.wqz.allinone.entity.Link
-import kotlinx.coroutines.flow.Flow
 
 /**
  * 链接数据访问对象
@@ -19,13 +19,16 @@ interface LinkDao {
     fun getAllLinks(): LiveData<List<Link>>
 
     @Query("SELECT * FROM Link WHERE folder = :folderId")
-    fun getLinksForFolder(folderId: Int): Flow<List<Link>>
+    fun getLinksForFolder(folderId: Int): List<Link>
 
     @Query("SELECT * FROM Link WHERE id = :id")
     fun getLink(id: Int): Link?
 
     @Insert
     fun insertLink(link: Link)
+
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    fun insertLinks(links: List<Link>)
 
     @Update
     fun updateLink(link: Link)

@@ -25,11 +25,13 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.wqz.allinone.R
-import com.wqz.allinone.ui.TitleBar
+import com.wqz.allinone.ui.XCard
+import com.wqz.allinone.ui.XTitleBar
 
 /**
  * 关于开发者
  * Created by Wu Qizhen on 2024.6.22
+ * Refactored by Wu Qizhen on 2024.11.30
  */
 @Composable
 fun AboutDeveloperScreen(logo: Int, name: Int, description: Int, details: Int) {
@@ -43,44 +45,49 @@ fun AboutDeveloperScreen(logo: Int, name: Int, description: Int, details: Int) {
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        TitleBar.TextTitleBar(title = R.string.about_developer)
+        XTitleBar.TextTitleBar(title = R.string.about_developer)
 
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            Image(
-                painter = painterResource(id = logo),
-                contentDescription = "Logo",
-                modifier = Modifier.size(40.dp),
-                contentScale = ContentScale.Crop
-            )
-            Spacer(modifier = Modifier.width(10.dp))
-            Column {
-                Text(
-                    text = stringResource(id = name),
-                    fontSize = 16.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = Color.White
+        XCard.LivelyCard(10) {
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Image(
+                    painter = painterResource(id = logo),
+                    contentDescription = "Logo",
+                    modifier = Modifier.size(40.dp),
+                    contentScale = ContentScale.Crop
                 )
-                Text(
-                    text = stringResource(id = description),
-                    fontSize = 12.sp,
-                    color = Color.Gray
-                )
+
+                Spacer(modifier = Modifier.width(10.dp))
+
+                Column {
+                    Text(
+                        text = stringResource(id = name),
+                        fontSize = 16.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = Color.White
+                    )
+
+                    Text(
+                        text = stringResource(id = description),
+                        fontSize = 12.sp,
+                        color = Color.Gray
+                    )
+                }
             }
+
+            Spacer(modifier = Modifier.height(10.dp))
+
+            Text(
+                text = stringResource(id = details),
+                modifier = Modifier.fillMaxWidth(),
+                lineHeight = 16.sp,
+                color = Color.White
+            )
         }
 
-        Spacer(modifier = Modifier.height(10.dp))
-
-        Text(
-            text = stringResource(id = details),
-            modifier = Modifier.fillMaxWidth(),
-            lineHeight = 16.sp,
-            color = Color.White
-        )
-
-        Spacer(modifier = Modifier.height(40.dp))
+        Spacer(modifier = Modifier.height(50.dp))
     }
 }
 

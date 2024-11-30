@@ -20,9 +20,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -43,14 +41,15 @@ import com.wqz.allinone.act.about.data.UpdateLogData
 import com.wqz.allinone.act.about.data.UpdateLog
 import com.wqz.allinone.ui.AppBackground
 import com.wqz.allinone.ui.ModifierExtends.clickVfx
-import com.wqz.allinone.ui.TitleBar
 import com.wqz.allinone.ui.color.BackgroundColor
 import com.wqz.allinone.ui.color.BorderColor
+import com.wqz.allinone.ui.property.BorderWidth
 import com.wqz.allinone.ui.theme.AllInOneTheme
 
 /**
  * 更新日志
  * Created by Wu Qizhen on 2024.8.31
+ * Refactored by Wu Qizhen on 2024.11.30
  */
 class UpdateLogActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -58,7 +57,7 @@ class UpdateLogActivity : ComponentActivity() {
 
         setContent {
             AllInOneTheme {
-                AppBackground.BreathingBackground {
+                AppBackground.BreathingBackground(title = R.string.update_log) {
                     UpdateLogScreen(
                         updateLogs = UpdateLogData.updateLogs
                     )
@@ -71,25 +70,13 @@ class UpdateLogActivity : ComponentActivity() {
     fun UpdateLogScreen(
         updateLogs: List<UpdateLog>
     ) {
-        val scrollState = rememberScrollState()
-
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .verticalScroll(scrollState)
-                .padding(horizontal = 20.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            TitleBar.TextTitleBar(title = R.string.update_log)
-
-            updateLogs.forEach {
-                key(it.version) {
-                    UpdateLogItem(it)
-                }
+        updateLogs.forEach {
+            key(it.version) {
+                UpdateLogItem(it)
             }
-
-            Spacer(modifier = Modifier.height(47.dp))
         }
+
+        Spacer(modifier = Modifier.height(47.dp))
     }
 
     @Composable
@@ -101,145 +88,100 @@ class UpdateLogActivity : ComponentActivity() {
         val backgroundColor =
             if (isPressed.value) BackgroundColor.PRESSED_GRAY else BackgroundColor.DEFAULT_GRAY
         val borderColors = BorderColor.DEFAULT_GRAY
-        val borderWidth = 0.4f.dp
+        val borderWidth = BorderWidth.DEFAULT_WIDTH
         var showDetails by remember { mutableStateOf(false) }
 
-        AnimatedVisibility(
-            visible = !showDetails,
-            enter = fadeIn() + expandVertically(),
-            exit = fadeOut() + shrinkVertically()
-        ) {
-            Column {
-                Spacer(modifier = Modifier.height(3.dp))
-                Column(
-                    modifier = Modifier
-                        .clickVfx(
-                            interactionSource = interactionSource,
-                            enabled = true,
-                            onClick = {
-                                showDetails = !showDetails
-                            }
+        Column {
+            Spacer(modifier = Modifier.height(3.dp))
+
+            Column(
+                modifier = Modifier
+                    .clickVfx(
+                        interactionSource = interactionSource,
+                        enabled = true,
+                        onClick = {
+                            showDetails = !showDetails
+                        }
+                    )
+                    .wrapContentHeight()
+                    .fillMaxWidth()
+                    .background(backgroundColor, RoundedCornerShape(10.dp))
+                    .border(
+                        width = borderWidth,
+                        shape = RoundedCornerShape(10.dp),
+                        brush = Brush.linearGradient(
+                            borderColors,
+                            start = Offset.Zero,
+                            end = Offset.Infinite
                         )
-                        .wrapContentHeight()
-                        .fillMaxWidth()
-                        .background(backgroundColor, RoundedCornerShape(10.dp))
-                        .border(
-                            width = borderWidth,
-                            shape = RoundedCornerShape(10.dp),
-                            brush = Brush.linearGradient(
-                                borderColors,
-                                start = Offset.Zero,
-                                end = Offset.Infinite
-                            )
-                        )
-                        .padding(10.dp)
+                    )
+                    .padding(10.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceBetween,
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
+                    Text(
+                        text = updateLog.version,
+                        fontSize = 16.sp,
+                        maxLines = 1,
+                        fontWeight = FontWeight.Bold
+                    )
+
+                    Text(
+                        text = updateLog.updateTime,
+                        fontSize = 16.sp,
+                        maxLines = 1,
+                        fontWeight = FontWeight.Bold
+                    )
+                }
+
+                AnimatedVisibility(
+                    visible = showDetails,
+                    enter = fadeIn() + expandVertically(),
+                    exit = fadeOut() + shrinkVertically()
+                ) {
+                    Column {
                         Text(
-                            text = updateLog.version,
-                            fontSize = 16.sp,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(top = 5.dp),
+                            text = "版本介绍：",
+                            fontSize = 14.sp,
                             maxLines = 1,
                             fontWeight = FontWeight.Bold
                         )
+
                         Text(
-                            text = updateLog.updateTime,
-                            fontSize = 16.sp,
+                            modifier = Modifier.fillMaxWidth(),
+                            text = updateLog.versionDesc,
+                            fontSize = 12.sp,
+                            color = Color.Gray
+                        )
+
+                        Text(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(top = 5.dp),
+                            text = "更新内容：",
+                            fontSize = 14.sp,
                             maxLines = 1,
                             fontWeight = FontWeight.Bold
+                        )
+
+                        Text(
+                            modifier = Modifier.fillMaxWidth(),
+                            text = updateLog.updateLog,
+                            fontSize = 12.sp,
+                            color = Color.Gray
                         )
                     }
                 }
-                Spacer(modifier = Modifier.height(3.dp))
             }
         }
 
-        AnimatedVisibility(
-            visible = showDetails,
-            enter = fadeIn() + expandVertically(),
-            exit = fadeOut() + shrinkVertically()
-        )
-        {
-            Column {
-                Spacer(modifier = Modifier.height(3.dp))
-                Column(
-                    modifier = Modifier
-                        .clickVfx(
-                            interactionSource = interactionSource,
-                            enabled = true,
-                            onClick = {
-                                showDetails = !showDetails
-                            }
-                        )
-                        .wrapContentHeight()
-                        .fillMaxWidth()
-                        .background(backgroundColor, RoundedCornerShape(10.dp))
-                        .border(
-                            width = borderWidth,
-                            shape = RoundedCornerShape(10.dp),
-                            brush = Brush.linearGradient(
-                                borderColors,
-                                start = Offset.Zero,
-                                end = Offset.Infinite
-                            )
-                        )
-                        .padding(10.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceBetween,
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Text(
-                            text = updateLog.version,
-                            fontSize = 16.sp,
-                            maxLines = 1,
-                            fontWeight = FontWeight.Bold
-                        )
-                        Text(
-                            text = updateLog.updateTime,
-                            fontSize = 16.sp,
-                            maxLines = 1,
-                            fontWeight = FontWeight.Bold
-                        )
-                    }
-                    Text(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(top = 5.dp),
-                        text = "版本介绍：",
-                        fontSize = 14.sp,
-                        maxLines = 1,
-                        fontWeight = FontWeight.Bold
-                    )
-                    Text(
-                        modifier = Modifier.fillMaxWidth(),
-                        text = updateLog.versionDesc,
-                        fontSize = 12.sp,
-                        color = Color.Gray
-                    )
-                    Text(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(top = 5.dp),
-                        text = "更新内容：",
-                        fontSize = 14.sp,
-                        maxLines = 1,
-                        fontWeight = FontWeight.Bold
-                    )
-                    Text(
-                        modifier = Modifier.fillMaxWidth(),
-                        text = updateLog.updateLog,
-                        fontSize = 12.sp,
-                        color = Color.Gray
-                    )
-                }
-                Spacer(modifier = Modifier.height(3.dp))
-            }
-        }
+        Spacer(modifier = Modifier.height(3.dp))
     }
 }

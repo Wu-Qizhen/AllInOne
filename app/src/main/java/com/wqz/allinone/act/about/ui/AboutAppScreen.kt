@@ -2,11 +2,15 @@ package com.wqz.allinone.act.about.ui
 
 import android.content.Intent
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.expandHorizontally
 import androidx.compose.animation.expandVertically
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
+import androidx.compose.animation.shrinkHorizontally
 import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.interaction.collectIsPressedAsState
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -41,13 +45,14 @@ import com.wqz.allinone.R
 import com.wqz.allinone.act.about.AboutDeveloperActivity
 import com.wqz.allinone.act.about.AboutStudioActivity
 import com.wqz.allinone.act.about.UpdateLogActivity
-import com.wqz.allinone.ui.ItemX
 import com.wqz.allinone.ui.ModifierExtends.clickVfx
+import com.wqz.allinone.ui.XItem
 import com.wqz.allinone.ui.theme.AllInOneTheme
 
 /**
  * 关于应用
  * Created by Wu Qizhen on 2024.6.22
+ * Refactored by Wu Qizhen on 2024.11.30
  */
 @Composable
 fun AboutAppScreen() {
@@ -92,19 +97,21 @@ fun AboutAppScreen() {
         // horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Spacer(modifier = Modifier.height(40.dp))
-        Text(
-            text = stringResource(id = R.string.about_us),
-            fontSize = 20.sp,
-            fontWeight = FontWeight.Bold,
-            color = Color.White
-        )
+
+        TitleBar(title = R.string.about_us)
+
         Spacer(modifier = Modifier.height(10.dp))
+
         Image(
             painter = painterResource(id = R.drawable.logo_wxgy_for_wear_os),
             contentDescription = stringResource(id = R.string.app_name),
-            modifier = Modifier.height(50.dp)
+            modifier = Modifier
+                .height(50.dp)
+                .clickVfx()
         )
+
         Spacer(modifier = Modifier.height(10.dp))
+
         Text(
             text = stringResource(id = R.string.introduction),
             color = Color.White,
@@ -112,9 +119,12 @@ fun AboutAppScreen() {
             fontFamily = FontFamily(
                 Font(R.font.fzfengrusongti_regular, FontWeight.Normal)
             ),
-            fontWeight = FontWeight.Bold
+            fontWeight = FontWeight.Bold,
+            modifier = Modifier.clickVfx()
         )
+
         Spacer(modifier = Modifier.height(5.dp))
+
         IconButtonWithTopSpacer(
             icon = R.drawable.ic_version,
             text = R.string.version,
@@ -122,19 +132,25 @@ fun AboutAppScreen() {
         ) {
             context.startActivity(Intent(context, UpdateLogActivity::class.java))
         }
+
         ClassificationBar(icon = R.drawable.ic_team, text = R.string.participating_team)
+
         Spacer(modifier = Modifier.height(5.dp))
-        ItemX.Capsule(
+
+        XItem.Capsule(
             image = R.drawable.logo_code_intellix,
             text = stringResource(id = R.string.studio),
             subText = stringResource(id = R.string.studio_desc)
         ) {
             context.startActivity(Intent(context, AboutStudioActivity::class.java))
         }
+
         ClassificationBar(icon = R.drawable.ic_member, text = R.string.participating_individuals)
+
         for ((index) in developerNames.withIndex()) {
             Spacer(modifier = Modifier.height(5.dp))
-            ItemX.Capsule(
+
+            XItem.Capsule(
                 image = developerImages[index],
                 text = stringResource(developerNames[index]),
                 subText = stringResource(developerDesc[index])
@@ -147,7 +163,9 @@ fun AboutAppScreen() {
                 context.startActivity(intent)
             }
         }
+
         Spacer(modifier = Modifier.height(10.dp))
+
         AnimatedVisibility(
             visible = showBuild.value,
             enter = fadeIn() + expandVertically(),
@@ -156,12 +174,12 @@ fun AboutAppScreen() {
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    // .padding(vertical = 10.dp)
+                    .height(30.dp)
                     .clickVfx {
                         showBuild.value = false
                     },
                 horizontalArrangement = Arrangement.Center,
-                verticalAlignment = Alignment.CenterVertically
+                verticalAlignment = Alignment.Bottom
             ) {
                 Icon(
                     painter = painterResource(id = R.drawable.logo_aethex_matrix),
@@ -171,44 +189,49 @@ fun AboutAppScreen() {
                         .padding(end = 5.dp),
                     tint = Color.White
                 )
+
                 Text(
-                    text = stringResource(id = R.string.built_with),
+                    text = stringResource(id = R.string.powered_by),
                     fontSize = 10.sp,
                     fontWeight = FontWeight.Bold,
                     textAlign = TextAlign.Center,
                 )
             }
         }
+
         AnimatedVisibility(
             visible = !showBuild.value,
             enter = fadeIn() + expandVertically(),
             exit = fadeOut() + shrinkVertically()
         ) {
-            Text(
-                text = stringResource(id = R.string.copyright),
-                fontSize = 10.sp,
-                fontWeight = FontWeight.Bold,
-                textAlign = TextAlign.Center,
+            Row(
                 modifier = Modifier
                     .fillMaxWidth()
+                    .height(30.dp)
                     .clickVfx {
                         showBuild.value = true
-                    }
-            )
+                    },
+                horizontalArrangement = Arrangement.Center,
+                verticalAlignment = Alignment.Bottom
+            ) {
+                Text(
+                    text = stringResource(id = R.string.copyright),
+                    fontSize = 10.sp,
+                    fontWeight = FontWeight.Bold,
+                    textAlign = TextAlign.Center,
+                )
+            }
         }
+
         Spacer(modifier = Modifier.height(20.dp))
-        /*VerticalScrollbar(
-            adapter = rememberScrollbarAdapter(scrollState),
-            modifier = Modifier // .align(Alignment.Horizontal)
-                .fillMaxHeight()
-        )*/
     }
 }
 
 @Composable
 fun IconButtonWithTopSpacer(icon: Int, text: Int, subText: Int, onClick: () -> Unit) {
     Spacer(modifier = Modifier.height(5.dp))
-    ItemX.Capsule(
+
+    XItem.Capsule(
         icon = icon,
         iconSize = 20,
         text = stringResource(text),
@@ -222,6 +245,7 @@ fun IconButtonWithTopSpacer(icon: Int, text: Int, subText: Int, onClick: () -> U
 fun ClassificationBar(icon: Int, text: Int) {
     Row(
         modifier = Modifier
+            .clickVfx()
             .fillMaxWidth()
             .padding(top = 10.dp, bottom = 5.dp),
         verticalAlignment = Alignment.CenterVertically
@@ -231,10 +255,53 @@ fun ClassificationBar(icon: Int, text: Int) {
             contentDescription = stringResource(id = text),
             modifier = Modifier.size(25.dp)
         )
+
         Spacer(modifier = Modifier.width(5.dp))
+
         Text(
             text = stringResource(id = text),
             fontWeight = FontWeight.Bold,
+        )
+    }
+}
+
+@Composable
+fun TitleBar(title: Int) {
+    val context = LocalContext.current
+    val interactionSource = remember { MutableInteractionSource() }
+    val isPressed = interactionSource.collectIsPressedAsState()
+
+    Row(
+        modifier = Modifier
+            .height(40.dp)
+            .clickVfx(
+                interactionSource = interactionSource
+            ) {
+                (context as? androidx.activity.ComponentActivity)?.finish()
+            },
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.Center
+    ) {
+        com.wqz.allinone.ui.AnimatedVisibility(
+            visible = isPressed.value,
+            enter = expandHorizontally() + fadeIn(),
+            exit = shrinkHorizontally() + fadeOut()
+        ) {
+            Icon(
+                painter = painterResource(id = R.drawable.ic_back),
+                contentDescription = "Back",
+                modifier = Modifier.size(18.dp),
+                tint = Color.White
+            )
+        }
+
+        Text(
+            text = stringResource(id = title),
+            fontSize = 22.sp,
+            fontWeight = FontWeight.Bold,
+            maxLines = 1,
+            color = Color.White,
+            textAlign = TextAlign.Center
         )
     }
 }

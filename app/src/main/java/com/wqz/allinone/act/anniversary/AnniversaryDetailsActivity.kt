@@ -1,5 +1,6 @@
 package com.wqz.allinone.act.anniversary
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
@@ -61,6 +62,7 @@ import kotlin.math.absoluteValue
 /**
  * 纪念日详情
  * Created by Wu Qizhen on 2024.8.31
+ * Refactored by Wu Qizhen on 2024.11.30
  */
 class AnniversaryDetailsActivity : ComponentActivity() {
     private lateinit var viewModel: AnniversaryViewModel
@@ -85,8 +87,7 @@ class AnniversaryDetailsActivity : ComponentActivity() {
                 AppBackground.BreathingBackground {
                     AnniversaryDetailsScreen(
                         anniversaryId = anniversaryId,
-                        date = date,
-                        viewModel = viewModel
+                        date = date
                     )
                 }
             }
@@ -96,8 +97,7 @@ class AnniversaryDetailsActivity : ComponentActivity() {
     @Composable
     fun AnniversaryDetailsScreen(
         anniversaryId: Int,
-        date: Calendar,
-        viewModel: AnniversaryViewModel
+        date: Calendar
     ) {
         val context = LocalContext.current
         val scrollState = rememberScrollState()
@@ -124,8 +124,9 @@ class AnniversaryDetailsActivity : ComponentActivity() {
                     .padding(start = 20.dp, end = 20.dp, bottom = 70.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                // TitleBar.TextTitleBar(title = R.string.anniversary)
+                // XTitleBar.TextTitleBar(title = R.string.anniversary)
                 Spacer(modifier = Modifier.height(15.dp))
+
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -146,12 +147,15 @@ class AnniversaryDetailsActivity : ComponentActivity() {
                             },
                             modifier = Modifier.size(25.dp)
                         )
+
                         Spacer(modifier = Modifier.width(10.dp))
+
                         IconButton(
                             onClick = {
                                 if (deleteConfirm) {
                                     viewModel.deleteAnniversary(anniversaryId)
-                                    Toast.makeText(context, "删除成功", Toast.LENGTH_SHORT).show()
+                                    Toast.makeText(context, R.string.deleted, Toast.LENGTH_SHORT)
+                                        .show()
                                     finish()
                                 } else {
                                     Toast.makeText(context, "再次点击即可删除", Toast.LENGTH_SHORT)
@@ -185,11 +189,12 @@ class AnniversaryDetailsActivity : ComponentActivity() {
                     modifier = Modifier.size(25.dp)
                 )*/
                 Spacer(modifier = Modifier.height(15.dp))
+
                 AnniversaryCard(
                     anniversary = anniversary!!,
                     date
                 )
-                /*ItemX.Button(
+                /*XItem.Button(
                     icon = R.drawable.ic_delete,
                     text = if (deleteConfirm) "确认删除" else stringResource(id = R.string.delete)
                 ) {
@@ -227,10 +232,14 @@ class AnniversaryDetailsActivity : ComponentActivity() {
             anniversary.date,
             currentDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate()
         ).toInt()
-        val background: Brush
-        val textColor: Color
-        if (isAnniversary) {
-            background = Brush.horizontalGradient(
+
+        val textColors = listOf(
+            Color(255, 251, 221),
+            Color.White
+        )
+        val textColorId: Int
+        val backgroundColors = listOf(
+            Brush.horizontalGradient(
                 listOf(
                     // Color(253, 7, 35),
                     Color(236, 74, 49),
@@ -238,82 +247,124 @@ class AnniversaryDetailsActivity : ComponentActivity() {
                     Color(248, 71, 97)
                     // Color(254, 223, 124)
                 )
-            )
-            textColor = Color(255, 251, 221)
-        } else {
-            background = Brush.horizontalGradient(
-                if (days > 0) listOf(
+            ),
+            Brush.horizontalGradient(
+                listOf(
                     Color(240, 175, 57),
                     Color(241, 126, 45)
-                ) else listOf(
+                )
+            ),
+            Brush.horizontalGradient(
+                listOf(
                     Color(141, 147, 250),
                     Color(96, 103, 228)
                 )
             )
-            textColor = Color.White
+        )
+        val backgroundColorId: Int
+        val yearText = anniversary.date.year.toString()
+        val monthDayText = "${anniversary.date.month.value} / ${anniversary.date.dayOfMonth}"
+        val weekDayText = when (anniversary.date.dayOfWeek.value) {
+            1 -> "周一"
+            2 -> "周二"
+            3 -> "周三"
+            4 -> "周四"
+            5 -> "周五"
+            6 -> "周六"
+            7 -> "周日"
+            else -> "周一"
+        }
+        val countText: String
+        val labelText: String
+        if (isAnniversary) {
+            countText = "$anniversaryCount"
+            labelText = "周年"
+            backgroundColorId = 0
+            textColorId = 0
+        } else {
+            countText = if (days > 0) "${days.plus(1)}" else "${days.absoluteValue}"
+            labelText = if (days > 0) "天" else "天后"
+            backgroundColorId = if (days > 0) 1 else 2
+            textColorId = 1
         }
 
+        val textColor = textColors[textColorId]
+
         val interactionSource = remember { MutableInteractionSource() }
+
         Column(
             modifier = Modifier
                 .clickVfx(
                     interactionSource = interactionSource,
                     enabled = true,
-                    onClick = {}
+                    onClick = {
+                        val intent =
+                            Intent(
+                                this@AnniversaryDetailsActivity,
+                                AnniversaryFullDisplayActivity::class.java
+                            )
+                        intent.putExtra("YEAR", yearText)
+                        intent.putExtra("MONTH_DAY", monthDayText)
+                        intent.putExtra("WEEK_DAY", weekDayText)
+                        intent.putExtra("COUNT", countText)
+                        intent.putExtra("LABEL", labelText)
+                        intent.putExtra("CONTENT", anniversary.content)
+                        intent.putExtra("TEXT_COLOR", textColorId)
+                        intent.putExtra("BACKGROUND_COLOR", backgroundColorId)
+                        startActivity(intent)
+                    }
                 )
                 .wrapContentHeight()
                 .fillMaxWidth()
                 .background(
-                    brush = background,
+                    brush = backgroundColors[backgroundColorId],
                     shape = RoundedCornerShape(10.dp)
                 )
                 .padding(20.dp)
         ) {
             val fontFamily = FontFamily(Font(R.font.din_bold))
+
             Text(
-                text = anniversary.date.year.toString(),
+                text = yearText,
                 fontSize = 22.sp,
                 fontFamily = fontFamily,
                 color = textColor,
                 maxLines = 1
             )
+
             Text(
-                text = "${anniversary.date.month.value} / ${anniversary.date.dayOfMonth}",
+                text = monthDayText,
                 fontSize = 18.sp,
                 fontFamily = fontFamily,
                 color = textColor,
                 maxLines = 1
             )
+
             Text(
-                text = when (anniversary.date.dayOfWeek.value) {
-                    1 -> "周一"
-                    2 -> "周二"
-                    3 -> "周三"
-                    4 -> "周四"
-                    5 -> "周五"
-                    6 -> "周六"
-                    7 -> "周日"
-                    else -> "周一"
-                },
+                text = weekDayText,
                 fontSize = 16.sp,
                 color = textColor,
                 maxLines = 1
             )
+
             Spacer(modifier = Modifier.height(30.dp))
+
             if (isAnniversary) {
                 Row(verticalAlignment = Alignment.Bottom) {
                     Text(
-                        text = "$anniversaryCount",
+                        text = countText,
                         fontSize = 80.sp,
                         fontWeight = FontWeight.Bold,
                         fontFamily = fontFamily,
                         color = textColor,
                         maxLines = 1
                     )
+
                     Spacer(modifier = Modifier.width(5.dp))
+
                     Text(
                         modifier = Modifier.padding(bottom = 10.dp),
-                        text = "周年",
+                        text = labelText,
                         fontSize = 30.sp,
                         color = textColor,
                         maxLines = 1
@@ -322,17 +373,19 @@ class AnniversaryDetailsActivity : ComponentActivity() {
             } else {
                 Row(verticalAlignment = Alignment.Bottom) {
                     Text(
-                        text = if (days > 0) "${days.plus(1)}" else "${days.absoluteValue}",
+                        text = countText,
                         fontSize = 50.sp,
                         fontWeight = FontWeight.Bold,
                         fontFamily = fontFamily,
                         color = textColor,
                         maxLines = 1
                     )
+
                     Spacer(modifier = Modifier.width(5.dp))
+
                     Text(
                         modifier = Modifier.padding(bottom = 5.dp),
-                        text = if (days > 0) "天" else "天后",
+                        text = labelText,
                         fontSize = 20.sp,
                         color = textColor,
                         maxLines = 1
