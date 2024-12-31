@@ -1,7 +1,36 @@
 package com.wqz.allinone.act.about.data
 
+/**
+ * 版本更新日志
+ * Created by Wu Qizhen on 2024.12.31
+ */
 object UpdateLogData {
     val updateLogs = listOf(
+        UpdateLog(
+            "🧬 Helix",
+            "螺旋，发展和进步",
+            "2024.12.31",
+            """
+                |» 新增
+                | - ⌈网格布局⌋：快速切换布局方式，适配不同场景下的最佳体验
+                | - ⌈启动页⌋ 高斯模糊入场动画
+                |» 优化
+                | - ⌈备份与导出⌋ 导出选项
+                | - ⌈备份与导出⌋ 导出逻辑
+                | - ⌈备份与导出⌋ 导出结果显示
+                | - ⌈身份校验⌋ 自动调出键盘
+            """.trimMargin()
+        ),
+        UpdateLog(
+            "🏠 Gallium",
+            "融合和创新",
+            "2024.12.22",
+            """
+                |» 优化
+                | - 卡片圆角大小
+                | - 按钮类型与颜色
+            """.trimMargin()
+        ),
         UpdateLog(
             "💎 Flint",
             "燧石，创新和火花",

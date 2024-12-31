@@ -8,4 +8,6 @@ import androidx.compose.ui.graphics.Color
  */
 object ContentColor {
     val DEFAULT_BROWN = Color(101, 75, 39)
+    val DEFAULT_RED = Color(64, 37, 43)
+    val DEFAULT_GREEN = Color(40, 70, 45)
 }

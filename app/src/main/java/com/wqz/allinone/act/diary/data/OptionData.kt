@@ -2,6 +2,10 @@ package com.wqz.allinone.act.diary.data
 
 import com.wqz.allinone.R
 
+/**
+ * 选项数据
+ * Created by Wu Qizhen on 2024.12.31
+ */
 object OptionData {
     val weatherOptions = listOf(
         Option(1, "晴", R.drawable.weather_sunny),

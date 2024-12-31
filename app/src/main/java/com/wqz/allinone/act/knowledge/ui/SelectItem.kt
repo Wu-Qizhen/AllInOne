@@ -43,6 +43,10 @@ import com.wqz.allinone.ui.color.BackgroundColor
 import com.wqz.allinone.ui.color.BorderColor
 import com.wqz.allinone.ui.property.BorderWidth
 
+/**
+ * 选择项
+ * Created by Wu Qizhen on 2024.12.31
+ */
 object SelectItem {
     @Composable
     fun SubjectItem(

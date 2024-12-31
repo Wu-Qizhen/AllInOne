@@ -9,17 +9,21 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -27,6 +31,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
@@ -34,7 +39,7 @@ import androidx.compose.ui.unit.sp
 import com.wqz.allinone.R
 import com.wqz.allinone.act.backup.BackupActivity
 import com.wqz.allinone.act.diary.DiaryPreviewActivity
-import com.wqz.allinone.secure.SecurePreferencesManager
+import com.wqz.allinone.preference.PasswordPreferencesManager
 import com.wqz.allinone.ui.AppBackground
 import com.wqz.allinone.ui.XCard
 import com.wqz.allinone.ui.XItem
@@ -42,7 +47,7 @@ import com.wqz.allinone.ui.theme.AllInOneTheme
 import com.wqz.allinone.ui.theme.ThemeColor
 
 /**
- * 密码校验页面
+ * 密码校验
  * Created by Wu Qizhen on 2024.10.3
  */
 class PasswordCheckActivity : ComponentActivity() {
@@ -69,11 +74,21 @@ class PasswordCheckActivity : ComponentActivity() {
         val context = LocalContext.current
         var password by remember { mutableStateOf("") }
         var passwordVisible by remember { mutableStateOf(false) }
-        val passwordPrefs = remember { SecurePreferencesManager(context = context) }
+        val passwordPrefs = remember { PasswordPreferencesManager(context = context) }
+        val focusRequester = remember { FocusRequester() }
+        // val focusManager = LocalFocusManager.current
+
+        // 在 Composable 第一次被绘制时请求焦点
+        LaunchedEffect(Unit) {
+            focusRequester.requestFocus()
+        }
 
         XCard.SurfaceCard {
             TextField(
-                modifier = Modifier.fillMaxWidth(),
+                // 将 focusRequester 关联到 TextField
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .focusRequester(focusRequester),
                 value = password,
                 onValueChange = { password = it },
                 colors = TextFieldDefaults.colors(
@@ -97,6 +112,7 @@ class PasswordCheckActivity : ComponentActivity() {
                         fontWeight = FontWeight.Bold
                     )
                 },
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                 visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
                 trailingIcon = {
                     IconButton(onClick = { passwordVisible = !passwordVisible }) {

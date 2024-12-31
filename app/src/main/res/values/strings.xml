@@ -10,7 +10,7 @@
     <string name="about_us">关于我们</string>
     <string name="introduction">一笔一划，万象尽在掌握</string>
 
-    <string name="version">Flint（F）</string>
+    <string name="version">Helix（H）</string>
     <string name="version_desc">版本号</string>
     <string name="update_log">更新日志</string>
 
@@ -181,8 +181,10 @@
     <string name="chinese">语文</string>
     <string name="english">英语</string>
     <string name="english_practical_writing">应用文写作</string>
-    <string name="english_ending_writing">结尾升华</string>
+    <string name="english_ending_writing">结尾描写</string>
     <string name="english_emotional_writing">情感描写</string>
+    <string name="chinese_ending_writing">结尾段</string>
+    <string name="chinese_common_expressions">常用表达</string>
 
     <!-- Toast -->
     <string name="cleared">已清空</string>
@@ -223,6 +225,8 @@
     <string name="about">关于</string>
     <string name="security">隐私与安全</string>
     <string name="backup">备份与导出</string>
+    <string name="homepage_gird_layout">设置主页为网格布局</string>
+    <string name="gird_layout">网格布局</string>
 
     <string name="password">密码</string>
     <string name="password_check">身份校验</string>

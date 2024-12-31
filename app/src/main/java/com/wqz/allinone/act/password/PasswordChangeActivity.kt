@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
@@ -26,18 +27,23 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.wqz.allinone.R
-import com.wqz.allinone.secure.SecurePreferencesManager
+import com.wqz.allinone.preference.PasswordPreferencesManager
 import com.wqz.allinone.ui.AppBackground
 import com.wqz.allinone.ui.XCard
 import com.wqz.allinone.ui.XItem
 import com.wqz.allinone.ui.theme.AllInOneTheme
 import com.wqz.allinone.ui.theme.ThemeColor
 
+/**
+ * 密码修改
+ * Created by Wu Qizhen on 2024.12.31
+ */
 class PasswordChangeActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,7 +63,7 @@ class PasswordChangeActivity : ComponentActivity() {
         var newPassword by remember { mutableStateOf("") }
         var confirmPassword by remember { mutableStateOf("") }
         var passwordVisible by remember { mutableStateOf(false) }
-        val passwordPrefs = remember { SecurePreferencesManager(context = context) }
+        val passwordPrefs = remember { PasswordPreferencesManager(context = context) }
 
         XCard.SurfaceCard {
             TextField(
@@ -85,6 +91,7 @@ class PasswordChangeActivity : ComponentActivity() {
                         fontWeight = FontWeight.Bold
                     )
                 },
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                 visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
                 trailingIcon = {
                     IconButton(onClick = { passwordVisible = !passwordVisible }) {
@@ -127,6 +134,7 @@ class PasswordChangeActivity : ComponentActivity() {
                         fontWeight = FontWeight.Bold
                     )
                 },
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                 visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
             )
         }

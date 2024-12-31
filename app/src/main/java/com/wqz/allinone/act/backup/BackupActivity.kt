@@ -2,19 +2,14 @@ package com.wqz.allinone.act.backup
 
 import android.Manifest
 import android.annotation.SuppressLint
-import android.content.ContentValues
 import android.content.pm.PackageManager
-import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.os.Environment
-import android.provider.MediaStore
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -23,15 +18,13 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.wrapContentSize
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.CheckboxDefaults
 import androidx.compose.material3.Divider
-import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.material3.TriStateCheckbox
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -40,10 +33,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.state.ToggleableState
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -58,8 +49,6 @@ import com.wqz.allinone.ui.property.BorderWidth
 import com.wqz.allinone.ui.theme.AllInOneTheme
 import com.wqz.allinone.ui.theme.ThemeColor
 import kotlinx.coroutines.launch
-import java.io.InputStream
-import java.io.OutputStream
 
 /**
  * 数据导出
@@ -99,19 +88,26 @@ class BackupActivity : ComponentActivity() {
     @Composable
     fun BackupScreen() {
         val context = LocalContext.current
-        var enabled by remember { mutableStateOf(true) }
+        // var enabled by remember { mutableStateOf(true) }
+        val (todoExport, onTodoStateChange) = remember { mutableStateOf(true) }
+        val (noteExport, onNoteStateChange) = remember { mutableStateOf(true) }
         val (diaryExport, onDiaryStateChange) = remember { mutableStateOf(true) }
         val (bookmarkExport, onBookmarkStateChange) = remember { mutableStateOf(true) }
-        val parentState = remember(diaryExport, bookmarkExport) {
-            if (diaryExport && bookmarkExport) ToggleableState.On
-            else if (!diaryExport && !bookmarkExport) ToggleableState.Off
+        val parentState = remember(todoExport, noteExport, diaryExport, bookmarkExport) {
+            if (todoExport && noteExport && diaryExport && bookmarkExport) ToggleableState.On
+            else if (!todoExport && !noteExport && !diaryExport && !bookmarkExport) ToggleableState.Off
             else ToggleableState.Indeterminate
         }
         val onParentClick = {
             val s = parentState != ToggleableState.On
+            onTodoStateChange(s)
+            onNoteStateChange(s)
             onDiaryStateChange(s)
             onBookmarkStateChange(s)
         }
+        val exportStatus by viewModel.exportStatus.collectAsState(emptyList()) //.observeAsState(emptyList())
+        var exportStatusString by remember { mutableStateOf("") }
+        val pendingOperations = mutableListOf<() -> Unit>()
 
         XCard.LivelyCard {
             Row(
@@ -139,21 +135,29 @@ class BackupActivity : ComponentActivity() {
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(start = 50.dp),
+                    .padding(start = 15.dp),
                 horizontalArrangement = Arrangement.Start,
                 verticalAlignment = Alignment.CenterVertically
             ) {
+                Text(
+                    text = "├",
+                    fontSize = 16.sp,
+                    maxLines = 1
+                )
+
+                Spacer(modifier = Modifier.width(10.dp))
+
                 Checkbox(
                     modifier = Modifier.size(20.dp),
-                    checked = diaryExport,
-                    onCheckedChange = onDiaryStateChange,
+                    checked = todoExport,
+                    onCheckedChange = onTodoStateChange,
                     colors = CheckboxDefaults.colors(checkedColor = ThemeColor)
                 )
 
                 Spacer(modifier = Modifier.width(15.dp))
 
                 Text(
-                    text = "日记",
+                    text = "待办箱",
                     fontSize = 16.sp,
                     maxLines = 1
                 )
@@ -164,10 +168,84 @@ class BackupActivity : ComponentActivity() {
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(start = 50.dp),
+                    .padding(start = 15.dp),
                 horizontalArrangement = Arrangement.Start,
                 verticalAlignment = Alignment.CenterVertically
             ) {
+                Text(
+                    text = "├",
+                    fontSize = 16.sp,
+                    maxLines = 1
+                )
+
+                Spacer(modifier = Modifier.width(10.dp))
+
+                Checkbox(
+                    modifier = Modifier.size(20.dp),
+                    checked = noteExport,
+                    onCheckedChange = onNoteStateChange,
+                    colors = CheckboxDefaults.colors(checkedColor = ThemeColor)
+                )
+
+                Spacer(modifier = Modifier.width(15.dp))
+
+                Text(
+                    text = "随手记",
+                    fontSize = 16.sp,
+                    maxLines = 1
+                )
+            }
+
+            Spacer(modifier = Modifier.height(10.dp))
+
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(start = 15.dp),
+                horizontalArrangement = Arrangement.Start,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    text = "├",
+                    fontSize = 16.sp,
+                    maxLines = 1
+                )
+
+                Spacer(modifier = Modifier.width(10.dp))
+
+                Checkbox(
+                    modifier = Modifier.size(20.dp),
+                    checked = diaryExport,
+                    onCheckedChange = onDiaryStateChange,
+                    colors = CheckboxDefaults.colors(checkedColor = ThemeColor)
+                )
+
+                Spacer(modifier = Modifier.width(15.dp))
+
+                Text(
+                    text = "生活书",
+                    fontSize = 16.sp,
+                    maxLines = 1
+                )
+            }
+
+            Spacer(modifier = Modifier.height(10.dp))
+
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(start = 15.dp),
+                horizontalArrangement = Arrangement.Start,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    text = "└",
+                    fontSize = 16.sp,
+                    maxLines = 1
+                )
+
+                Spacer(modifier = Modifier.width(10.dp))
+
                 Checkbox(
                     modifier = Modifier.size(20.dp),
                     checked = bookmarkExport,
@@ -178,7 +256,7 @@ class BackupActivity : ComponentActivity() {
                 Spacer(modifier = Modifier.width(15.dp))
 
                 Text(
-                    text = "书签",
+                    text = "书签宝",
                     fontSize = 16.sp,
                     maxLines = 1
                 )
@@ -196,38 +274,63 @@ class BackupActivity : ComponentActivity() {
             Text(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(15.dp),
-                text = "* 文件将导出到系统下载目录",
+                    .padding(15.dp, 15.dp, 15.dp, 0.dp),
+                text = "* 文件将导出到系统下载目录\n* 导出结果：",
                 color = ThemeColor,
                 fontSize = 12.sp,
-                maxLines = 1,
+                textAlign = TextAlign.Start
+            )
+
+            Text(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(15.dp, 0.dp, 15.dp, 15.dp),
+                text = exportStatusString,
+                color = ThemeColor,
+                fontSize = 12.sp,
                 textAlign = TextAlign.Start
             )
         }
 
         Spacer(modifier = Modifier.height(10.dp))
 
-        if (enabled) {
-            XItem.Button(
-                icon = R.drawable.ic_todo,
-                text = stringResource(id = R.string.execute)
-            ) {
-                if (diaryExport && bookmarkExport) {
-                    onPermissionGranted = {
-                        exportDiaries()
-                        viewModel.viewModelScope.launch { viewModel.exportBookmarks() }
-                    }
-                } else if (diaryExport) {
-                    onPermissionGranted = ::exportDiaries
-                } else if (bookmarkExport) {
-                    onPermissionGranted = {
-                        viewModel.viewModelScope.launch { viewModel.exportBookmarks() }
-                    }
+        /*if (enabled) {*/
+        XItem.Button(
+            icon = R.drawable.ic_todo,
+            text = stringResource(id = R.string.execute)
+        ) {
+            if (todoExport) {
+                pendingOperations.add { viewModel.exportDatabase(context, "Todo", "待办箱") }
+            }
+            if (noteExport) {
+                pendingOperations.add { viewModel.exportDatabase(context, "Note", "随手记") }
+            }
+            if (diaryExport) {
+                pendingOperations.add { viewModel.exportDatabase(context, "Diary", "生活书") }
+            }
+            if (bookmarkExport) {
+                pendingOperations.add {
+                    viewModel.viewModelScope.launch { viewModel.exportBookmarks() }
+                }
+            }
+
+            if (pendingOperations.isNotEmpty()) {
+                onPermissionGranted = {
+                    pendingOperations.forEach { it() }
+                    pendingOperations.clear()
                 }
                 (context as BackupActivity).requestStoragePermission()
-                enabled = false
             }
-        } else {
+
+            /*exportStatus.joinToString(separator = "\n") { it }.also {
+                if (exportStatusString != it) {
+                    exportStatusString = it
+                }
+            }*/
+
+            exportStatusString = exportStatus.joinToString(separator = "\n")
+        }
+        /*} else {
             Row(
                 modifier = Modifier
                     .wrapContentSize()
@@ -251,7 +354,7 @@ class BackupActivity : ComponentActivity() {
                     color = Color.LightGray
                 )
             }
-        }
+        }*/
 
         Spacer(modifier = Modifier.height(50.dp))
     }
@@ -266,40 +369,6 @@ class BackupActivity : ComponentActivity() {
             requestPermissionLauncher.launch(Manifest.permission.WRITE_EXTERNAL_STORAGE)
         } else {
             onPermissionGranted()
-        }
-    }
-
-    private fun exportDiaries() {
-        val sourceFile = getDatabasePath("Diary") // 替换为你的数据库名称
-        val backupFileName = "Diary.db"
-
-        val values = ContentValues().apply {
-            put(MediaStore.Downloads.DISPLAY_NAME, backupFileName)
-            put(MediaStore.Downloads.MIME_TYPE, "application/x-sqlite3")
-            put(MediaStore.Downloads.RELATIVE_PATH, Environment.DIRECTORY_DOWNLOADS)
-        }
-
-        val uri: Uri? = contentResolver.insert(MediaStore.Downloads.EXTERNAL_CONTENT_URI, values)
-        uri?.let { targetUri ->
-            try {
-                contentResolver.openOutputStream(targetUri)?.use { outputStream ->
-                    sourceFile.inputStream().use { inputStream ->
-                        copyFile(inputStream, outputStream)
-                    }
-                }
-                Toast.makeText(this, R.string.backup_diary_success, Toast.LENGTH_SHORT).show()
-            } catch (e: Exception) {
-                e.printStackTrace()
-                Toast.makeText(this, R.string.backup_diary_failed, Toast.LENGTH_SHORT).show()
-            }
-        }
-    }
-
-    private fun copyFile(inputStream: InputStream, outputStream: OutputStream) {
-        val buffer = ByteArray(1024)
-        var read: Int
-        while (inputStream.read(buffer).also { read = it } != -1) {
-            outputStream.write(buffer, 0, read)
         }
     }
 }

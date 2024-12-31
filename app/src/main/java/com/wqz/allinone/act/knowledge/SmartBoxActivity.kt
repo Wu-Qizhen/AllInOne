@@ -10,7 +10,9 @@ import androidx.compose.runtime.key
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.wqz.allinone.R
+import com.wqz.allinone.act.knowledge.data.ChineseData
 import com.wqz.allinone.act.knowledge.data.EnglishData
+import com.wqz.allinone.act.knowledge.data.KnowledgeCode
 import com.wqz.allinone.act.knowledge.data.Outline
 import com.wqz.allinone.act.knowledge.ui.SelectItem
 import com.wqz.allinone.ui.AppBackground
@@ -26,16 +28,24 @@ class SmartBoxActivity : ComponentActivity() {
 
         val code = intent.getIntExtra("KNOWLEDGE_CODE", 0)
         val outlines: List<Outline> = when (code) {
-            0 -> {
+            KnowledgeCode.ENGLISH_PRACTICAL_WRITING -> {
                 EnglishData.englishPracticalWritingOutlines
             }
 
-            1 -> {
+            KnowledgeCode.ENGLISH_EMOTIONAL_WRITING -> {
                 EnglishData.englishEmotionalWritingOutlines
             }
 
-            2 -> {
+            KnowledgeCode.ENGLISH_ENDING_WRITING -> {
                 EnglishData.englishEndingWritingOutlines
+            }
+
+            KnowledgeCode.CHINESE_ENDING_WRITING -> {
+                ChineseData.chineseEndingWritingOutlines
+            }
+
+            KnowledgeCode.CHINESE_COMMON_EXPRESSION -> {
+                ChineseData.chineseCommonExpressionOutlines
             }
 
             else -> {

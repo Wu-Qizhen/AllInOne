@@ -2,7 +2,6 @@ package com.wqz.allinone.act.knowledge
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Spacer
@@ -41,8 +40,7 @@ class SubjectChooseActivity : ComponentActivity() {
     fun SubjectChooseScreen() {
         XCard.SurfaceCard {
             SelectItem.SubjectItem(text = R.string.chinese) {
-                Toast.makeText(this@SubjectChooseActivity, "施工中", Toast.LENGTH_SHORT).show()
-                // startActivity(Intent(this@SubjectChooseActivity, ChineseActivity::class.java))
+                startActivity(Intent(this@SubjectChooseActivity, ChineseActivity::class.java))
             }
 
             Divider(

@@ -1,5 +1,9 @@
 package com.wqz.allinone.act.knowledge.data
 
+/**
+ * 英语数据
+ * Created by Wu Qizhen on 2024.12.31
+ */
 object EnglishData {
     val englishPracticalWritingOutlines = listOf(
         Outline(
@@ -125,18 +129,6 @@ object EnglishData {
     val englishEmotionalWritingOutlines = listOf(
         Outline(
             "1. 喜悦",
-            """
-                |A wave of euphoria, as profound as the depths of an unexplored ocean, surged through my veins, transforming even the most mundane moments into a tapestry of vibrant hues, where every breath felt like a celebration of life's exquisite intricacies and the triumphs that lay within my grasp.
-                |
-                |Ecstatic joy overflowed within me, like a thousand suns illuminating my path to triumph.
-                |
-                |My heart leapt with elation, as if a symphony of jubilant crescendoed within me.
-                |
-                |An effervescent wave of rapture cascaded through her, each pulse a testament to her unbridled exhilaration, as her aspirations congealed into a tangible, shimmering reality.
-            """.trimMargin()
-        ),
-        Outline(
-            "1. 建议信 / 推荐信",
             """
                 |A wave of euphoria, as profound as the depths of an unexplored ocean, surged through my veins, transforming even the most mundane moments into a tapestry of vibrant hues, where every breath felt like a celebration of life's exquisite intricacies and the triumphs that lay within my grasp.
                 |

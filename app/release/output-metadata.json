@@ -11,8 +11,8 @@
       "type": "SINGLE",
       "filters": [],
       "attributes": [],
-      "versionCode": 16,
-      "versionName": "Flint",
+      "versionCode": 19,
+      "versionName": "Helix",
       "outputFile": "app-release.apk"
     }
   ],

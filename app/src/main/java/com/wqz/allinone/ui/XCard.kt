@@ -42,11 +42,11 @@ object XCard {
                 .fillMaxWidth()
                 .background(
                     color = BackgroundColor.DEFAULT_GRAY,
-                    shape = RoundedCornerShape(10.dp)
+                    shape = RoundedCornerShape(15.dp)
                 )
                 .border(
                     width = BorderWidth.DEFAULT_WIDTH,
-                    shape = RoundedCornerShape(10.dp),
+                    shape = RoundedCornerShape(15.dp),
                     brush = Brush.linearGradient(
                         BorderColor.DEFAULT_GRAY,
                         start = Offset.Zero,
@@ -83,11 +83,11 @@ object XCard {
                 .fillMaxWidth()
                 .background(
                     color = backgroundColor,
-                    shape = RoundedCornerShape(10.dp)
+                    shape = RoundedCornerShape(15.dp)
                 )
                 .border(
                     width = BorderWidth.DEFAULT_WIDTH,
-                    shape = RoundedCornerShape(10.dp),
+                    shape = RoundedCornerShape(15.dp),
                     brush = Brush.linearGradient(
                         BorderColor.DEFAULT_GRAY,
                         start = Offset.Zero,

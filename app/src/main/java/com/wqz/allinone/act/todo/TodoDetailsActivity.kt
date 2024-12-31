@@ -39,6 +39,7 @@ import com.wqz.allinone.ui.AppBackground
 import com.wqz.allinone.ui.XCard
 import com.wqz.allinone.ui.XItem
 import com.wqz.allinone.ui.property.BorderWidth
+import com.wqz.allinone.ui.property.ButtonCategory
 import com.wqz.allinone.ui.theme.AllInOneTheme
 import com.wqz.allinone.ui.theme.ThemeColor
 import kotlinx.coroutines.launch
@@ -138,7 +139,7 @@ class TodoDetailsActivity : ComponentActivity() {
                 } else {
                     Text(
                         text = "未完成",
-                        color = Color(201, 79, 79),
+                        color = Color(219, 92, 92),
                         maxLines = 1
                     )
                 }
@@ -169,7 +170,8 @@ class TodoDetailsActivity : ComponentActivity() {
         ) {
             XItem.Button(
                 icon = R.drawable.ic_delete,
-                text = stringResource(id = R.string.delete)
+                text = stringResource(id = R.string.delete),
+                color = ButtonCategory.WARNING_BUTTON
             ) {
                 deleteConfirm++
                 if (deleteConfirm > 2) {
@@ -193,7 +195,8 @@ class TodoDetailsActivity : ComponentActivity() {
 
             XItem.Button(
                 icon = R.drawable.ic_todo,
-                text = stringResource(id = R.string.save)
+                text = stringResource(id = R.string.save),
+                color = ButtonCategory.SAFE_BUTTON
             ) {
                 if (content.trim().isNotEmpty()) {
                     todo.title = content.trim()

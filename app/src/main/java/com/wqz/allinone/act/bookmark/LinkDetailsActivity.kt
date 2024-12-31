@@ -42,6 +42,7 @@ import com.wqz.allinone.ui.AppBackground
 import com.wqz.allinone.ui.XCard
 import com.wqz.allinone.ui.XItem
 import com.wqz.allinone.ui.property.BorderWidth
+import com.wqz.allinone.ui.property.ButtonCategory
 import com.wqz.allinone.ui.theme.AllInOneTheme
 import com.wqz.allinone.ui.theme.ThemeColor
 import java.util.regex.Pattern
@@ -198,7 +199,8 @@ class LinkDetailsActivity : ComponentActivity() {
         ) {
             XItem.Button(
                 icon = R.drawable.ic_delete,
-                text = stringResource(id = R.string.delete)
+                text = stringResource(id = R.string.delete),
+                color = ButtonCategory.WARNING_BUTTON
             ) {
                 deleteConfirm++
                 if (deleteConfirm > 2) {
@@ -224,7 +226,8 @@ class LinkDetailsActivity : ComponentActivity() {
 
             XItem.Button(
                 icon = R.drawable.ic_todo,
-                text = stringResource(id = R.string.modify)
+                text = stringResource(id = R.string.modify),
+                color = ButtonCategory.SAFE_BUTTON
             ) {
                 val title = name.trim().replace("\n", "")
                 val site = url.trim().replace("\n", "")
