@@ -244,7 +244,7 @@ class NoteEditActivity : ComponentActivity() {
                 placeholder = {
                     Text(
                         text = "标题",
-                        color = Color.DarkGray,
+                        color = Color.Gray,
                         fontSize = 20.sp,
                         fontWeight = FontWeight.Bold
                     )
@@ -279,7 +279,7 @@ class NoteEditActivity : ComponentActivity() {
                 placeholder = {
                     Text(
                         text = "记点什么吧 (●'◡'●)",
-                        color = Color.DarkGray,
+                        color = Color.Gray,
                         fontSize = 14.sp
                     )
                 }

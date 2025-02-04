@@ -54,6 +54,7 @@ import com.wqz.allinone.ui.XItem
 import com.wqz.allinone.ui.color.BackgroundColor
 import com.wqz.allinone.ui.color.BorderColor
 import com.wqz.allinone.ui.property.BorderWidth
+import com.wqz.allinone.ui.property.ButtonCategory
 import com.wqz.allinone.ui.theme.AllInOneTheme
 
 /**
@@ -227,7 +228,8 @@ class NoteListActivity : ComponentActivity() {
                         horizontalArrangement = Arrangement.Center
                     ) {
                         XItem.Button(
-                            text = stringResource(R.string.delete)
+                            text = stringResource(R.string.delete),
+                            color = ButtonCategory.WARNING_BUTTON
                         ) {
                             if (!note.isLocked) {
                                 showDialog = 2
@@ -251,7 +253,8 @@ class NoteListActivity : ComponentActivity() {
                         Spacer(modifier = Modifier.width(10.dp))
 
                         XItem.Button(
-                            text = stringResource(R.string.cancel)
+                            text = stringResource(R.string.cancel),
+                            color = ButtonCategory.SAFE_BUTTON
                         ) { showDialog = 0 }
                     }
                 }

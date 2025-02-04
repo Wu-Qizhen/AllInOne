@@ -7,11 +7,14 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.tween
+import androidx.compose.animation.expandHorizontally
 import androidx.compose.animation.expandVertically
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
+import androidx.compose.animation.shrinkHorizontally
 import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.collectIsPressedAsState
 import androidx.compose.foundation.layout.Arrangement
@@ -24,9 +27,12 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.CheckboxDefaults
 import androidx.compose.material3.Divider
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -40,6 +46,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -50,7 +57,8 @@ import com.wqz.allinone.entity.Todo
 import com.wqz.allinone.ui.AppBackground
 import com.wqz.allinone.ui.ModifierExtends.clickVfx
 import com.wqz.allinone.ui.XCard
-import com.wqz.allinone.ui.XItem
+import com.wqz.allinone.ui.color.BackgroundColor
+import com.wqz.allinone.ui.color.ContentColor
 import com.wqz.allinone.ui.property.BorderWidth
 import com.wqz.allinone.ui.theme.AllInOneTheme
 import com.wqz.allinone.ui.theme.ThemeColor
@@ -83,8 +91,73 @@ class TodoCompletedActivity : ComponentActivity() {
     fun TodoCompletedListScreen() {
         val todos by viewModel.completedTodos.observeAsState(listOf())
         var deleteConfirm by remember { mutableStateOf(false) }
+        val interactionSource = remember { MutableInteractionSource() }
+        val isPressed = interactionSource.collectIsPressedAsState()
+        val backgroundColor =
+            if (isPressed.value) BackgroundColor.PRESSED_YELLOW else BackgroundColor.DEFAULT_YELLOW
 
-        XItem.Button(
+        Row(
+            modifier = Modifier
+                .clickVfx(
+                    interactionSource = interactionSource,
+                    enabled = true,
+                    onClick = {
+                        if (deleteConfirm) {
+                            viewModel.viewModelScope.launch {
+                                viewModel.clearCompleted()
+                                Toast
+                                    .makeText(
+                                        this@TodoCompletedActivity,
+                                        R.string.cleared,
+                                        Toast.LENGTH_SHORT
+                                    )
+                                    .show()
+                                finish()
+                            }
+                        } else {
+                            deleteConfirm = true
+                        }
+                    },
+                    onLongClick = {
+                        deleteConfirm = false
+                    }
+                )
+                .wrapContentSize()
+                .background(backgroundColor, RoundedCornerShape(50.dp))
+                .padding(top = 8.dp, bottom = 8.dp, start = 8.dp, end = 10.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Icon(
+                painter = painterResource(id = R.drawable.ic_delete),
+                tint = ContentColor.DEFAULT_BROWN,
+                modifier = Modifier.size(20.dp),
+                contentDescription = null
+            )
+
+            Spacer(modifier = Modifier.size(5.dp))
+
+            AnimatedVisibility(
+                visible = deleteConfirm,
+                enter = fadeIn() + expandHorizontally(),
+                exit = fadeOut() + shrinkHorizontally()
+            ) {
+                Text(
+                    text = stringResource(id = R.string.confirm),
+                    fontSize = 16.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = ContentColor.DEFAULT_BROWN
+                )
+            }
+
+            Text(
+                text = stringResource(id = R.string.clear),
+                fontSize = 16.sp,
+                fontWeight = FontWeight.Bold,
+                color = ContentColor.DEFAULT_BROWN
+            )
+        }
+
+        /*XItem.Button(
             icon = R.drawable.ic_delete,
             text = if (deleteConfirm) "确认操作" else stringResource(id = R.string.clear)
         ) {
@@ -98,7 +171,7 @@ class TodoCompletedActivity : ComponentActivity() {
             } else {
                 deleteConfirm = true
             }
-        }
+        }*/
 
         Spacer(modifier = Modifier.height(10.dp))
 

@@ -213,7 +213,7 @@ class AnniversaryPreviewActivity : ComponentActivity() {
                         placeholder = {
                             Text(
                                 text = "2000.01.01",
-                                color = Color.DarkGray,
+                                color = Color.Gray,
                                 fontSize = 16.sp,
                                 fontWeight = FontWeight.Bold,
                                 textAlign = TextAlign.Center,

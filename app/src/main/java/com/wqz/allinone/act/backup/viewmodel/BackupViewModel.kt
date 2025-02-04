@@ -27,9 +27,7 @@ import java.util.Locale
  * Created by Wu Qizhen on 2024.11.29
  */
 class BackupViewModel(application: Application) : AndroidViewModel(application) {
-    // private val _exportStatus = MutableLiveData<List<String>>(emptyList())
-    // val exportStatus: LiveData<List<String>> = _exportStatus
-    val exportStatus = MutableStateFlow<List<String>>(emptyList())
+    val exportStatus = MutableStateFlow(listOf("* 导出结果："))
 
     private val folderDao: FolderDao
     private val linkDao: LinkDao
@@ -89,7 +87,7 @@ class BackupViewModel(application: Application) : AndroidViewModel(application) 
         val now = Date()
         val dateFormat = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault())
         val timestamp = dateFormat.format(now)
-        val backupFileName = "BOOKMARKS_$timestamp.txt"
+        val backupFileName = "BOOKMARK_$timestamp.txt"
 
         val values = ContentValues().apply {
             put(MediaStore.Downloads.DISPLAY_NAME, backupFileName)

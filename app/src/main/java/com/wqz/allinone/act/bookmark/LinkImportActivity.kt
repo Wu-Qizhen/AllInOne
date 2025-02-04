@@ -86,7 +86,7 @@ class LinkImportActivity : ComponentActivity() {
                 placeholder = {
                     Text(
                         text = "名称@https://xxx.com",
-                        color = Color.DarkGray,
+                        color = Color.Gray,
                         fontSize = 14.sp,
                         fontWeight = FontWeight.Bold,
                         modifier = Modifier.fillMaxWidth()

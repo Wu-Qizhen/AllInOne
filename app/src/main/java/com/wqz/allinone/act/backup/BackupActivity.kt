@@ -10,6 +10,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -18,12 +19,16 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.CheckboxDefaults
 import androidx.compose.material3.Divider
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.material3.TriStateCheckbox
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -33,8 +38,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.state.ToggleableState
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -48,6 +55,7 @@ import com.wqz.allinone.ui.XItem
 import com.wqz.allinone.ui.property.BorderWidth
 import com.wqz.allinone.ui.theme.AllInOneTheme
 import com.wqz.allinone.ui.theme.ThemeColor
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 /**
@@ -88,7 +96,7 @@ class BackupActivity : ComponentActivity() {
     @Composable
     fun BackupScreen() {
         val context = LocalContext.current
-        // var enabled by remember { mutableStateOf(true) }
+        var enabled by remember { mutableStateOf(true) }
         val (todoExport, onTodoStateChange) = remember { mutableStateOf(true) }
         val (noteExport, onNoteStateChange) = remember { mutableStateOf(true) }
         val (diaryExport, onDiaryStateChange) = remember { mutableStateOf(true) }
@@ -105,9 +113,13 @@ class BackupActivity : ComponentActivity() {
             onDiaryStateChange(s)
             onBookmarkStateChange(s)
         }
-        val exportStatus by viewModel.exportStatus.collectAsState(emptyList()) //.observeAsState(emptyList())
-        var exportStatusString by remember { mutableStateOf("") }
+        val exportStatus by viewModel.exportStatus.collectAsState(initial = listOf("* 导出结果：")) //.observeAsState(emptyList())
+        var exportStatusString by remember { mutableStateOf("* 导出结果：") }
         val pendingOperations = mutableListOf<() -> Unit>()
+
+        LaunchedEffect(exportStatus) {
+            exportStatusString = exportStatus.joinToString(separator = "\n")
+        }
 
         XCard.LivelyCard {
             Row(
@@ -275,7 +287,7 @@ class BackupActivity : ComponentActivity() {
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(15.dp, 15.dp, 15.dp, 0.dp),
-                text = "* 文件将导出到系统下载目录\n* 导出结果：",
+                text = "* 文件将导出到系统下载目录",
                 color = ThemeColor,
                 fontSize = 12.sp,
                 textAlign = TextAlign.Start
@@ -294,47 +306,58 @@ class BackupActivity : ComponentActivity() {
 
         Spacer(modifier = Modifier.height(10.dp))
 
-        /*if (enabled) {*/
-        XItem.Button(
-            icon = R.drawable.ic_todo,
-            text = stringResource(id = R.string.execute)
-        ) {
-            if (todoExport) {
-                pendingOperations.add { viewModel.exportDatabase(context, "Todo", "待办箱") }
-            }
-            if (noteExport) {
-                pendingOperations.add { viewModel.exportDatabase(context, "Note", "随手记") }
-            }
-            if (diaryExport) {
-                pendingOperations.add { viewModel.exportDatabase(context, "Diary", "生活书") }
-            }
-            if (bookmarkExport) {
-                pendingOperations.add {
-                    viewModel.viewModelScope.launch { viewModel.exportBookmarks() }
+        if (enabled) {
+            XItem.Button(
+                icon = R.drawable.ic_todo,
+                text = stringResource(id = R.string.execute)
+            ) {
+                if (todoExport) {
+                    pendingOperations.add { viewModel.exportDatabase(context, "Todo", "待办箱") }
+                }
+                if (noteExport) {
+                    pendingOperations.add { viewModel.exportDatabase(context, "Note", "随手记") }
+                }
+                if (diaryExport) {
+                    pendingOperations.add { viewModel.exportDatabase(context, "Diary", "生活书") }
+                }
+                if (bookmarkExport) {
+                    pendingOperations.add {
+                        viewModel.viewModelScope.launch { viewModel.exportBookmarks() }
+                    }
+                }
+
+                if (pendingOperations.isNotEmpty()) {
+                    if (ContextCompat.checkSelfPermission(
+                            this@BackupActivity,
+                            Manifest.permission.WRITE_EXTERNAL_STORAGE
+                        ) == PackageManager.PERMISSION_GRANTED
+                    ) {
+                        // 权限已经授予，立即执行导出操作
+                        pendingOperations.forEach { it() }
+                        pendingOperations.clear()
+                    } else {
+                        // 权限未授予，触发权限请求
+                        onPermissionGranted = {
+                            pendingOperations.forEach { it() }
+                            pendingOperations.clear()
+                        }
+                        requestStoragePermission()
+                    }
+                }
+
+                enabled = false
+
+                // 启动协程延迟启用按钮
+                viewModel.viewModelScope.launch {
+                    delay(3000) // 延迟 3 秒
+                    enabled = true
                 }
             }
-
-            if (pendingOperations.isNotEmpty()) {
-                onPermissionGranted = {
-                    pendingOperations.forEach { it() }
-                    pendingOperations.clear()
-                }
-                (context as BackupActivity).requestStoragePermission()
-            }
-
-            /*exportStatus.joinToString(separator = "\n") { it }.also {
-                if (exportStatusString != it) {
-                    exportStatusString = it
-                }
-            }*/
-
-            exportStatusString = exportStatus.joinToString(separator = "\n")
-        }
-        /*} else {
+        } else {
             Row(
                 modifier = Modifier
                     .wrapContentSize()
-                    .background(Color.DarkGray, RoundedCornerShape(50.dp))
+                    .background(Color.Gray, RoundedCornerShape(50.dp))
                     .padding(top = 8.dp, bottom = 8.dp, start = 8.dp, end = 10.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
@@ -354,7 +377,7 @@ class BackupActivity : ComponentActivity() {
                     color = Color.LightGray
                 )
             }
-        }*/
+        }
 
         Spacer(modifier = Modifier.height(50.dp))
     }

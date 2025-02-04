@@ -25,7 +25,7 @@ interface FolderDao {
     fun getFolder(folderId: Int): Folder?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertFolder(folder: Folder)
+    fun insertFolder(folder: Folder): Long
 
     @Update
     fun updateFolder(folder: Folder)

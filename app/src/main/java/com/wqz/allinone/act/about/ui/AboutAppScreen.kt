@@ -133,6 +133,12 @@ fun AboutAppScreen() {
             context.startActivity(Intent(context, UpdateLogActivity::class.java))
         }
 
+        IconButtonWithTopSpacer(
+            icon = R.drawable.logo_aethex_matrix,
+            text = R.string.aethex_matrix,
+            subText = R.string.framework
+        ) { }
+
         ClassificationBar(icon = R.drawable.ic_team, text = R.string.participating_team)
 
         Spacer(modifier = Modifier.height(5.dp))

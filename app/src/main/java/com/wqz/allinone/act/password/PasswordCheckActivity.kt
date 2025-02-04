@@ -39,6 +39,7 @@ import androidx.compose.ui.unit.sp
 import com.wqz.allinone.R
 import com.wqz.allinone.act.backup.BackupActivity
 import com.wqz.allinone.act.diary.DiaryPreviewActivity
+import com.wqz.allinone.act.recovery.RecoveryActivity
 import com.wqz.allinone.preference.PasswordPreferencesManager
 import com.wqz.allinone.ui.AppBackground
 import com.wqz.allinone.ui.XCard
@@ -145,6 +146,15 @@ class PasswordCheckActivity : ComponentActivity() {
                     2 -> {
                         startActivity(Intent(context, BackupActivity::class.java))
                         finish()
+                    }
+
+                    3 -> {
+                        startActivity(Intent(context, RecoveryActivity::class.java))
+                        finish()
+                    }
+
+                    else -> {
+                        Toast.makeText(context, R.string.password_error, Toast.LENGTH_SHORT).show()
                     }
                 }
             } else {

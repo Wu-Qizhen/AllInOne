@@ -12,8 +12,8 @@ android {
         applicationId = "com.wqz.allinone"
         minSdk = 30
         targetSdk = 34
-        versionCode = 19
-        versionName = "Helix"
+        versionCode = 22
+        versionName = "Indigo"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
             useSupportLibrary = true

@@ -59,6 +59,17 @@ fun SettingScreen() {
 
     Spacer(modifier = Modifier.height(5.dp))
 
+    XItem.Capsule(
+        icon = R.drawable.ic_recovery,
+        text = stringResource(R.string.recovery)
+    ) {
+        val intent = Intent(context, PasswordCheckActivity::class.java)
+        intent.putExtra("REQUEST_CODE", 3)
+        context.startActivity(intent)
+    }
+
+    Spacer(modifier = Modifier.height(5.dp))
+
     XItem.Switch(
         icon = R.drawable.ic_layout,
         text = stringResource(R.string.gird_layout),

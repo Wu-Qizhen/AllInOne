@@ -91,7 +91,7 @@ fun LaunchScreen(
     )
 
     LaunchedEffect(key1 = Unit) {
-        delay(150)
+        delay(100)
         isVisible = false
     }
 
@@ -641,7 +641,7 @@ private fun openCalendarApp(
     context: Context
 ) {
     val calendarIntent = Intent(Intent.ACTION_VIEW).apply {
-        data = Uri.parse("content://com.android.calendar")
+        data = Uri.parse("content://com.samsung.android.calendar")
         // 如果从非 Activity 上下文中启动的话需要设置这个标志
         flags = Intent.FLAG_ACTIVITY_NEW_TASK
     }

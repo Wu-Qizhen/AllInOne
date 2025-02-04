@@ -10,9 +10,12 @@
     <string name="about_us">关于我们</string>
     <string name="introduction">一笔一划，万象尽在掌握</string>
 
-    <string name="version">Helix（H）</string>
+    <string name="version">Indigo（I）</string>
     <string name="version_desc">版本号</string>
     <string name="update_log">更新日志</string>
+
+    <string name="aethex_matrix">Aethex Matrix</string>
+    <string name="framework">Powered by</string>
 
     <string name="participating_team">参与团队</string>
     <string name="studio_desc">设计 | 开发</string>
@@ -36,91 +39,22 @@
     <string name="sd">Stable Diffusion</string>
     <string name="sd_desc">设计协力</string>
     <string name="about_developer">关于此成员</string>
-    <string name="text_about_wqz">简历：
-        \n» 熟练掌握 Java 和 Kotlin 编程语言，具备扎实的编程基础。
-        \n» 熟悉 Android 开发，熟练使用 Android Studio 和相关工具。
-        \n» 熟练使用 Jetpack Compose 构建高性能的 Android 界面。
-        \n» 熟悉 XML、HTML、CSS，具备良好的前端开发能力。
-        \n» 熟悉 JavaScript，具备一定的前端交互开发经验。
-        \n» 熟悉常用的前端框架和库，如 React、Vue 等。
-        \n» 熟悉 Git 版本控制，具备良好的团队协作能力。
-        \n» 熟练使用 Linux 操作系统，熟悉常用命令和 Shell 编程。
-        \n» 熟悉敏捷开发流程，具备良好的需求分析和项目管理能力。
-        \n
-        \n技能：
-        \n» 编程语言：
-        \n - Java：精通
-        \n - Android：精通
-        \n - Kotlin：精通
-        \n - JavaScript：精通
-        \n - HTML：精通
-        \n - CSS：精通
-        \n
-        \n» 开发工具：
-        \n - Android Studio：熟练
-        \n - IntelliJ IDEA：熟练
-        \n - Visual Studio Code：熟练
-        \n
-        \n» 数据库：
-        \n - SQLite：熟练
-        \n - MySQL：了解
-        \n
-        \n» 框架和库：
-        \n - Android Framework：熟练
-        \n - React Native：了解
-        \n
-        \n» 版本控制：
-        \n - Git：熟练
+    <string name="text_about_wqz">
+        本项目开发和项目发起人，负责项目的整体规划和执行，领导团队进行软件开发工作，并推动项目从概念到实现的整个过程。
     </string>
-    <string name="text_about_codegeex">CodeGeeX 是清华和智谱 AI 联合打造具有 130 亿参数的多语言代码生成模型，二代 CodeGeeX 不同于一代
-        CodeGeeX（完全在国产华为昇腾芯片平台训练），CodeGeeX 是基于 ChatGLM 架构加入代码预训练实现，得益于 ChatGLM
-        的更优性能，CodeGeeX 在多项指标上取得性能提升（+107% > CodeGeeX；仅 60 亿参数即超过 150 亿参数的 StarCoder-15B 近
-        10%），更多特性包括：
-        \n» 更强大的代码能力：基于 ChatGLM2-6B 基座语言模型，CodeGeeX2-6B 进一步经过了 600B
-        代码数据预训练，相比一代模型，在代码能力上全面提升，HumanEval-X 评测集的六种编程语言均大幅提升（Python +57%, C++
-        +71%, Java +54%, JavaScript +83%, Go +56%, Rust +321%），在 Python 上达到 35.9% 的 Pass@1 一次通过率，超越规模更大的
-        StarCoder-15B。
-        \n» 更优秀的模型特性：继承 ChatGLM2-6B 模型特性，CodeGeeX2-6B 更好支持中英文输入，支持最大 8192 序列长度，推理速度较一代
-        CodeGeeX-13B 大幅提升，量化后仅需 6GB 显存即可运行，支持轻量级本地化部署。
-        \n» 更全面的编程助手：CodeGeeX 插件（VS Code, Jetbrains）后端升级，支持超过 100 种编程语言，新增上下文补全、跨文件补全等实用功能。结合
-        Ask CodeGeeX 交互式编程助手，支持中英文对话解决各种编程问题，包括且不限于代码解释、代码翻译、代码纠错、文档生成等，帮助程序员更高效开发。
-        \n» 更开放的协议：CodeGeeX2-6B 权重对学术研究完全开放，填写登记表申请商业使用。
+    <string name="text_about_codegeex">
+        CodeGeeX 是由清华大学开发的一款多语言代码生成预训练模型，具有 130 亿参数，支持 Python、Java 等多种编程语言，能够实现高精度代码生成和跨语言代码翻译，已通过 VSCode 插件形式提供给广大开发者使用，大幅提升编程效率。
     </string>
-    <string name="text_about_tylm">通义灵码是一款基于阿里云通义代码大模型打造的智能编码助手，基于海量优秀开源代码数据集和编程教科书训练，可根据当前代码文件及跨文件的上下文，自动生成行级
+    <string name="text_about_tylm">
+        通义灵码是一款基于阿里云通义代码大模型打造的智能编码助手，基于海量优秀开源代码数据集和编程教科书训练，可根据当前代码文件及跨文件的上下文，自动生成行级
         / 函数级代码、单元测试、代码注释等，此外还具备代码解释、智能研发问答、异常报错排查等能力，并针对阿里云 SDK/OpenAPI
         使用场景调优，为开发者带来高效、流畅的编码体验。
     </string>
-    <string name="text_about_chatglm">ChatGLM-6B 是一个具有 62 亿参数的中英双语语言模型。通过使用与 ChatGLM（chatglm.cn）相同的技术，ChatGLM-6B
-        初具中文问答和对话功能，并支持在单张 2080Ti 上进行推理使用。具体来说，ChatGLM-6B 有如下特点：
-        \n» 充分的中英双语预训练：ChatGLM-6B 在 1:1 比例的中英语料上训练了 1T 的 token 量，兼具双语能力。
-        \n» 优化的模型架构和大小：吸取 GLM-130B 训练经验，修正了二维 RoPE 位置编码实现，使用传统 FFN
-        结构。6B（62亿）的参数大小，也使得研究者和个人开发者自己微调和部署 ChatGLM-6B 成为可能。
-        \n» 较低的部署门槛：FP16 半精度下，ChatGLM-6B 需要至少 13GB 的显存进行推理，结合模型量化技术，这一需求可以进一步降低到
-        10GB（INT8）和 6GB（INT4），使得 ChatGLM-6B 可以部署在消费级显卡上。
-        \n» 更长的序列长度：相比 GLM-10B（序列长度1024），ChatGLM-6B 序列长度达 2048，支持更长对话和应用。
-        \n» 人类意图对齐训练：使用了监督微调（Supervised Fine-Tuning）、反馈自助（Feedback Bootstrap）、人类反馈强化学习（Reinforcement
-        Learning from Human Feedback）等方式，使模型初具理解人类指令意图的能力。输出格式为 markdown，方便展示。
-        \n
-        \n因此，ChatGLM-6B 具备了一定条件下较好的对话与问答能力。当然，ChatGLM-6B 也有相当多已知的局限和不足：
-        \n» 模型容量较小：6B 的小容量，决定了其相对较弱的模型记忆和语言能力。在面对许多事实性知识任务时，ChatGLM-6B
-        可能会生成不正确的信息；她也不擅长逻辑类问题（如数学、编程）的解答。
-        \n» 可能会产生有害说明或有偏见的内容：ChatGLM-6B 只是一个初步与人类意图对齐的语言模型，可能会生成有害、有偏见的内容。
-        \n» 较弱的多轮对话能力：ChatGLM-6B 的上下文理解能力还不够充分，在面对长答案生成，以及多轮对话的场景时，可能会出现上下文丢失和理解错误的情况。
-        \n» 英文能力不足：训练时使用的指示大部分都是中文的，只有一小部分指示是英文的。因此在使用英文指示时，回复的质量可能不如中文指示的回复，甚至与中文指示下的回复矛盾。
-        \n» 易被误导：ChatGLM-6B 的“自我认知”可能存在问题，很容易被误导并产生错误的言论。例如当前版本模型在被误导的情况下，会在自我认知上发生偏差。即使该模型经过了
-        1 万亿标识符（token）左右的双语预训练，并且进行了指令微调和人类反馈强化学习（RLHF），但是因为模型容量较小，所以在某些指示下可能会产生有误导性的内容。
+    <string name="text_about_chatglm">
+        智谱清言是一款专注于语音识别和自然语言处理技术的智能语音助手。它能够准确识别用户的语音指令，并理解其中的意图，从而提供高效、便捷的交互体验。智谱清言应用场景广泛，包括但不限于智能家居控制、语音助手服务、客服机器人等，旨在通过先进的语音交互技术，提升人机沟通的便捷性和自然性。
     </string>
-    <string name="text_about_sd">Stable Diffusion 是一款基于潜在扩散模型的深度学习工具，主要用于文本生成图像（txt2img）的应用场景。这款产品由
-        StabilityAI 公司开发，并于 2022 年 8 月发布。Stable Diffusion 在艺术创作、程序开发等领域广泛应用，因其生成图像速度快、对资源和内存要求低等特点而受到欢迎。
-        \n
-        \nStable Diffusion 的核心技术来源于 AI 视频剪辑技术创业公司 Runway 的 Patrick Esser 以及慕尼黑大学机器视觉学习组的
-        Robin Romabach。相较于其他同类产品，如 DALL-E 等大模型，Stable Diffusion 使消费者级显卡用户也能快速实现文生图。
-        \n
-        \nStable Diffusion 模型第一个版本训练耗资 60 万美元，而提供资金支持的是 StabilityAI 公司。该公司成立于 2020 年，创始人兼
-        CEO 为 Emad Mostaque。目前，Stable Diffusion 主要提供图像编辑、超分辨率、风格迁移、修复、补全等功能，并可在电脑端和手机端进行下载与运行。
-        \n
-        \n值得一提的是，Stable Diffusion 针对人物造型做了优化。相较于 Disco Diffusion，其观感表现更优秀，但略逊于
-        DALL-E2。Stable Diffusion 完全免费开源，所有代码均在 GitHub 上公开，用户可以轻松拷贝使用。
+    <string name="text_about_sd">
+        Stable Diffusion 是一个开源的文本到图像生成模型，由 Stability AI 开发。它能根据文本描述生成高分辨率的图像，具有快速、稳定的特点，广泛应用于艺术创作、设计等领域，并受到广泛的社区支持。该模型的发布显著降低了高质量图像生成的门槛。
     </string>
 
     <!-- 主页 -->
@@ -145,6 +79,7 @@
     <string name="delete">删除</string>
     <string name="modify">修改</string>
     <string name="cancel">取消</string>
+    <string name="confirm">确定</string>
     <string name="edit">编辑</string>
     <string name="thing">事件</string>
     <string name="contents">内容</string>
@@ -225,6 +160,7 @@
     <string name="about">关于</string>
     <string name="security">隐私与安全</string>
     <string name="backup">备份与导出</string>
+    <string name="recovery">恢复与导入</string>
     <string name="homepage_gird_layout">设置主页为网格布局</string>
     <string name="gird_layout">网格布局</string>
 
@@ -268,4 +204,5 @@
     <string name="title_activity_english">EnglishActivity</string>
     <string name="title_activity_chinese">ChineseActivity</string>
     <string name="title_activity_smart_box">SmartBoxActivity</string>
+    <string name="title_activity_recovery">RecoveryActivity</string>
 </resources>

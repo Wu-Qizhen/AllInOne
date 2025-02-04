@@ -69,6 +69,7 @@ import com.wqz.allinone.ui.XItem
 import com.wqz.allinone.ui.color.BackgroundColor
 import com.wqz.allinone.ui.color.BorderColor
 import com.wqz.allinone.ui.property.BorderWidth
+import com.wqz.allinone.ui.property.ButtonCategory
 import com.wqz.allinone.ui.theme.AllInOneTheme
 import com.wqz.allinone.ui.theme.ThemeColor
 import java.time.LocalDate
@@ -222,7 +223,7 @@ class DiaryPreviewActivity : ComponentActivity() {
                         placeholder = {
                             Text(
                                 text = "2000.01",
-                                color = Color.DarkGray,
+                                color = Color.Gray,
                                 fontSize = 16.sp,
                                 fontWeight = FontWeight.Bold,
                                 textAlign = TextAlign.Center,
@@ -439,7 +440,8 @@ class DiaryPreviewActivity : ComponentActivity() {
                         horizontalArrangement = Arrangement.Center
                     ) {
                         XItem.Button(
-                            text = stringResource(R.string.delete)
+                            text = stringResource(R.string.delete),
+                            color = ButtonCategory.WARNING_BUTTON
                         ) {
                             showDialog = 2
                             Toast.makeText(
@@ -454,7 +456,8 @@ class DiaryPreviewActivity : ComponentActivity() {
                         Spacer(modifier = Modifier.width(10.dp))
 
                         XItem.Button(
-                            text = stringResource(R.string.cancel)
+                            text = stringResource(R.string.cancel),
+                            color = ButtonCategory.SAFE_BUTTON
                         ) { showDialog = 0 }
                     }
                 }

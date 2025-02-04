@@ -58,6 +58,7 @@ object XItem {
     private val BACKGROUND_PRESSED_GRAY = BackgroundColor.PRESSED_GRAY
     private val BACKGROUND_DEFAULT_YELLOW = BackgroundColor.DEFAULT_YELLOW
     private val BACKGROUND_PRESSED_YELLOW = BackgroundColor.PRESSED_YELLOW
+    private val BACKGROUND_DEFAULT_BROWN = BackgroundColor.DEFAULT_BROWN
     private val BORDER_DEFAULT_GRAY = BorderColor.DEFAULT_GRAY
     private val BORDER_WIDTH = BorderWidth.DEFAULT_WIDTH
 
@@ -88,6 +89,39 @@ object XItem {
                 fontSize = 16.sp,
                 fontWeight = FontWeight.Bold,
                 color = ContentColor.DEFAULT_BROWN
+            )
+        }
+    }
+
+    /**
+     * 文本按钮
+     * @param text 按钮文字
+     * @param color 颜色
+     * @param onClick 点击事件
+     */
+    @Composable
+    fun Button(
+        text: String,
+        color: List<Color>,
+        onClick: () -> Unit
+    ) {
+        val interactionSource = remember { MutableInteractionSource() }
+        val isPressed = interactionSource.collectIsPressedAsState()
+        val backgroundColor =
+            if (isPressed.value) color[1] else color[0]
+
+        Box(
+            modifier = Modifier
+                .clickVfx(interactionSource, true, onClick)
+                .wrapContentSize()
+                .background(backgroundColor, RoundedCornerShape(50.dp))
+                .padding(horizontal = 20.dp, vertical = 10.dp)
+        ) {
+            Text(
+                text = text,
+                fontSize = 16.sp,
+                fontWeight = FontWeight.Bold,
+                color = color[2]
             )
         }
     }
@@ -464,9 +498,9 @@ object XItem {
         onClick: () -> Unit
     ) {
         val interactionSource = remember { MutableInteractionSource() }
-        val isPressed = interactionSource.collectIsPressedAsState()
+        // val isPressed = interactionSource.collectIsPressedAsState()
         val backgroundColor =
-            if (isPressed.value) BACKGROUND_PRESSED_GRAY else BACKGROUND_DEFAULT_GRAY
+            if (status.value) BACKGROUND_DEFAULT_BROWN else BACKGROUND_DEFAULT_GRAY
         val borderColor by animateColorAsState(
             targetValue = if (status.value) ThemeColor else Color(
                 23,
