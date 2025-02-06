@@ -12,7 +12,7 @@ android {
         applicationId = "com.wqz.allinone"
         minSdk = 30
         targetSdk = 34
-        versionCode = 22
+        versionCode = 23
         versionName = "Indigo"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -72,6 +72,7 @@ dependencies {
     implementation("androidx.compose.material3:material3:1.1.2")
     // implementation("androidx.wear.compose:compose-material:1.3.1")
     implementation("com.google.android.material:material:1.11.0")
+    implementation("com.google.code.gson:gson:2.10.1")
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     implementation(platform("androidx.compose:compose-bom:2023.08.00"))

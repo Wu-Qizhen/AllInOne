@@ -11,8 +11,8 @@
       "type": "SINGLE",
       "filters": [],
       "attributes": [],
-      "versionCode": 21,
-      "versionName": "Helix",
+      "versionCode": 23,
+      "versionName": "Indigo",
       "outputFile": "app-release.apk"
     }
   ],

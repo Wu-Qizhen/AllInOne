@@ -23,9 +23,9 @@ class NoteViewModel(application: Application) : AndroidViewModel(application) {
     val notes: LiveData<List<Note>>
 
     init {
-        val noteDatabase = NoteDatabase.getInstance(application)
+        val noteDatabase = NoteDatabase.getDatabase(application)
         noteDao = noteDatabase.noteDao()
-        notes = noteDao.getAll()
+        notes = noteDao.getAllAsLiveData()
     }
 
     suspend fun saveNote(note: Note): Note {

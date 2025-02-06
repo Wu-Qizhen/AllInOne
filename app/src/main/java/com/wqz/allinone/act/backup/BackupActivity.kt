@@ -25,6 +25,8 @@ import androidx.compose.material3.Checkbox
 import androidx.compose.material3.CheckboxDefaults
 import androidx.compose.material3.Divider
 import androidx.compose.material3.Icon
+import androidx.compose.material3.RadioButton
+import androidx.compose.material3.RadioButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TriStateCheckbox
 import androidx.compose.runtime.Composable
@@ -113,6 +115,8 @@ class BackupActivity : ComponentActivity() {
             onDiaryStateChange(s)
             onBookmarkStateChange(s)
         }
+        val exportTypes = listOf("JSON", "DB")
+        val (selectedExportType, setSelectedExportType) = remember { mutableStateOf(exportTypes[0]) }
         val exportStatus by viewModel.exportStatus.collectAsState(initial = listOf("* 导出结果：")) //.observeAsState(emptyList())
         var exportStatusString by remember { mutableStateOf("* 导出结果：") }
         val pendingOperations = mutableListOf<() -> Unit>()
@@ -140,6 +144,7 @@ class BackupActivity : ComponentActivity() {
                 Text(
                     text = "全选",
                     fontSize = 16.sp,
+                    fontWeight = FontWeight.Bold,
                     maxLines = 1
                 )
             }
@@ -287,7 +292,49 @@ class BackupActivity : ComponentActivity() {
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(15.dp, 15.dp, 15.dp, 0.dp),
-                text = "* 文件将导出到系统下载目录",
+                text = "导出格式",
+                fontSize = 16.sp,
+                fontWeight = FontWeight.Bold,
+                textAlign = TextAlign.Start
+            )
+
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(end = 15.dp),
+                verticalAlignment = Alignment.CenterVertically
+                // horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                exportTypes.forEach { type ->
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        RadioButton(
+                            selected = (type == selectedExportType),
+                            onClick = { setSelectedExportType(type) },
+                            colors = RadioButtonDefaults.colors(selectedColor = ThemeColor)
+                        )
+                        Text(
+                            text = type,
+                            fontSize = 16.sp,
+                            maxLines = 1
+                        )
+                    }
+                }
+            }
+
+            Divider(
+                modifier = Modifier
+                    .fillMaxWidth(),
+                thickness = BorderWidth.DEFAULT_WIDTH,
+                color = Color(54, 54, 54)
+            )
+
+            Text(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(15.dp, 15.dp, 15.dp, 0.dp),
+                text = "* 导出格式对书签宝无效\n* 文件将导出到系统下载目录",
                 color = ThemeColor,
                 fontSize = 12.sp,
                 textAlign = TextAlign.Start
@@ -311,18 +358,49 @@ class BackupActivity : ComponentActivity() {
                 icon = R.drawable.ic_todo,
                 text = stringResource(id = R.string.execute)
             ) {
-                if (todoExport) {
-                    pendingOperations.add { viewModel.exportDatabase(context, "Todo", "待办箱") }
+                if (selectedExportType == "JSON") {
+                    if (todoExport) {
+                        pendingOperations.add { viewModel.exportJson(context, "Todo", "待办箱") }
+                    }
+                    if (noteExport) {
+                        pendingOperations.add { viewModel.exportJson(context, "Note", "随手记") }
+                    }
+                    if (diaryExport) {
+                        pendingOperations.add { viewModel.exportJson(context, "Diary", "生活书") }
+                    }
+                } else {
+                    if (todoExport) {
+                        pendingOperations.add {
+                            viewModel.exportDatabase(
+                                context,
+                                "Todo",
+                                "待办箱"
+                            )
+                        }
+                    }
+                    if (noteExport) {
+                        pendingOperations.add {
+                            viewModel.exportDatabase(
+                                context,
+                                "Note",
+                                "随手记"
+                            )
+                        }
+                    }
+                    if (diaryExport) {
+                        pendingOperations.add {
+                            viewModel.exportDatabase(
+                                context,
+                                "Diary",
+                                "生活书"
+                            )
+                        }
+                    }
                 }
-                if (noteExport) {
-                    pendingOperations.add { viewModel.exportDatabase(context, "Note", "随手记") }
-                }
-                if (diaryExport) {
-                    pendingOperations.add { viewModel.exportDatabase(context, "Diary", "生活书") }
-                }
+
                 if (bookmarkExport) {
                     pendingOperations.add {
-                        viewModel.viewModelScope.launch { viewModel.exportBookmarks() }
+                        viewModel.exportBookmarksToTxt()
                     }
                 }
 

@@ -19,12 +19,19 @@ interface TodoDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(todo: Todo): Long
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insert(todos: List<Todo>): List<Long>
+
     @Query("INSERT INTO Todo (title, completed) VALUES (:title, :completed)")
-    suspend fun insert(title: String, completed: Boolean)
+    suspend fun insert(title: String, completed: Boolean= false)
 
     @Query("SELECT * FROM Todo")
     @Transaction
-    fun getAll(): LiveData<List<Todo>>
+    fun getAllAsLiveData(): LiveData<List<Todo>>
+
+    @Query("SELECT * FROM Todo")
+    @Transaction
+    fun getAll(): List<Todo>
 
     @Query("SELECT * FROM Todo WHERE completed = 1")
     @Transaction

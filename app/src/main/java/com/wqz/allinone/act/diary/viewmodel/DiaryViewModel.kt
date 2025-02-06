@@ -36,7 +36,7 @@ class DiaryViewModel(application: Application) : AndroidViewModel(application) {
     val diaries: LiveData<List<Diary>> get() = _diaries
 
     init {
-        val database = DiaryDatabase.getInstance(application)
+        val database = DiaryDatabase.getDatabase(application)
         dao = database.diaryDao()
         updateDiariesForCurrentMonth()
     }

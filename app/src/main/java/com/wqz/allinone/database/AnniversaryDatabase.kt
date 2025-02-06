@@ -26,7 +26,7 @@ abstract class AnniversaryDatabase : RoomDatabase() {
         private var INSTANCE: AnniversaryDatabase? = null
 
         // 获取数据库实例的方法
-        fun getInstance(context: Context): AnniversaryDatabase {
+        fun getDatabase(context: Context): AnniversaryDatabase {
             synchronized(this) {
                 var instance = INSTANCE
 

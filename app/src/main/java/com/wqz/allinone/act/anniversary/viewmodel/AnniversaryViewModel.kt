@@ -20,7 +20,7 @@ class AnniversaryViewModel(application: Application) : AndroidViewModel(applicat
     val anniversaries: LiveData<List<Anniversary>>
 
     init {
-        val database = AnniversaryDatabase.getInstance(application)
+        val database = AnniversaryDatabase.getDatabase(application)
         dao = database.anniversaryDao()
         anniversaries = dao.getAllSortedByDate()
     }

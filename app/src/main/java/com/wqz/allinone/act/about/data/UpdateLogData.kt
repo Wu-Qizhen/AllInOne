@@ -7,7 +7,7 @@ package com.wqz.allinone.act.about.data
 object UpdateLogData {
     val updateLogs = listOf(
         UpdateLog(
-            "🍋‍🟩 Indigo",
+            "🐲 Indigo",
             "靛蓝色，深邃和智慧",
             "2025.2.4",
             """

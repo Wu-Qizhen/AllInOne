@@ -25,12 +25,14 @@ interface DiaryDao {
     suspend fun getById(id: Long): Diary?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(entry: Diary): Long
+    suspend fun insert(diary: Diary): Long
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insert(diaries: List<Diary>): List<Long>
 
     @Update
     suspend fun update(entry: Diary)
 
-    // 根据 ID 删除
     @Query("DELETE FROM Diary WHERE id = :diaryId")
     suspend fun deleteById(diaryId: Long)
 }

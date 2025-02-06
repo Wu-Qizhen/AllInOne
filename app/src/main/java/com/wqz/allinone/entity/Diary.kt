@@ -13,8 +13,6 @@ import java.time.LocalDate
 data class Diary(
     @PrimaryKey(autoGenerate = true)
     var id: Long = 0,
-    /*@ColumnInfo(name = "title")
-    val title: String,*/
     @ColumnInfo(name = "content")
     val content: String,
     @ColumnInfo(name = "date")

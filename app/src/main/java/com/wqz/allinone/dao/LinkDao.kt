@@ -24,7 +24,7 @@ interface LinkDao {
     @Query("SELECT * FROM Link WHERE id = :id")
     fun getLink(id: Int): Link?
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertLink(link: Link)
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)

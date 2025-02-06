@@ -15,5 +15,5 @@ data class Todo(
     @ColumnInfo(name = "title")
     var title: String,
     @ColumnInfo(name = "completed")
-    var completed: Boolean
+    var completed: Boolean = false
 )

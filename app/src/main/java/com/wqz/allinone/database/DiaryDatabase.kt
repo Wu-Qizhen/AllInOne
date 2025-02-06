@@ -23,7 +23,7 @@ abstract class DiaryDatabase : RoomDatabase() {
         private var INSTANCE: DiaryDatabase? = null
 
         // 获取数据库实例的方法
-        fun getInstance(context: Context): DiaryDatabase {
+        fun getDatabase(context: Context): DiaryDatabase {
             synchronized(this) {
                 var instance = INSTANCE
 
