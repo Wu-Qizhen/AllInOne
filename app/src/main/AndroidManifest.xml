@@ -14,6 +14,12 @@
         android:name="android.permission.MANAGE_EXTERNAL_STORAGE"
         tools:ignore="ScopedStorage" />
 
+    <queries>
+
+        <!-- 声明需要查询的包名 -->
+        <package android:name="com.samsung.android.calendar" />
+    </queries>
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -25,6 +31,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AllInOne"
         tools:targetApi="31">
+        <activity
+            android:name=".act.record.RecordActivity"
+            android:exported="false"
+            android:label="@string/title_activity_record"
+            android:theme="@style/Theme.AllInOne" />
         <activity
             android:name=".act.recovery.RecoveryActivity"
             android:exported="false"

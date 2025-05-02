@@ -34,6 +34,7 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
@@ -53,9 +54,11 @@ import com.wqz.allinone.ui.XCard
 import com.wqz.allinone.ui.XItem
 import com.wqz.allinone.ui.color.BackgroundColor
 import com.wqz.allinone.ui.color.BorderColor
+import com.wqz.allinone.ui.color.ContentColor
 import com.wqz.allinone.ui.property.BorderWidth
 import com.wqz.allinone.ui.property.ButtonCategory
 import com.wqz.allinone.ui.theme.AllInOneTheme
+import com.wqz.allinone.ui.theme.ThemeColor
 
 /**
  * 笔记列表
@@ -199,7 +202,26 @@ class NoteListActivity : ComponentActivity() {
 
                     Spacer(modifier = Modifier.height(5.dp))
 
-                    Text(text = note.updateTime, fontSize = 12.sp, color = Color.Gray)
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Text(text = note.updateTime, fontSize = 12.sp, color = Color.Gray)
+
+                        Row(
+                            modifier = Modifier
+                                .width(25.dp)
+                                .background(ThemeColor, RoundedCornerShape(10.dp)),
+                            horizontalArrangement = Arrangement.Center
+                        ) {
+                            Text(
+                                text = note.id.toString(),
+                                fontSize = 10.sp,
+                                color = ContentColor.DEFAULT_BROWN
+                            )
+                        }
+                    }
                 }
 
                 Spacer(modifier = Modifier.height(3.dp))

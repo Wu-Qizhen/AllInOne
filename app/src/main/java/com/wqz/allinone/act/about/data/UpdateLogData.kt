@@ -7,9 +7,22 @@ package com.wqz.allinone.act.about.data
 object UpdateLogData {
     val updateLogs = listOf(
         UpdateLog(
+            "🦚 Jasper",
+            "碧玉，坚固和稳定",
+            "2025.05.02",
+            """
+                |» 新增
+                | - ⌈溯影棱镜⌋：你的数字人生博物馆——每一段痕迹，都是时间的礼物
+                | - ⌈随手记⌋ UID 显示
+                |» 优化
+                | - ⌈随手记⌋ 锁定逻辑
+                | - 卡片光影效果
+            """.trimMargin()
+        ),
+        UpdateLog(
             "🐲 Indigo",
             "靛蓝色，深邃和智慧",
-            "2025.2.4",
+            "2025.02.04",
             """
                 |» 新增
                 | - ⌈恢复与导入⌋：一键恢复数据，轻松恢复之前已保存的数据

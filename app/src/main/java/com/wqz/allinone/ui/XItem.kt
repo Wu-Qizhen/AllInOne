@@ -454,8 +454,8 @@ object XItem {
                     shape = RoundedCornerShape(15.dp),
                     brush = Brush.linearGradient(
                         BORDER_DEFAULT_GRAY,
-                        start = Offset.Zero,
-                        end = Offset.Infinite
+                        start = Offset.Infinite,
+                        end = Offset.Zero
                     )
                 )
                 .padding(10.dp)

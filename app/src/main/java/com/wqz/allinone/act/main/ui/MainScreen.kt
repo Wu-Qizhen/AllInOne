@@ -4,7 +4,7 @@ package com.wqz.allinone.act.main.ui
 
 import android.content.Context
 import android.content.Intent
-import android.net.Uri
+import android.content.pm.PackageManager
 import android.widget.Toast
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedVisibility
@@ -66,6 +66,7 @@ import com.wqz.allinone.act.bookmark.FolderListActivity
 import com.wqz.allinone.act.knowledge.SubjectChooseActivity
 import com.wqz.allinone.act.note.NoteListActivity
 import com.wqz.allinone.act.password.PasswordCheckActivity
+import com.wqz.allinone.act.record.RecordActivity
 import com.wqz.allinone.act.setting.SettingActivity
 import com.wqz.allinone.act.todo.TodoListActivity
 import com.wqz.allinone.ui.ModifierExtends.clickVfx
@@ -348,6 +349,15 @@ fun MainScreen(
                 Spacer(modifier = Modifier.height(10.dp))
 
                 XItem.Capsule(
+                    icon = R.drawable.ic_memory,
+                    text = stringResource(id = R.string.tracing_prism)
+                ) {
+                    context.startActivity(Intent(context, RecordActivity::class.java))
+                }
+
+                Spacer(modifier = Modifier.height(5.dp))
+
+                XItem.Capsule(
                     icon = R.drawable.ic_setting,
                     text = stringResource(id = R.string.setting)
                 ) {
@@ -499,18 +509,20 @@ fun MainScreen(
                     horizontalArrangement = Arrangement.Center
                 ) {
                     XItem.Card(
+                        icon = R.drawable.ic_memory,
+                        text = stringResource(id = R.string.tracing_prism)
+                    ) {
+                        context.startActivity(Intent(context, RecordActivity::class.java))
+                    }
+
+                    Spacer(modifier = Modifier.width(5.dp))
+
+                    XItem.Card(
                         icon = R.drawable.ic_setting,
                         text = stringResource(id = R.string.setting)
                     ) {
                         context.startActivity(Intent(context, SettingActivity::class.java))
                     }
-
-                    Spacer(modifier = Modifier.width(5.dp))
-
-                    Surface(
-                        modifier = Modifier.size(85.dp),
-                        color = Color.Transparent
-                    ) {}
                 }
             }
 
@@ -637,21 +649,39 @@ fun LaunchAnimation(
     }
 }
 
-private fun openCalendarApp(
-    context: Context
-) {
-    val calendarIntent = Intent(Intent.ACTION_VIEW).apply {
-        data = Uri.parse("content://com.samsung.android.calendar")
-        // 如果从非 Activity 上下文中启动的话需要设置这个标志
-        flags = Intent.FLAG_ACTIVITY_NEW_TASK
+private fun openCalendarApp(context: Context) {
+    /*val packageName = "com.samsung.android.calendar"
+    // 获取包管理器
+    val packageManager = context.packageManager
+    // 创建一个启动应用的 Intent
+    val intent = packageManager.getLaunchIntentForPackage(packageName)
+
+    if (intent != null) {
+        // 如果找到了对应的应用，启动它
+        context.startActivity(intent)
+    } else {
+        // 如果没有找到对应的应用，可以提示用户或执行其他操作
+        Toast.makeText(context, "未找到应用程序", Toast.LENGTH_SHORT).show()
+    }*/
+
+    val packageName = "com.samsung.android.calendar"
+    val packageManager = context.packageManager
+
+    // 检查目标应用是否存在
+    try {
+        packageManager.getPackageInfo(packageName, PackageManager.GET_ACTIVITIES)
+    } catch (e: PackageManager.NameNotFoundException) {
+        // 应用未安装
+        Toast.makeText(context, "未找到应用程序", Toast.LENGTH_SHORT).show()
+        return
     }
 
-    try {
-        context.startActivity(calendarIntent)
-    } catch (e: Exception) {
-        // 如果没有找到处理该意图的应用，则捕获异常并处理
-        e.printStackTrace()
-        // 在这里可以提示用户安装日历应用或选择其他操作
-        Toast.makeText(context, "无法打开日历应用", Toast.LENGTH_SHORT).show()
+    // 获取启动 Intent
+    val launchIntent = packageManager.getLaunchIntentForPackage(packageName)
+    if (launchIntent != null) {
+        context.startActivity(launchIntent)
+    } else {
+        // 无法启动（可能是权限问题或 Activity 未暴露）
+        Toast.makeText(context, "无法启动应用程序", Toast.LENGTH_SHORT).show()
     }
 }

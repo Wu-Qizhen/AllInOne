@@ -12,8 +12,8 @@ android {
         applicationId = "com.wqz.allinone"
         minSdk = 30
         targetSdk = 34
-        versionCode = 23
-        versionName = "Indigo"
+        versionCode = 25
+        versionName = "Jasper"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
             useSupportLibrary = true

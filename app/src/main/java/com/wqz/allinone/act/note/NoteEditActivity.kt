@@ -5,6 +5,8 @@ import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -17,6 +19,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ArrowBack
@@ -33,6 +36,7 @@ import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.Center
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -49,6 +53,7 @@ import com.wqz.allinone.act.note.viewmodel.NoteViewModel
 import com.wqz.allinone.entity.Note
 import com.wqz.allinone.ui.AppBackground
 import com.wqz.allinone.ui.ModifierExtends.clickVfx
+import com.wqz.allinone.ui.color.ContentColor
 import com.wqz.allinone.ui.theme.AllInOneTheme
 import com.wqz.allinone.ui.theme.ThemeColor
 import kotlinx.coroutines.launch
@@ -112,6 +117,7 @@ class NoteEditActivity : ComponentActivity() {
                 .padding(horizontal = 4.dp) // 输入框内部距默认 16
         ) {
             Spacer(modifier = Modifier.height(15.dp))
+
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -141,6 +147,7 @@ class NoteEditActivity : ComponentActivity() {
                             }
                             .size(25.dp)
                     )*/
+
                     IconButton(
                         onClick = {
                             finish()
@@ -154,7 +161,9 @@ class NoteEditActivity : ComponentActivity() {
                         },
                         modifier = Modifier.size(25.dp)
                     )
+
                     Spacer(modifier = Modifier.width(10.dp))
+
                     if (note.id != -1) {
                         Image(
                             painter = painterResource(id = if (isLocked) R.drawable.ic_lock else R.drawable.ic_unlock),
@@ -163,6 +172,7 @@ class NoteEditActivity : ComponentActivity() {
                                 .size(20.dp)
                                 .clickVfx {
                                     isLocked = !isLocked
+                                    note.isLocked = isLocked
                                     note.id?.let { viewModel.updateLockStatus(it, isLocked) }
                                     Toast
                                         .makeText(
@@ -173,6 +183,7 @@ class NoteEditActivity : ComponentActivity() {
                                         .show()
                                 }
                         )
+
                         /*IconButton(
                             onClick = {
                                 note.isLocked = !note.isLocked
@@ -187,8 +198,10 @@ class NoteEditActivity : ComponentActivity() {
                             },
                             modifier = Modifier.size(25.dp)
                         )*/
+
                         Spacer(modifier = Modifier.width(10.dp))
                     }
+
                     IconButton(
                         onClick = {
                             // onSaveClick(noteId, title.value, content.value, noteDao)
@@ -224,6 +237,7 @@ class NoteEditActivity : ComponentActivity() {
                     )
                 }
             }
+
             TextField(
                 modifier = Modifier.fillMaxWidth(),
                 value = title.value,
@@ -250,16 +264,36 @@ class NoteEditActivity : ComponentActivity() {
                     )
                 }
             )
-            Row {
+
+            Row(verticalAlignment = Alignment.CenterVertically) {
                 Spacer(modifier = Modifier.width(16.dp))
+
                 Text(
                     text = updateTime,
                     color = Color.LightGray,
                     fontSize = 12.sp
                 )
-                Spacer(modifier = Modifier.width(10.dp))
+
+                Spacer(modifier = Modifier.width(5.dp))
+
                 Text(text = "${contentLength}字", color = Color.LightGray, fontSize = 12.sp)
+
+                Spacer(modifier = Modifier.width(5.dp))
+
+                Row(
+                    modifier = Modifier
+                        .width(25.dp)
+                        .background(ThemeColor, RoundedCornerShape(10.dp)),
+                    horizontalArrangement = Arrangement.Center
+                ) {
+                    Text(
+                        text = note.id.toString(),
+                        fontSize = 10.sp,
+                        color = ContentColor.DEFAULT_BROWN
+                    )
+                }
             }
+
             TextField(
                 modifier = Modifier.fillMaxWidth(),
                 value = content.value,
@@ -284,6 +318,7 @@ class NoteEditActivity : ComponentActivity() {
                     )
                 }
             )
+
             Spacer(modifier = Modifier.height(34.dp))
         }
     }
