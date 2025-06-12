@@ -23,7 +23,7 @@ interface TodoDao {
     suspend fun insert(todos: List<Todo>): List<Long>
 
     @Query("INSERT INTO Todo (title, completed) VALUES (:title, :completed)")
-    suspend fun insert(title: String, completed: Boolean= false)
+    suspend fun insert(title: String, completed: Boolean = false)
 
     @Query("SELECT * FROM Todo")
     @Transaction
@@ -36,6 +36,10 @@ interface TodoDao {
     @Query("SELECT * FROM Todo WHERE completed = 1")
     @Transaction
     fun getCompletedTodos(): LiveData<List<Todo>>
+
+    @Query("SELECT COUNT(*) FROM Todo WHERE completed = 0")
+    @Transaction
+    fun getUncompletedTodoCount(): Int
 
     @Query("SELECT * FROM Todo WHERE completed = 0")
     @Transaction

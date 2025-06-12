@@ -19,6 +19,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
@@ -50,13 +51,13 @@ import com.wqz.allinone.ui.theme.ThemeColor
  */
 class RecordActivity : ComponentActivity() {
     private lateinit var viewModel: RecordViewModel
-    private lateinit var mockRecords: List<RecordSnapshot>
+    // private lateinit var mockRecords: List<RecordSnapshot>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         viewModel = RecordViewModel(application)
-        mockRecords = viewModel.getRecordSnapshots()
+        // mockRecords = viewModel.getRecordSnapshots()
 
         setContent {
             AllInOneTheme {
@@ -70,43 +71,48 @@ class RecordActivity : ComponentActivity() {
     @Composable
     fun MemoryPrismScreen() {
         var currentIndex by remember { mutableIntStateOf(0) }
-        val currentRecord = mockRecords[currentIndex]
+        // val mockRecords by viewModel.recordSnapshots.collectAsState()
+        val mockRecords by viewModel.recordSnapshots.collectAsState(initial = emptyList())
+        // val currentRecord = mockRecords[currentIndex]
 
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .clickable(
-                    enabled = true,
-                    onClick = {
-                        currentIndex = (currentIndex + 1) % mockRecords.size
-                    }
-                )
-            /*.pointerInput(Unit) {
+        if (mockRecords.isNotEmpty()) {
+            val currentRecord = mockRecords[currentIndex]
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .clickable(
+                        enabled = true,
+                        onClick = {
+                            currentIndex = (currentIndex + 1) % mockRecords.size
+                        }
+                    )
+                /*.pointerInput(Unit) {
                 detectVerticalDragGestures { _, dragAmount ->
                     if (dragAmount < -20) { // 向下滑动阈值
                         currentIndex = (currentIndex + 1) % mockRecords.size
                     }
                 }
             }*/
-        ) {
-            // 进度环形图
-            CircularProgressIndicator(
-                progress = { currentRecord.progress },
-                modifier = Modifier.fillMaxSize(),
-                // strokeWidth = 8.dp,
-                color = ThemeColor,
-                trackColor = Color.White.copy(alpha = 0.1f)
-            )
+            ) {
+                // 进度环形图
+                CircularProgressIndicator(
+                    progress = { currentRecord.progress },
+                    modifier = Modifier.fillMaxSize(),
+                    // strokeWidth = 8.dp,
+                    color = ThemeColor,
+                    trackColor = Color.White.copy(alpha = 0.1f)
+                )
 
-            AnimatedContent(
-                targetState = currentRecord,
-                transitionSpec = {
-                    fadeIn(animationSpec = tween(300)) togetherWith
-                            fadeOut(animationSpec = tween(300))
-                },
-                label = "RecordTransition"
-            ) { record ->
-                RecordCard(record = record)
+                AnimatedContent(
+                    targetState = currentRecord,
+                    transitionSpec = {
+                        fadeIn(animationSpec = tween(300)) togetherWith
+                                fadeOut(animationSpec = tween(300))
+                    },
+                    label = "RecordTransition"
+                ) { record ->
+                    RecordCard(record = record)
+                }
             }
         }
     }
@@ -128,6 +134,7 @@ class RecordActivity : ComponentActivity() {
                 fontFamily = FontFamily(
                     Font(R.font.fzfengrusongti_regular, FontWeight.Normal)
                 ),
+                fontWeight = FontWeight.Bold,
                 letterSpacing = 3.sp
             )
 
@@ -189,29 +196,6 @@ class RecordActivity : ComponentActivity() {
         trackColor: Color = Color.Gray,
         // strokeWidth: Dp = 8.dp // 添加 strokeWidth 参数
     ) {
-        /*val density = LocalDensity.current
-        val strokeWidthPx = with(density) { strokeWidth.toPx() }
-
-        Canvas(modifier = modifier) {
-            val radius = (size.minDimension - strokeWidthPx) / 2
-
-            // 绘制背景轨道
-            drawCircle(
-                color = trackColor,
-                radius = radius,
-                style = Stroke(strokeWidthPx)
-            )
-
-            // 绘制进度弧
-            drawArc(
-                color = color,
-                startAngle = -90f,
-                sweepAngle = 360 * progress(),
-                useCenter = false,
-                style = Stroke(strokeWidthPx, cap = StrokeCap.Round)
-            )
-        }*/
-
         Canvas(
             modifier = modifier
                 .fillMaxSize()
@@ -241,38 +225,5 @@ class RecordActivity : ComponentActivity() {
                 )
             }
         }
-
-        /*val density = LocalDensity.current
-        val strokeWidthPx = with(density) { 8.dp.toPx() }
-
-        Canvas(modifier = modifier) {
-            // 计算有效绘制区域半径（考虑笔触宽度）
-            val radius = (size.minDimension - strokeWidthPx) / 2
-
-            // 将坐标系原点移至画布中心
-            translate(size.width / 2, size.height / 2) {
-                // 绘制背景圆环
-                drawCircle(
-                    color = trackColor,
-                    radius = radius,
-                    style = Stroke(strokeWidthPx)
-                )
-            }
-
-            translate(size.width / 2, size.height / 2) {
-                // 绘制进度圆弧
-                drawArc(
-                    color = color,
-                    startAngle = -90f,
-                    sweepAngle = 360 * progress(),
-                    useCenter = false,
-                    style = Stroke(strokeWidthPx, cap = StrokeCap.Round),
-                    // 指定圆弧绘制区域为正方形，与圆环对齐
-                    size = Size(radius * 2, radius * 2),
-                    // 调整左上角坐标，使圆弧中心与圆环一致
-                    topLeft = Offset(-radius, -radius)
-                )
-            }
-        }*/
     }
 }

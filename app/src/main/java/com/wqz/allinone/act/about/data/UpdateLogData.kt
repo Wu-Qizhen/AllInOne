@@ -7,6 +7,18 @@ package com.wqz.allinone.act.about.data
 object UpdateLogData {
     val updateLogs = listOf(
         UpdateLog(
+            "👻 Kraken",
+            "传说中的大海怪，强大和神秘",
+            "2025.06.12",
+            """
+                |» 新增
+                | - ⌈纪念日⌋ 纪念日编辑
+                |» 优化
+                | - ⌈溯影棱镜⌋ 界面布局
+                | - 统一输入框样式
+            """.trimMargin()
+        ),
+        UpdateLog(
             "🦚 Jasper",
             "碧玉，坚固和稳定",
             "2025.05.02",

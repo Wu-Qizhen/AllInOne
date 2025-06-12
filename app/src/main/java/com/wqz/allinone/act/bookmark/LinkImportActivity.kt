@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
-import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -29,8 +28,8 @@ import com.wqz.allinone.entity.Link
 import com.wqz.allinone.ui.AppBackground
 import com.wqz.allinone.ui.XCard
 import com.wqz.allinone.ui.XItem
+import com.wqz.allinone.ui.color.TextFieldColor
 import com.wqz.allinone.ui.theme.AllInOneTheme
-import com.wqz.allinone.ui.theme.ThemeColor
 import java.util.regex.Pattern
 
 /**
@@ -71,13 +70,7 @@ class LinkImportActivity : ComponentActivity() {
                 modifier = Modifier.fillMaxWidth(),
                 value = importLinks,
                 onValueChange = { importLinks = it },
-                colors = TextFieldDefaults.colors(
-                    unfocusedContainerColor = Color.Transparent,
-                    focusedContainerColor = Color.Transparent,
-                    unfocusedIndicatorColor = Color.Transparent,
-                    focusedIndicatorColor = Color.Transparent,
-                    cursorColor = ThemeColor
-                ),
+                colors = TextFieldColor.colors(),
                 textStyle = TextStyle(
                     color = Color.White,
                     fontSize = 14.sp,

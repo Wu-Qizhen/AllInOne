@@ -14,7 +14,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
-import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -44,8 +43,8 @@ import com.wqz.allinone.preference.PasswordPreferencesManager
 import com.wqz.allinone.ui.AppBackground
 import com.wqz.allinone.ui.XCard
 import com.wqz.allinone.ui.XItem
+import com.wqz.allinone.ui.color.TextFieldColor
 import com.wqz.allinone.ui.theme.AllInOneTheme
-import com.wqz.allinone.ui.theme.ThemeColor
 
 /**
  * 密码校验
@@ -92,15 +91,7 @@ class PasswordCheckActivity : ComponentActivity() {
                     .focusRequester(focusRequester),
                 value = password,
                 onValueChange = { password = it },
-                colors = TextFieldDefaults.colors(
-                    unfocusedContainerColor = Color.Transparent, // 背景颜色
-                    focusedContainerColor = Color.Transparent, // 背景颜色
-                    unfocusedIndicatorColor = Color.Transparent, // 下划线颜色
-                    focusedIndicatorColor = Color.Transparent, // 下划线颜色
-                    cursorColor = ThemeColor, // 光标颜色
-                    focusedLabelColor = Color.White,
-                    unfocusedLabelColor = Color.Gray
-                ),
+                colors = TextFieldColor.colors(),
                 textStyle = TextStyle(
                     color = Color.White,
                     fontSize = 16.sp,

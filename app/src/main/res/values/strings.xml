@@ -10,7 +10,7 @@
     <string name="about_us">关于我们</string>
     <string name="introduction">一笔一划，万象尽在掌握</string>
 
-    <string name="version">Jasper（J）</string>
+    <string name="version">Kraken（K）</string>
     <string name="version_desc">版本号</string>
     <string name="update_log">更新日志</string>
 
@@ -100,6 +100,7 @@
 
     <!-- 纪念日 -->
     <string name="add_anniversary">添加纪念日</string>
+    <string name="edit_anniversary">编辑纪念日</string>
 
     <!-- 生活书 -->
     <string name="mood_select">心情选择</string>
@@ -207,4 +208,5 @@
     <string name="title_activity_smart_box">SmartBoxActivity</string>
     <string name="title_activity_recovery">RecoveryActivity</string>
     <string name="title_activity_record">RecordActivity</string>
+    <string name="title_activity_anniversary_edit">AnniversaryEditActivity</string>
 </resources>

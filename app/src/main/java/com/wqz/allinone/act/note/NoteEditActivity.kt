@@ -28,7 +28,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
-import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -54,6 +53,7 @@ import com.wqz.allinone.entity.Note
 import com.wqz.allinone.ui.AppBackground
 import com.wqz.allinone.ui.ModifierExtends.clickVfx
 import com.wqz.allinone.ui.color.ContentColor
+import com.wqz.allinone.ui.color.TextFieldColor
 import com.wqz.allinone.ui.theme.AllInOneTheme
 import com.wqz.allinone.ui.theme.ThemeColor
 import kotlinx.coroutines.launch
@@ -242,13 +242,7 @@ class NoteEditActivity : ComponentActivity() {
                 modifier = Modifier.fillMaxWidth(),
                 value = title.value,
                 onValueChange = { title.value = it },
-                colors = TextFieldDefaults.colors(
-                    unfocusedContainerColor = Color.Transparent, // 背景颜色
-                    focusedContainerColor = Color.Transparent, // 背景颜色
-                    unfocusedIndicatorColor = Color.Transparent, // 下划线颜色
-                    focusedIndicatorColor = Color.Transparent, // 下划线颜色
-                    cursorColor = ThemeColor // 光标颜色
-                ),
+                colors = TextFieldColor.colors(),
                 textStyle = TextStyle(
                     color = Color.White,
                     fontSize = 20.sp,
@@ -287,7 +281,7 @@ class NoteEditActivity : ComponentActivity() {
                     horizontalArrangement = Arrangement.Center
                 ) {
                     Text(
-                        text = note.id.toString(),
+                        text = if (note.id == -1) "NEW" else note.id.toString(),
                         fontSize = 10.sp,
                         color = ContentColor.DEFAULT_BROWN
                     )
@@ -298,13 +292,7 @@ class NoteEditActivity : ComponentActivity() {
                 modifier = Modifier.fillMaxWidth(),
                 value = content.value,
                 onValueChange = { content.value = it },
-                colors = TextFieldDefaults.colors(
-                    unfocusedContainerColor = Color.Transparent, // 背景颜色
-                    focusedContainerColor = Color.Transparent, // 背景颜色
-                    unfocusedIndicatorColor = Color.Transparent, // 下划线颜色
-                    focusedIndicatorColor = Color.Transparent, // 下划线颜色
-                    cursorColor = ThemeColor // 光标颜色
-                ),
+                colors = TextFieldColor.colors(),
                 textStyle = TextStyle(
                     color = Color.White,
                     fontSize = 14.sp,

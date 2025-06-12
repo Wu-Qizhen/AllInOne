@@ -103,7 +103,7 @@ class AnniversaryDetailsActivity : ComponentActivity() {
         val scrollState = rememberScrollState()
         // 状态来存储获取到的周年纪念信息
         var anniversary by remember { mutableStateOf<Anniversary?>(null) }
-        var deleteConfirm by remember { mutableStateOf(false) }
+        // var deleteConfirm by remember { mutableStateOf(false) }
 
         // 使用 LaunchedEffect 在 Composable 的重组中执行协程
         LaunchedEffect(anniversaryId) {
@@ -148,7 +148,7 @@ class AnniversaryDetailsActivity : ComponentActivity() {
                             modifier = Modifier.size(25.dp)
                         )
 
-                        Spacer(modifier = Modifier.width(10.dp))
+                        /*Spacer(modifier = Modifier.width(10.dp))
 
                         IconButton(
                             onClick = {
@@ -172,9 +172,34 @@ class AnniversaryDetailsActivity : ComponentActivity() {
                                 )
                             },
                             modifier = Modifier.size(25.dp)
+                        )*/
+
+                        Spacer(modifier = Modifier.width(10.dp))
+
+                        IconButton(
+                            onClick = {
+                                val intent =
+                                    Intent(
+                                        this@AnniversaryDetailsActivity,
+                                        AnniversaryEditActivity::class.java
+                                    )
+                                intent.putExtra("ANNIVERSARY_ID", anniversaryId)
+                                startActivity(intent)
+                                finish()
+                            },
+                            content = {
+                                Icon(
+                                    painter = painterResource(id = R.drawable.ic_edit),
+                                    contentDescription = "编辑",
+                                    tint = Color.White,
+                                    modifier = Modifier.size(20.dp)
+                                )
+                            },
+                            modifier = Modifier.size(25.dp)
                         )
                     }
                 }
+
                 /*IconButton(
                     onClick = {
                         finish()
@@ -188,12 +213,14 @@ class AnniversaryDetailsActivity : ComponentActivity() {
                     },
                     modifier = Modifier.size(25.dp)
                 )*/
+
                 Spacer(modifier = Modifier.height(15.dp))
 
                 AnniversaryCard(
                     anniversary = anniversary!!,
                     date
                 )
+
                 /*XItem.Button(
                     icon = R.drawable.ic_delete,
                     text = if (deleteConfirm) "确认删除" else stringResource(id = R.string.delete)

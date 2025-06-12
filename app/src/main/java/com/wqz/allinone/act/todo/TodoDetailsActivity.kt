@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -11,16 +12,17 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Divider
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
-import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
@@ -38,6 +40,9 @@ import com.wqz.allinone.entity.Todo
 import com.wqz.allinone.ui.AppBackground
 import com.wqz.allinone.ui.XCard
 import com.wqz.allinone.ui.XItem
+import com.wqz.allinone.ui.color.BackgroundColor
+import com.wqz.allinone.ui.color.ContentColor
+import com.wqz.allinone.ui.color.TextFieldColor
 import com.wqz.allinone.ui.property.BorderWidth
 import com.wqz.allinone.ui.property.ButtonCategory
 import com.wqz.allinone.ui.theme.AllInOneTheme
@@ -88,15 +93,7 @@ class TodoDetailsActivity : ComponentActivity() {
                 modifier = Modifier.fillMaxWidth(),
                 value = content,
                 onValueChange = { content = it },
-                colors = TextFieldDefaults.colors(
-                    unfocusedContainerColor = Color.Transparent, // 背景颜色
-                    focusedContainerColor = Color.Transparent, // 背景颜色
-                    unfocusedIndicatorColor = Color.Transparent, // 下划线颜色
-                    focusedIndicatorColor = Color.Transparent, // 下划线颜色
-                    cursorColor = ThemeColor, // 光标颜色
-                    focusedLabelColor = Color.White,
-                    unfocusedLabelColor = Color.Gray
-                ),
+                colors = TextFieldColor.colors(),
                 textStyle = TextStyle(
                     color = Color.White,
                     fontSize = 16.sp,
@@ -122,7 +119,8 @@ class TodoDetailsActivity : ComponentActivity() {
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(start = 15.dp)
+                    .padding(start = 15.dp),
+                verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
                     text = "待办状态：",
@@ -131,17 +129,33 @@ class TodoDetailsActivity : ComponentActivity() {
                 )
 
                 if (todo.completed) {
-                    Text(
-                        text = "已完成",
-                        color = Color(87, 150, 92),
-                        maxLines = 1
-                    )
+                    Row(
+                        modifier = Modifier
+                            .background(ContentColor.DEFAULT_GREEN, RoundedCornerShape(10.dp))
+                            .padding(horizontal = 3.dp),
+                        horizontalArrangement = Arrangement.Center
+                    ) {
+                        Text(
+                            text = "已完成",
+                            fontSize = 10.sp,
+                            color = BackgroundColor.DEFAULT_GREEN,
+                            maxLines = 1
+                        )
+                    }
                 } else {
-                    Text(
-                        text = "未完成",
-                        color = Color(219, 92, 92),
-                        maxLines = 1
-                    )
+                    Row(
+                        modifier = Modifier
+                            .background(ContentColor.DEFAULT_RED, RoundedCornerShape(10.dp))
+                            .padding(horizontal = 3.dp),
+                        horizontalArrangement = Arrangement.Center
+                    ) {
+                        Text(
+                            text = "未完成",
+                            fontSize = 10.sp,
+                            color = BackgroundColor.DEFAULT_RED,
+                            maxLines = 1
+                        )
+                    }
                 }
             }
 

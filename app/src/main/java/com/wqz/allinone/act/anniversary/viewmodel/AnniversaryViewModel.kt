@@ -42,4 +42,10 @@ class AnniversaryViewModel(application: Application) : AndroidViewModel(applicat
         }
         return anniversary
     }
+
+    suspend fun updateAnniversary(anniversary: Anniversary) {
+        withContext(Dispatchers.IO) {
+            dao.update(anniversary)
+        }
+    }
 }

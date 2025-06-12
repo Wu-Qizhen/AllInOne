@@ -22,7 +22,6 @@ import androidx.compose.material3.RadioButton
 import androidx.compose.material3.RadioButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
-import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -49,6 +48,7 @@ import com.wqz.allinone.act.recovery.viewmodel.RecoveryViewModel
 import com.wqz.allinone.ui.AppBackground
 import com.wqz.allinone.ui.XCard
 import com.wqz.allinone.ui.XItem
+import com.wqz.allinone.ui.color.TextFieldColor
 import com.wqz.allinone.ui.property.BorderWidth
 import com.wqz.allinone.ui.theme.AllInOneTheme
 import com.wqz.allinone.ui.theme.ThemeColor
@@ -145,13 +145,7 @@ class RecoveryActivity : ComponentActivity() {
                 modifier = Modifier.fillMaxWidth(),
                 value = importContent,
                 onValueChange = { importContent = it },
-                colors = TextFieldDefaults.colors(
-                    unfocusedContainerColor = Color.Transparent,
-                    focusedContainerColor = Color.Transparent,
-                    unfocusedIndicatorColor = Color.Transparent,
-                    focusedIndicatorColor = Color.Transparent,
-                    cursorColor = ThemeColor
-                ),
+                colors = TextFieldColor.colors(),
                 textStyle = TextStyle(
                     color = Color.White,
                     fontSize = 16.sp,

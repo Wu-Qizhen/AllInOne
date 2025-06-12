@@ -18,7 +18,6 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Divider
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
-import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
@@ -41,10 +40,10 @@ import com.wqz.allinone.entity.Link
 import com.wqz.allinone.ui.AppBackground
 import com.wqz.allinone.ui.XCard
 import com.wqz.allinone.ui.XItem
+import com.wqz.allinone.ui.color.TextFieldColor
 import com.wqz.allinone.ui.property.BorderWidth
 import com.wqz.allinone.ui.property.ButtonCategory
 import com.wqz.allinone.ui.theme.AllInOneTheme
-import com.wqz.allinone.ui.theme.ThemeColor
 import java.util.regex.Pattern
 
 /**
@@ -98,15 +97,7 @@ class LinkDetailsActivity : ComponentActivity() {
                 modifier = Modifier.fillMaxWidth(),
                 value = name,
                 onValueChange = { name = it },
-                colors = TextFieldDefaults.colors(
-                    unfocusedContainerColor = Color.Transparent, // 背景颜色
-                    focusedContainerColor = Color.Transparent, // 背景颜色
-                    unfocusedIndicatorColor = Color.Transparent, // 下划线颜色
-                    focusedIndicatorColor = Color.Transparent, // 下划线颜色
-                    cursorColor = ThemeColor, // 光标颜色
-                    focusedLabelColor = Color.White,
-                    unfocusedLabelColor = Color.Gray
-                ),
+                colors = TextFieldColor.colors(),
                 textStyle = TextStyle(
                     color = Color.White,
                     fontSize = 16.sp,
@@ -131,15 +122,7 @@ class LinkDetailsActivity : ComponentActivity() {
                 modifier = Modifier.fillMaxWidth(),
                 value = url,
                 onValueChange = { url = it },
-                colors = TextFieldDefaults.colors(
-                    unfocusedContainerColor = Color.Transparent, // 背景颜色
-                    focusedContainerColor = Color.Transparent, // 背景颜色
-                    unfocusedIndicatorColor = Color.Transparent, // 下划线颜色
-                    focusedIndicatorColor = Color.Transparent, // 下划线颜色
-                    cursorColor = ThemeColor, // 光标颜色
-                    focusedLabelColor = Color.White,
-                    unfocusedLabelColor = Color.Gray
-                ),
+                colors = TextFieldColor.colors(),
                 textStyle = TextStyle(
                     color = Color.White,
                     fontSize = 16.sp,
