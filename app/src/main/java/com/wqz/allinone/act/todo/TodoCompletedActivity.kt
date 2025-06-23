@@ -2,7 +2,6 @@ package com.wqz.allinone.act.todo
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.animation.AnimatedVisibility
@@ -54,13 +53,13 @@ import androidx.lifecycle.viewModelScope
 import com.wqz.allinone.R
 import com.wqz.allinone.act.todo.viewmodel.TodoViewModel
 import com.wqz.allinone.entity.Todo
-import com.wqz.allinone.ui.AppBackground
 import com.wqz.allinone.ui.ModifierExtends.clickVfx
+import com.wqz.allinone.ui.XBackground
 import com.wqz.allinone.ui.XCard
+import com.wqz.allinone.ui.XToast
 import com.wqz.allinone.ui.color.BackgroundColor
 import com.wqz.allinone.ui.color.ContentColor
 import com.wqz.allinone.ui.property.BorderWidth
-import com.wqz.allinone.ui.theme.AllInOneTheme
 import com.wqz.allinone.ui.theme.ThemeColor
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -79,10 +78,8 @@ class TodoCompletedActivity : ComponentActivity() {
         viewModel = TodoViewModel(application)
 
         setContent {
-            AllInOneTheme {
-                AppBackground.BreathingBackground(title = R.string.completed) {
-                    TodoCompletedListScreen()
-                }
+            XBackground.BreathingBackground(titleId = R.string.completed) {
+                TodoCompletedListScreen()
             }
         }
     }
@@ -105,13 +102,10 @@ class TodoCompletedActivity : ComponentActivity() {
                         if (deleteConfirm) {
                             viewModel.viewModelScope.launch {
                                 viewModel.clearCompleted()
-                                Toast
-                                    .makeText(
-                                        this@TodoCompletedActivity,
-                                        R.string.cleared,
-                                        Toast.LENGTH_SHORT
-                                    )
-                                    .show()
+                                XToast.showText(
+                                    this@TodoCompletedActivity,
+                                    R.string.cleared
+                                )
                                 finish()
                             }
                         } else {

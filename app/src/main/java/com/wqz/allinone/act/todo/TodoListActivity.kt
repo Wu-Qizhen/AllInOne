@@ -46,12 +46,11 @@ import androidx.lifecycle.viewModelScope
 import com.wqz.allinone.R
 import com.wqz.allinone.act.todo.viewmodel.TodoViewModel
 import com.wqz.allinone.entity.Todo
-import com.wqz.allinone.ui.AppBackground
 import com.wqz.allinone.ui.ModifierExtends.clickVfx
+import com.wqz.allinone.ui.XBackground
 import com.wqz.allinone.ui.XCard
 import com.wqz.allinone.ui.XItem
 import com.wqz.allinone.ui.property.BorderWidth
-import com.wqz.allinone.ui.theme.AllInOneTheme
 import com.wqz.allinone.ui.theme.ThemeColor
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -70,10 +69,8 @@ class TodoListActivity : ComponentActivity() {
         viewModel = TodoViewModel(application)
 
         setContent {
-            AllInOneTheme {
-                AppBackground.BreathingBackground(title = R.string.todo) {
-                    TodoListScreen()
-                }
+            XBackground.BreathingBackground(titleId = R.string.todo) {
+                TodoListScreen()
             }
         }
     }

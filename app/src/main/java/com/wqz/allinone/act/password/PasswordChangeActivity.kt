@@ -1,7 +1,6 @@
 package com.wqz.allinone.act.password
 
 import android.os.Bundle
-import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Spacer
@@ -33,11 +32,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.wqz.allinone.R
 import com.wqz.allinone.preference.PasswordPreferencesManager
-import com.wqz.allinone.ui.AppBackground
+import com.wqz.allinone.ui.XBackground
 import com.wqz.allinone.ui.XCard
 import com.wqz.allinone.ui.XItem
+import com.wqz.allinone.ui.XToast
 import com.wqz.allinone.ui.color.TextFieldColor
-import com.wqz.allinone.ui.theme.AllInOneTheme
 
 /**
  * 密码修改
@@ -48,10 +47,8 @@ class PasswordChangeActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         setContent {
-            AllInOneTheme {
-                AppBackground.BreathingBackground(title = R.string.password_change) {
-                    PasswordChangeScreen()
-                }
+            XBackground.BreathingBackground(titleId = R.string.password_change) {
+                PasswordChangeScreen()
             }
         }
     }
@@ -128,14 +125,13 @@ class PasswordChangeActivity : ComponentActivity() {
             if (newPassword.isNotEmpty() && confirmPassword.isNotEmpty()) {
                 if (newPassword == confirmPassword) {
                     passwordPrefs.savePassword(newPassword)
-                    Toast.makeText(context, R.string.modified, Toast.LENGTH_SHORT).show()
+                    XToast.showText(context, R.string.modified)
                     finish()
                 } else {
-                    Toast.makeText(context, R.string.password_not_match, Toast.LENGTH_SHORT)
-                        .show()
+                    XToast.showText(context, R.string.password_not_match)
                 }
             } else {
-                Toast.makeText(context, R.string.password_empty, Toast.LENGTH_SHORT).show()
+                XToast.showText(context, R.string.password_empty)
             }
         }
 

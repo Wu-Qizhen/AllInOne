@@ -15,8 +15,7 @@ import com.wqz.allinone.act.knowledge.data.EnglishData
 import com.wqz.allinone.act.knowledge.data.KnowledgeCode
 import com.wqz.allinone.act.knowledge.data.Outline
 import com.wqz.allinone.act.knowledge.ui.SelectItem
-import com.wqz.allinone.ui.AppBackground
-import com.wqz.allinone.ui.theme.AllInOneTheme
+import com.wqz.allinone.ui.XBackground
 
 /**
  * 智慧盒
@@ -54,10 +53,8 @@ class SmartBoxActivity : ComponentActivity() {
         }
 
         setContent {
-            AllInOneTheme {
-                AppBackground.BreathingBackground(title = R.string.smart_box) {
-                    SmartBoxScreen(outlines = outlines)
-                }
+            XBackground.BreathingBackground(titleId = R.string.smart_box) {
+                SmartBoxScreen(outlines = outlines)
             }
         }
     }

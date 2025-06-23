@@ -1,7 +1,6 @@
 package com.wqz.allinone.act.note
 
 import android.os.Bundle
-import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
@@ -50,11 +49,11 @@ import androidx.lifecycle.viewModelScope
 import com.wqz.allinone.R
 import com.wqz.allinone.act.note.viewmodel.NoteViewModel
 import com.wqz.allinone.entity.Note
-import com.wqz.allinone.ui.AppBackground
 import com.wqz.allinone.ui.ModifierExtends.clickVfx
+import com.wqz.allinone.ui.XBackground
+import com.wqz.allinone.ui.XToast
 import com.wqz.allinone.ui.color.ContentColor
 import com.wqz.allinone.ui.color.TextFieldColor
-import com.wqz.allinone.ui.theme.AllInOneTheme
 import com.wqz.allinone.ui.theme.ThemeColor
 import kotlinx.coroutines.launch
 
@@ -83,12 +82,10 @@ class NoteEditActivity : ComponentActivity() {
             )
 
             setContent {
-                AllInOneTheme {
-                    AppBackground.BreathingBackground {
-                        NoteEditScreen(
-                            currentNote = note
-                        )
-                    }
+                XBackground.BreathingBackground {
+                    NoteEditScreen(
+                        currentNote = note
+                    )
                 }
             }
         }
@@ -174,13 +171,7 @@ class NoteEditActivity : ComponentActivity() {
                                     isLocked = !isLocked
                                     note.isLocked = isLocked
                                     note.id?.let { viewModel.updateLockStatus(it, isLocked) }
-                                    Toast
-                                        .makeText(
-                                            this@NoteEditActivity,
-                                            "已${if (isLocked) "锁定" else "解锁"}笔记",
-                                            Toast.LENGTH_SHORT
-                                        )
-                                        .show()
+                                    XToast.showText("已${if (isLocked) "锁定" else "解锁"}笔记")
                                 }
                         )
 
@@ -207,11 +198,10 @@ class NoteEditActivity : ComponentActivity() {
                             // onSaveClick(noteId, title.value, content.value, noteDao)
                             // 校验内容是否为空
                             if (content.value.isEmpty() && title.value.isEmpty()) {
-                                Toast.makeText(
+                                XToast.showText(
                                     this@NoteEditActivity,
-                                    R.string.input_empty,
-                                    Toast.LENGTH_SHORT
-                                ).show()
+                                    R.string.input_empty
+                                )
                                 return@IconButton
                             }
                             viewModel.viewModelScope.launch {
@@ -220,11 +210,10 @@ class NoteEditActivity : ComponentActivity() {
                                 note = viewModel.saveNote(note)
                                 updateTime = note.updateTime
                             }
-                            Toast.makeText(
+                            XToast.showText(
                                 this@NoteEditActivity,
-                                R.string.saved,
-                                Toast.LENGTH_SHORT
-                            ).show()
+                                R.string.saved
+                            )
                         },
                         content = {
                             Icon(

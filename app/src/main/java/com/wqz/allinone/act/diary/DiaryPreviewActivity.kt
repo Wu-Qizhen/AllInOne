@@ -2,7 +2,6 @@ package com.wqz.allinone.act.diary
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.animation.AnimatedVisibility
@@ -61,16 +60,16 @@ import com.wqz.allinone.R
 import com.wqz.allinone.act.diary.data.OptionData
 import com.wqz.allinone.act.diary.viewmodel.DiaryViewModel
 import com.wqz.allinone.entity.Diary
-import com.wqz.allinone.ui.AppBackground
 import com.wqz.allinone.ui.ModifierExtends.clickVfx
+import com.wqz.allinone.ui.XBackground
 import com.wqz.allinone.ui.XCard
 import com.wqz.allinone.ui.XItem
+import com.wqz.allinone.ui.XToast
 import com.wqz.allinone.ui.color.BackgroundColor
 import com.wqz.allinone.ui.color.BorderColor
 import com.wqz.allinone.ui.color.TextFieldColor
 import com.wqz.allinone.ui.property.BorderWidth
 import com.wqz.allinone.ui.property.ButtonCategory
-import com.wqz.allinone.ui.theme.AllInOneTheme
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.util.Locale
@@ -89,10 +88,8 @@ class DiaryPreviewActivity : ComponentActivity() {
         viewModel = DiaryViewModel(application)
 
         setContent {
-            AllInOneTheme {
-                AppBackground.BreathingBackground(title = R.string.diary) {
-                    DiaryPreviewScreen()
-                }
+            XBackground.BreathingBackground(titleId = R.string.diary) {
+                DiaryPreviewScreen()
             }
         }
     }
@@ -242,12 +239,10 @@ class DiaryPreviewActivity : ComponentActivity() {
                                 viewModel.setDate(currentDate.value)
                                 showJump = false
                             } else {
-                                Toast.makeText(
+                                XToast.showText(
                                     context,
-                                    R.string.invalid_date,
-                                    Toast.LENGTH_SHORT
+                                    R.string.invalid_date
                                 )
-                                    .show()
                             }
                         }
                     }
@@ -437,12 +432,10 @@ class DiaryPreviewActivity : ComponentActivity() {
                             color = ButtonCategory.WARNING_BUTTON
                         ) {
                             showDialog = 2
-                            Toast.makeText(
+                            XToast.showText(
                                 this@DiaryPreviewActivity,
-                                R.string.deleted,
-                                Toast.LENGTH_SHORT
+                                R.string.deleted
                             )
-                                .show()
                             viewModel.deleteDiaryWithDelay(diary.id)
                         }
 

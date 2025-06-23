@@ -15,7 +15,6 @@
         tools:ignore="ScopedStorage" />
 
     <queries>
-
         <!-- 声明需要查询的包名 -->
         <package android:name="com.samsung.android.calendar" />
     </queries>

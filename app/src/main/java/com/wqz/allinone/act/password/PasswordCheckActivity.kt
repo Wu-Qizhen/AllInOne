@@ -2,7 +2,6 @@ package com.wqz.allinone.act.password
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Spacer
@@ -40,11 +39,11 @@ import com.wqz.allinone.act.backup.BackupActivity
 import com.wqz.allinone.act.diary.DiaryPreviewActivity
 import com.wqz.allinone.act.recovery.RecoveryActivity
 import com.wqz.allinone.preference.PasswordPreferencesManager
-import com.wqz.allinone.ui.AppBackground
+import com.wqz.allinone.ui.XBackground
 import com.wqz.allinone.ui.XCard
 import com.wqz.allinone.ui.XItem
+import com.wqz.allinone.ui.XToast
 import com.wqz.allinone.ui.color.TextFieldColor
-import com.wqz.allinone.ui.theme.AllInOneTheme
 
 /**
  * 密码校验
@@ -57,12 +56,10 @@ class PasswordCheckActivity : ComponentActivity() {
         val requestCode = intent.getIntExtra("REQUEST_CODE", 0)
 
         setContent {
-            AllInOneTheme {
-                AppBackground.BreathingBackground(title = R.string.password_check) {
-                    PasswordCheckScreen(
-                        requestCode = requestCode
-                    )
-                }
+            XBackground.BreathingBackground(titleId = R.string.password_check) {
+                PasswordCheckScreen(
+                    requestCode = requestCode
+                )
             }
         }
     }
@@ -145,11 +142,11 @@ class PasswordCheckActivity : ComponentActivity() {
                     }
 
                     else -> {
-                        Toast.makeText(context, R.string.password_error, Toast.LENGTH_SHORT).show()
+                        XToast.showText(context, R.string.password_error)
                     }
                 }
             } else {
-                Toast.makeText(context, R.string.password_error, Toast.LENGTH_SHORT).show()
+                XToast.showText(context, R.string.password_error)
             }
         }
 

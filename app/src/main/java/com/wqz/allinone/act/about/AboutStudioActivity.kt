@@ -4,8 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import com.wqz.allinone.act.about.ui.AboutStudioScreen
-import com.wqz.allinone.ui.AppBackground
-import com.wqz.allinone.ui.theme.AllInOneTheme
+import com.wqz.allinone.ui.XBackground
 
 /**
  * 关于组织
@@ -16,10 +15,8 @@ class AboutStudioActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         // enableEdgeToEdge()
         setContent {
-            AllInOneTheme {
-                AppBackground.BreathingBackground {
-                    AboutStudioScreen()
-                }
+            XBackground.BreathingBackground {
+                AboutStudioScreen()
             }
         }
     }

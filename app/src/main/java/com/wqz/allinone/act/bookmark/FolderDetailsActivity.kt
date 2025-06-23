@@ -1,7 +1,6 @@
 package com.wqz.allinone.act.bookmark
 
 import android.os.Bundle
-import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Arrangement
@@ -33,13 +32,13 @@ import androidx.lifecycle.viewModelScope
 import com.wqz.allinone.R
 import com.wqz.allinone.act.bookmark.viewmodel.BookmarkViewModel
 import com.wqz.allinone.entity.Folder
-import com.wqz.allinone.ui.AppBackground
+import com.wqz.allinone.ui.XBackground
 import com.wqz.allinone.ui.XCard
 import com.wqz.allinone.ui.XItem
+import com.wqz.allinone.ui.XToast
 import com.wqz.allinone.ui.color.TextFieldColor
 import com.wqz.allinone.ui.property.BorderWidth
 import com.wqz.allinone.ui.property.ButtonCategory
-import com.wqz.allinone.ui.theme.AllInOneTheme
 import kotlinx.coroutines.launch
 
 /**
@@ -62,16 +61,14 @@ class FolderDetailsActivity : ComponentActivity() {
             val linkCount = viewModel.getLinkCount(folderId)
 
             setContent {
-                AllInOneTheme {
-                    AppBackground.BreathingBackground(title = R.string.folder_details) {
-                        FolderDetailsScreen(
-                            folder = Folder(
-                                id = folderId,
-                                name = folderName ?: ""
-                            ),
-                            linkCount = linkCount
-                        )
-                    }
+                XBackground.BreathingBackground(titleId = R.string.folder_details) {
+                    FolderDetailsScreen(
+                        folder = Folder(
+                            id = folderId,
+                            name = folderName ?: ""
+                        ),
+                        linkCount = linkCount
+                    )
                 }
             }
         }
@@ -149,18 +146,13 @@ class FolderDetailsActivity : ComponentActivity() {
                 if (deleteConfirm > 2) {
                     viewModel.deleteLinks(folderId = folder.id)
                     viewModel.deleteFolder(folder)
-                    Toast.makeText(
+                    XToast.showText(
                         this@FolderDetailsActivity,
-                        R.string.deleted,
-                        Toast.LENGTH_SHORT
-                    ).show()
+                        R.string.deleted
+                    )
                     finish()
                 } else {
-                    Toast.makeText(
-                        this@FolderDetailsActivity,
-                        "再按 ${3 - deleteConfirm} 次即可删除",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    XToast.showText("再按 ${3 - deleteConfirm} 次即可删除")
                 }
             }
 
@@ -178,18 +170,16 @@ class FolderDetailsActivity : ComponentActivity() {
                             name = title
                         )
                     )
-                    Toast.makeText(
+                    XToast.showText(
                         this@FolderDetailsActivity,
-                        R.string.modified,
-                        Toast.LENGTH_SHORT
-                    ).show()
+                        R.string.modified
+                    )
                     finish()
                 } else {
-                    Toast.makeText(
+                    XToast.showText(
                         this@FolderDetailsActivity,
-                        R.string.input_folder_name_empty,
-                        Toast.LENGTH_SHORT
-                    ).show()
+                        R.string.input_folder_name_empty
+                    )
                 }
             }
         }

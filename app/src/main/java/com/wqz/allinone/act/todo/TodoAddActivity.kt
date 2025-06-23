@@ -1,7 +1,6 @@
 package com.wqz.allinone.act.todo
 
 import android.os.Bundle
-import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Spacer
@@ -16,7 +15,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
@@ -26,11 +24,11 @@ import androidx.compose.ui.unit.sp
 import com.wqz.allinone.R
 import com.wqz.allinone.act.todo.viewmodel.TodoViewModel
 import com.wqz.allinone.entity.Todo
-import com.wqz.allinone.ui.AppBackground
+import com.wqz.allinone.ui.XBackground
 import com.wqz.allinone.ui.XCard
 import com.wqz.allinone.ui.XItem
+import com.wqz.allinone.ui.XToast
 import com.wqz.allinone.ui.color.TextFieldColor
-import com.wqz.allinone.ui.theme.AllInOneTheme
 
 /**
  * 待办添加
@@ -46,17 +44,15 @@ class TodoAddActivity : ComponentActivity() {
         viewModel = TodoViewModel(application)
 
         setContent {
-            AllInOneTheme {
-                AppBackground.BreathingBackground(title = R.string.add_todo) {
-                    TodoAddScreen()
-                }
+            XBackground.BreathingBackground(titleId = R.string.add_todo) {
+                TodoAddScreen()
             }
         }
     }
 
     @Composable
     fun TodoAddScreen() {
-        val context = LocalContext.current
+        // val context = LocalContext.current
         var content by remember { mutableStateOf("") }
 
         XCard.SurfaceCard {
@@ -89,10 +85,12 @@ class TodoAddActivity : ComponentActivity() {
                     completed = false
                 )
                 viewModel.insertTodo(todo)
-                Toast.makeText(context, R.string.added, Toast.LENGTH_SHORT).show()
+                // XToast.showText("添加成功")
+                XToast.showText(this, R.string.added)
                 finish()
             } else {
-                Toast.makeText(context, R.string.input_todo_empty, Toast.LENGTH_SHORT).show()
+                // XToast.showText("请输入待办内容")
+                XToast.showText(this, R.string.input_todo_empty)
             }
         }
 

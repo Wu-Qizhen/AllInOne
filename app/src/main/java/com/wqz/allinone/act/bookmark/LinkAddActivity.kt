@@ -2,7 +2,6 @@ package com.wqz.allinone.act.bookmark
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Arrangement
@@ -30,11 +29,11 @@ import androidx.compose.ui.unit.sp
 import com.wqz.allinone.R
 import com.wqz.allinone.act.bookmark.viewmodel.BookmarkViewModel
 import com.wqz.allinone.entity.Link
-import com.wqz.allinone.ui.AppBackground
+import com.wqz.allinone.ui.XBackground
 import com.wqz.allinone.ui.XCard
 import com.wqz.allinone.ui.XItem
+import com.wqz.allinone.ui.XToast
 import com.wqz.allinone.ui.color.TextFieldColor
-import com.wqz.allinone.ui.theme.AllInOneTheme
 import java.util.regex.Pattern
 
 /**
@@ -53,12 +52,10 @@ class LinkAddActivity : ComponentActivity() {
         val folderId = intent.getIntExtra("FOLDER_ID", 0)
 
         setContent {
-            AllInOneTheme {
-                AppBackground.BreathingBackground(title = R.string.add_link) {
-                    LinkAddScreen(
-                        folderId = folderId
-                    )
-                }
+            XBackground.BreathingBackground(titleId = R.string.add_link) {
+                LinkAddScreen(
+                    folderId = folderId
+                )
             }
         }
     }
@@ -140,14 +137,13 @@ class LinkAddActivity : ComponentActivity() {
                             folder = folderId
                         )
                         viewModel.insertLink(newLink)
-                        Toast.makeText(context, R.string.added, Toast.LENGTH_SHORT).show()
+                        XToast.showText(context, R.string.added)
                         finish()
                     } else {
-                        Toast.makeText(context, R.string.invalid_url, Toast.LENGTH_SHORT).show()
+                        XToast.showText(context, R.string.invalid_url)
                     }
                 } else {
-                    Toast.makeText(context, R.string.input_link_empty, Toast.LENGTH_SHORT)
-                        .show()
+                    XToast.showText(context, R.string.input_link_empty)
                 }
             }
         }

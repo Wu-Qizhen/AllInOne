@@ -34,12 +34,11 @@ import androidx.compose.ui.unit.sp
 import com.wqz.allinone.R
 import com.wqz.allinone.act.bookmark.viewmodel.BookmarkViewModel
 import com.wqz.allinone.entity.Link
-import com.wqz.allinone.ui.AppBackground
 import com.wqz.allinone.ui.ModifierExtends.clickVfx
+import com.wqz.allinone.ui.XBackground
 import com.wqz.allinone.ui.XCard
 import com.wqz.allinone.ui.XItem
 import com.wqz.allinone.ui.property.BorderWidth
-import com.wqz.allinone.ui.theme.AllInOneTheme
 
 /**
  * 链接列表
@@ -67,13 +66,11 @@ class LinkListActivity : ComponentActivity() {
         val folderName = intent.getStringExtra("FOLDER_NAME")
 
         setContent {
-            AllInOneTheme {
-                AppBackground.BreathingBackground(title = folderName!!) {
-                    LinkListScreen(
-                        folderId = folderId,
-                        folderName = folderName
-                    )
-                }
+            XBackground.BreathingBackground(title = folderName!!) {
+                LinkListScreen(
+                    folderId = folderId,
+                    folderName = folderName
+                )
             }
         }
     }

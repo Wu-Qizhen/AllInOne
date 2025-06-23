@@ -12,6 +12,7 @@ object BackgroundColor {
     val DEFAULT_BROWN = Color(101, 75, 39, 128)
     val DEFAULT_YELLOW = Color(254, 192, 58)
     val PRESSED_YELLOW = Color(199, 160, 37)
+    val PSEUDO_TRANSPARENT_YELLOW = Color(104, 78, 23, 255)
     val DEFAULT_RED = Color(64, 41, 41)
     val PRESSED_RED = Color(64, 41, 41, 204)
     val DEFAULT_GREEN = Color(37, 54, 39)

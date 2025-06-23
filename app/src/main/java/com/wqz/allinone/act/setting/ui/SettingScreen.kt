@@ -1,7 +1,6 @@
 package com.wqz.allinone.act.setting.ui
 
 import android.content.Intent
-import android.widget.Toast
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.runtime.Composable
@@ -16,6 +15,7 @@ import com.wqz.allinone.act.about.AboutAppActivity
 import com.wqz.allinone.act.password.PasswordCheckActivity
 import com.wqz.allinone.preference.LayoutPreferencesManager
 import com.wqz.allinone.ui.XItem
+import com.wqz.allinone.ui.XToast
 
 /**
  * 设置
@@ -78,7 +78,7 @@ fun SettingScreen() {
     ) {
         isGirdLayout.value = !isGirdLayout.value
         layoutPrefs.setLayoutType(if (isGirdLayout.value) LayoutPreferencesManager.LAYOUT_TYPE_GRID else LayoutPreferencesManager.LAYOUT_TYPE_LIST)
-        Toast.makeText(context, "设置将在重启应用后生效", Toast.LENGTH_SHORT).show()
+        XToast.showText("设置将在重启应用后生效")
     }
 
     Spacer(modifier = Modifier.height(50.dp))

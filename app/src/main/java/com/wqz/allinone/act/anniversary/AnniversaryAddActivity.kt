@@ -1,7 +1,6 @@
 package com.wqz.allinone.act.anniversary
 
 import android.os.Bundle
-import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Spacer
@@ -26,11 +25,11 @@ import androidx.compose.ui.unit.sp
 import com.wqz.allinone.R
 import com.wqz.allinone.act.anniversary.viewmodel.AnniversaryViewModel
 import com.wqz.allinone.entity.Anniversary
-import com.wqz.allinone.ui.AppBackground
+import com.wqz.allinone.ui.XBackground
 import com.wqz.allinone.ui.XCard
 import com.wqz.allinone.ui.XItem
+import com.wqz.allinone.ui.XToast
 import com.wqz.allinone.ui.color.TextFieldColor
-import com.wqz.allinone.ui.theme.AllInOneTheme
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
@@ -48,10 +47,8 @@ class AnniversaryAddActivity : ComponentActivity() {
         viewModel = AnniversaryViewModel(application)
 
         setContent {
-            AllInOneTheme {
-                AppBackground.BreathingBackground(title = R.string.add_anniversary) {
-                    AnniversaryAddScreen()
-                }
+            XBackground.BreathingBackground(titleId = R.string.add_anniversary) {
+                AnniversaryAddScreen()
             }
         }
     }
@@ -131,10 +128,10 @@ class AnniversaryAddActivity : ComponentActivity() {
                     date = LocalDate.parse(date, DateTimeFormatter.ofPattern("yyyy.MM.dd"))
                 )
                 viewModel.insertAnniversary(anniversary)
-                Toast.makeText(context, R.string.added, Toast.LENGTH_SHORT).show()
+                XToast.showText(context, R.string.added)
                 finish()
             } else {
-                Toast.makeText(context, R.string.input_anniversary_empty, Toast.LENGTH_SHORT).show()
+                XToast.showText(context, R.string.input_anniversary_empty)
             }
         }
 

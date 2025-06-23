@@ -2,7 +2,6 @@ package com.wqz.allinone.act.anniversary
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.animation.AnimatedVisibility
@@ -62,10 +61,11 @@ import androidx.compose.ui.unit.sp
 import com.wqz.allinone.R
 import com.wqz.allinone.act.anniversary.viewmodel.AnniversaryViewModel
 import com.wqz.allinone.entity.Anniversary
-import com.wqz.allinone.ui.AppBackground
 import com.wqz.allinone.ui.ModifierExtends.clickVfx
+import com.wqz.allinone.ui.XBackground
 import com.wqz.allinone.ui.XCard
 import com.wqz.allinone.ui.XItem
+import com.wqz.allinone.ui.XToast
 import com.wqz.allinone.ui.color.BackgroundColor
 import com.wqz.allinone.ui.color.BorderColor
 import com.wqz.allinone.ui.color.TextFieldColor
@@ -94,10 +94,8 @@ class AnniversaryPreviewActivity : ComponentActivity() {
         viewModel = AnniversaryViewModel(application)
 
         setContent {
-            AllInOneTheme {
-                AppBackground.BreathingBackground(title = R.string.anniversary) {
-                    AnniversaryPreviewScreen(viewModel)
-                }
+            XBackground.BreathingBackground(titleId = R.string.anniversary) {
+                AnniversaryPreviewScreen(viewModel)
             }
         }
     }
@@ -234,12 +232,10 @@ class AnniversaryPreviewActivity : ComponentActivity() {
                                 currentDate.value = newDateCalendar
                                 showJump = false
                             } else {
-                                Toast.makeText(
+                                XToast.showText(
                                     context,
-                                    R.string.invalid_date,
-                                    Toast.LENGTH_SHORT
+                                    R.string.invalid_date
                                 )
-                                    .show()
                             }
                         }
                     }

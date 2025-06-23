@@ -38,7 +38,6 @@ import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.wqz.allinone.R
@@ -47,7 +46,6 @@ import com.wqz.allinone.act.about.AboutStudioActivity
 import com.wqz.allinone.act.about.UpdateLogActivity
 import com.wqz.allinone.ui.ModifierExtends.clickVfx
 import com.wqz.allinone.ui.XItem
-import com.wqz.allinone.ui.theme.AllInOneTheme
 
 /**
  * 关于应用
@@ -63,6 +61,7 @@ fun AboutAppScreen() {
         R.string.wqz,
         R.string.chatglm,
         R.string.tylm,
+        R.string.deepseek,
         R.string.codegeex,
         R.string.sd
     )
@@ -70,6 +69,7 @@ fun AboutAppScreen() {
         R.string.wqz_desc,
         R.string.chatglm_desc,
         R.string.tylm_desc,
+        R.string.deepseek_desc,
         R.string.codegeex_desc,
         R.string.sd_desc
     )
@@ -77,6 +77,7 @@ fun AboutAppScreen() {
         R.drawable.logo_wqz,
         R.drawable.logo_chatglm,
         R.drawable.logo_tylm,
+        R.drawable.logo_deepseek,
         R.drawable.logo_codegeex,
         R.drawable.logo_sd
     )
@@ -84,6 +85,7 @@ fun AboutAppScreen() {
         R.string.text_about_wqz,
         R.string.text_about_chatglm,
         R.string.text_about_tylm,
+        R.string.text_about_deepseek,
         R.string.text_about_codegeex,
         R.string.text_about_sd
     )
@@ -312,10 +314,10 @@ fun TitleBar(title: Int) {
     }
 }
 
-@Preview
+/*@Preview
 @Composable
 fun AboutAppScreenPreview() {
     AllInOneTheme {
         AboutAppScreen()
     }
-}
+}*/

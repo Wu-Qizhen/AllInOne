@@ -2,7 +2,6 @@ package com.wqz.allinone.act.anniversary
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.ExperimentalFoundationApi
@@ -40,7 +39,6 @@ import androidx.compose.ui.Alignment.Companion.Center
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
@@ -51,9 +49,9 @@ import androidx.compose.ui.unit.sp
 import com.wqz.allinone.R
 import com.wqz.allinone.act.anniversary.viewmodel.AnniversaryViewModel
 import com.wqz.allinone.entity.Anniversary
-import com.wqz.allinone.ui.AppBackground
+import com.wqz.allinone.ui.XBackground
 import com.wqz.allinone.ui.ModifierExtends.clickVfx
-import com.wqz.allinone.ui.theme.AllInOneTheme
+import com.wqz.allinone.ui.XToast
 import java.time.ZoneId
 import java.time.temporal.ChronoUnit
 import java.util.Calendar
@@ -83,13 +81,11 @@ class AnniversaryDetailsActivity : ComponentActivity() {
         // val anniversary = dao.getById(anniversaryId)
 
         setContent {
-            AllInOneTheme {
-                AppBackground.BreathingBackground {
-                    AnniversaryDetailsScreen(
-                        anniversaryId = anniversaryId,
-                        date = date
-                    )
-                }
+            XBackground.BreathingBackground {
+                AnniversaryDetailsScreen(
+                    anniversaryId = anniversaryId,
+                    date = date
+                )
             }
         }
     }
@@ -99,7 +95,7 @@ class AnniversaryDetailsActivity : ComponentActivity() {
         anniversaryId: Int,
         date: Calendar
     ) {
-        val context = LocalContext.current
+        // val context = LocalContext.current
         val scrollState = rememberScrollState()
         // 状态来存储获取到的周年纪念信息
         var anniversary by remember { mutableStateOf<Anniversary?>(null) }
@@ -111,7 +107,7 @@ class AnniversaryDetailsActivity : ComponentActivity() {
                 // 调用挂起函数获取周年纪念信息
                 anniversary = viewModel.getAnniversary(anniversaryId)
             } catch (e: Exception) {
-                Toast.makeText(context, e.toString(), Toast.LENGTH_SHORT).show()
+                XToast.showText(e.toString())
             }
         }
 
@@ -154,11 +150,11 @@ class AnniversaryDetailsActivity : ComponentActivity() {
                             onClick = {
                                 if (deleteConfirm) {
                                     viewModel.deleteAnniversary(anniversaryId)
-                                    Toast.makeText(context, R.string.deleted, Toast.LENGTH_SHORT)
+                                    XToast.showText(context, R.string.deleted, Toast.LENGTH_SHORT)
                                         .show()
                                     finish()
                                 } else {
-                                    Toast.makeText(context, "再次点击即可删除", Toast.LENGTH_SHORT)
+                                    XToast.showText(context, "再次点击即可删除", Toast.LENGTH_SHORT)
                                         .show()
                                     deleteConfirm = true
                                 }
@@ -227,10 +223,10 @@ class AnniversaryDetailsActivity : ComponentActivity() {
                 ) {
                     if (deleteConfirm) {
                         viewModel.deleteAnniversary(anniversaryId)
-                        Toast.makeText(context, "删除成功", Toast.LENGTH_SHORT).show()
+                        XToast.showText(context, "删除成功")
                         finish()
                     } else {
-                        Toast.makeText(context, "再次点击即可删除", Toast.LENGTH_SHORT).show()
+                        XToast.showText(context, "再次点击即可删除")
                         deleteConfirm = true
                     }
                 }*/

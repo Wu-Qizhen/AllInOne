@@ -24,13 +24,11 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.wqz.allinone.R
 import com.wqz.allinone.ui.ModifierExtends.clickVfx
 import com.wqz.allinone.ui.XTitleBar
-import com.wqz.allinone.ui.theme.AllInOneTheme
 
 /**
  * 关于组织
@@ -128,10 +126,10 @@ fun AboutStudioScreen() {
     }
 }
 
-@Preview(showBackground = true)
+/*@Preview(showBackground = true)
 @Composable
 fun AboutStudioScreenPreview() {
     AllInOneTheme {
         AboutStudioScreen()
     }
-}
+}*/

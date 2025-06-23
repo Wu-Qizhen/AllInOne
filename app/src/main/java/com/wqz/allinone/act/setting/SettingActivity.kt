@@ -5,8 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import com.wqz.allinone.R
 import com.wqz.allinone.act.setting.ui.SettingScreen
-import com.wqz.allinone.ui.AppBackground
-import com.wqz.allinone.ui.theme.AllInOneTheme
+import com.wqz.allinone.ui.XBackground
 
 /**
  * 设置
@@ -17,10 +16,8 @@ class SettingActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         setContent {
-            AllInOneTheme {
-                AppBackground.BreathingBackground(title = R.string.setting) {
-                    SettingScreen()
-                }
+            XBackground.BreathingBackground(titleId = R.string.setting) {
+                SettingScreen()
             }
         }
     }

@@ -15,10 +15,9 @@ import androidx.compose.ui.unit.dp
 import com.wqz.allinone.R
 import com.wqz.allinone.act.knowledge.data.KnowledgeCode
 import com.wqz.allinone.act.knowledge.ui.SelectItem
-import com.wqz.allinone.ui.AppBackground
+import com.wqz.allinone.ui.XBackground
 import com.wqz.allinone.ui.XCard
 import com.wqz.allinone.ui.property.BorderWidth
-import com.wqz.allinone.ui.theme.AllInOneTheme
 
 /**
  * 语文
@@ -29,10 +28,8 @@ class ChineseActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         setContent {
-            AllInOneTheme {
-                AppBackground.BreathingBackground(R.string.chinese) {
-                    ChineseScreen()
-                }
+            XBackground.BreathingBackground(R.string.chinese) {
+                ChineseScreen()
             }
         }
     }

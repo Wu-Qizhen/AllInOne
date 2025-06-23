@@ -41,8 +41,7 @@ import androidx.compose.ui.unit.sp
 import com.wqz.allinone.R
 import com.wqz.allinone.act.record.data.RecordSnapshot
 import com.wqz.allinone.act.record.viewmodel.RecordViewModel
-import com.wqz.allinone.ui.AppBackground
-import com.wqz.allinone.ui.theme.AllInOneTheme
+import com.wqz.allinone.ui.XBackground
 import com.wqz.allinone.ui.theme.ThemeColor
 
 /**
@@ -60,10 +59,8 @@ class RecordActivity : ComponentActivity() {
         // mockRecords = viewModel.getRecordSnapshots()
 
         setContent {
-            AllInOneTheme {
-                AppBackground.BreathingBackground {
-                    MemoryPrismScreen()
-                }
+            XBackground.BreathingBackground {
+                MemoryPrismScreen()
             }
         }
     }

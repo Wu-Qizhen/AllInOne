@@ -6,7 +6,6 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Arrangement
@@ -37,13 +36,13 @@ import androidx.compose.ui.unit.sp
 import com.wqz.allinone.R
 import com.wqz.allinone.act.bookmark.viewmodel.BookmarkViewModel
 import com.wqz.allinone.entity.Link
-import com.wqz.allinone.ui.AppBackground
+import com.wqz.allinone.ui.XBackground
 import com.wqz.allinone.ui.XCard
 import com.wqz.allinone.ui.XItem
+import com.wqz.allinone.ui.XToast
 import com.wqz.allinone.ui.color.TextFieldColor
 import com.wqz.allinone.ui.property.BorderWidth
 import com.wqz.allinone.ui.property.ButtonCategory
-import com.wqz.allinone.ui.theme.AllInOneTheme
 import java.util.regex.Pattern
 
 /**
@@ -65,17 +64,15 @@ class LinkDetailsActivity : ComponentActivity() {
         viewModel = BookmarkViewModel(application)
 
         setContent {
-            AllInOneTheme {
-                AppBackground.BreathingBackground(title = R.string.link_details) {
-                    LinkDetailsScreen(
-                        link = Link(
-                            id = linkId,
-                            title = linkTitle ?: "",
-                            url = linkUrl ?: "",
-                            folder = folderId
-                        )
+            XBackground.BreathingBackground(titleId = R.string.link_details) {
+                LinkDetailsScreen(
+                    link = Link(
+                        id = linkId,
+                        title = linkTitle ?: "",
+                        url = linkUrl ?: "",
+                        folder = folderId
                     )
-                }
+                )
             }
         }
     }
@@ -150,7 +147,7 @@ class LinkDetailsActivity : ComponentActivity() {
             ) {
                 val clip = ClipData.newPlainText("URL", url)
                 clipboardManager.setPrimaryClip(clip)
-                Toast.makeText(context, R.string.copied, Toast.LENGTH_SHORT).show()
+                XToast.showText(this@LinkDetailsActivity, R.string.copied)
             }
 
             Spacer(modifier = Modifier.width(10.dp))
@@ -164,11 +161,10 @@ class LinkDetailsActivity : ComponentActivity() {
                 try {
                     startActivity(intent)
                 } catch (e: Exception) {
-                    Toast.makeText(
+                    XToast.showText(
                         context,
-                        R.string.open_error,
-                        Toast.LENGTH_SHORT
-                    ).show()
+                        R.string.open_error
+                    )
                 }
             }
         }
@@ -188,20 +184,15 @@ class LinkDetailsActivity : ComponentActivity() {
                 deleteConfirm++
                 if (deleteConfirm > 2) {
                     viewModel.deleteLink(link)
-                    Toast.makeText(
+                    XToast.showText(
                         context,
-                        R.string.deleted,
-                        Toast.LENGTH_SHORT
-                    ).show()
+                        R.string.deleted
+                    )
                     /*val result = Intent().putExtra("delete", true)
                     setResult(Activity.RESULT_OK, result)*/
                     finish()
                 } else {
-                    Toast.makeText(
-                        context,
-                        "再按 ${3 - deleteConfirm} 次即可删除",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    XToast.showText("再按 ${3 - deleteConfirm} 次即可删除")
                 }
             }
 
@@ -223,25 +214,21 @@ class LinkDetailsActivity : ComponentActivity() {
                             folder = link.folder
                         )
                         viewModel.updateLink(newLink)
-                        Toast.makeText(
+                        XToast.showText(
                             context,
-                            R.string.modified,
-                            Toast.LENGTH_SHORT
-                        ).show()
-                        finish()
+                            R.string.modified
+                        )
                     } else {
-                        Toast.makeText(
+                        XToast.showText(
                             context,
-                            R.string.invalid_url,
-                            Toast.LENGTH_SHORT
-                        ).show()
+                            R.string.invalid_url
+                        )
                     }
                 } else {
-                    Toast.makeText(
+                    XToast.showText(
                         context,
-                        R.string.input_link_empty,
-                        Toast.LENGTH_SHORT
-                    ).show()
+                        R.string.input_link_empty
+                    )
                 }
             }
         }

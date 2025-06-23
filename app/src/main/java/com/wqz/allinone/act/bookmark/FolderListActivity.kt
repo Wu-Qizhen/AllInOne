@@ -37,12 +37,11 @@ import androidx.compose.ui.unit.sp
 import com.wqz.allinone.R
 import com.wqz.allinone.act.bookmark.viewmodel.BookmarkViewModel
 import com.wqz.allinone.entity.Folder
-import com.wqz.allinone.ui.AppBackground
 import com.wqz.allinone.ui.ModifierExtends.clickVfx
+import com.wqz.allinone.ui.XBackground
 import com.wqz.allinone.ui.XCard
 import com.wqz.allinone.ui.XItem
 import com.wqz.allinone.ui.property.BorderWidth
-import com.wqz.allinone.ui.theme.AllInOneTheme
 
 /**
  * 文件夹列表
@@ -58,10 +57,8 @@ class FolderListActivity : ComponentActivity() {
         viewModel = BookmarkViewModel(application)
 
         setContent {
-            AllInOneTheme {
-                AppBackground.BreathingBackground(title = R.string.bookmark) {
-                    FolderListScreen()
-                }
+            XBackground.BreathingBackground(titleId = R.string.bookmark) {
+                FolderListScreen()
             }
         }
     }

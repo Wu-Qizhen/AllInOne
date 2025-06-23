@@ -1,7 +1,6 @@
 package com.wqz.allinone.act.recovery
 
 import android.os.Bundle
-import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
@@ -32,7 +31,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
@@ -45,12 +43,12 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewModelScope
 import com.wqz.allinone.R
 import com.wqz.allinone.act.recovery.viewmodel.RecoveryViewModel
-import com.wqz.allinone.ui.AppBackground
+import com.wqz.allinone.ui.XBackground
 import com.wqz.allinone.ui.XCard
 import com.wqz.allinone.ui.XItem
+import com.wqz.allinone.ui.XToast
 import com.wqz.allinone.ui.color.TextFieldColor
 import com.wqz.allinone.ui.property.BorderWidth
-import com.wqz.allinone.ui.theme.AllInOneTheme
 import com.wqz.allinone.ui.theme.ThemeColor
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -68,19 +66,17 @@ class RecoveryActivity : ComponentActivity() {
         viewModel = RecoveryViewModel(application)
 
         setContent {
-            AllInOneTheme {
-                AppBackground.BreathingBackground(
-                    R.string.recovery
-                ) {
-                    RecoveryScreen()
-                }
+            XBackground.BreathingBackground(
+                R.string.recovery
+            ) {
+                RecoveryScreen()
             }
         }
     }
 
     @Composable
     fun RecoveryScreen() {
-        val context = LocalContext.current
+        // val context = LocalContext.current
         var enabled by remember { mutableStateOf(true) }
         val importObjects = listOf("待办箱", "随手记", "生活书", "书签宝")
         val (selectedImportObject, setSelectedImportObject) = remember {
@@ -201,7 +197,7 @@ class RecoveryActivity : ComponentActivity() {
                 text = stringResource(id = R.string.clear)
             ) {
                 importContent = ""
-                Toast.makeText(context, "已清空", Toast.LENGTH_SHORT).show()
+                XToast.showText("已清空")
             }
 
             Spacer(modifier = Modifier.width(10.dp))

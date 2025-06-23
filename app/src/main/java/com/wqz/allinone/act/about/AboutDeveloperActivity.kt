@@ -5,8 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import com.wqz.allinone.R
 import com.wqz.allinone.act.about.ui.AboutDeveloperScreen
-import com.wqz.allinone.ui.AppBackground
-import com.wqz.allinone.ui.theme.AllInOneTheme
+import com.wqz.allinone.ui.XBackground
 
 /**
  * 关于开发者
@@ -22,15 +21,13 @@ class AboutDeveloperActivity : ComponentActivity() {
             intent.getIntExtra("description", R.string.wqz_desc)
         val details = intent.getIntExtra("details", R.string.text_about_wqz)
         setContent {
-                AllInOneTheme {
-                    AppBackground.BreathingBackground {
-                    AboutDeveloperScreen(
-                        logo = logo,
-                        name = name,
-                        description = description,
-                        details = details
-                    )
-                }
+            XBackground.BreathingBackground {
+                AboutDeveloperScreen(
+                    logo = logo,
+                    name = name,
+                    description = description,
+                    details = details
+                )
             }
         }
     }

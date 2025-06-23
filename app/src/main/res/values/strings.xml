@@ -2,7 +2,7 @@
     <!-- 应用信息 -->
     <string name="app_name">万象归一</string>
     <string name="slogan">点滴记忆，万象收纳</string>
-    <string name="copyright">Copyright © 2024 Code IntelliX.\nAll rights reserved.</string>
+    <string name="copyright">Copyright © 2025 Code IntelliX.\nAll rights reserved.</string>
     <string name="powered_by">Powered by\nAethex Matrix ®</string>
     <string name="studio">Code IntelliX</string>
 
@@ -10,7 +10,7 @@
     <string name="about_us">关于我们</string>
     <string name="introduction">一笔一划，万象尽在掌握</string>
 
-    <string name="version">Kraken（K）</string>
+    <string name="version">Lapis（L）</string>
     <string name="version_desc">版本号</string>
     <string name="update_log">更新日志</string>
 
@@ -36,6 +36,8 @@
     <string name="tylm_desc">开发协力</string>
     <string name="codegeex">CodeGeeX</string>
     <string name="codegeex_desc">开发协力</string>
+    <string name="deepseek">深度求索</string>
+    <string name="deepseek_desc">开发协力</string>
     <string name="sd">Stable Diffusion</string>
     <string name="sd_desc">设计协力</string>
     <string name="about_developer">关于此成员</string>
@@ -52,6 +54,9 @@
     </string>
     <string name="text_about_chatglm">
         智谱清言是一款专注于语音识别和自然语言处理技术的智能语音助手。它能够准确识别用户的语音指令，并理解其中的意图，从而提供高效、便捷的交互体验。智谱清言应用场景广泛，包括但不限于智能家居控制、语音助手服务、客服机器人等，旨在通过先进的语音交互技术，提升人机沟通的便捷性和自然性。
+    </string>
+    <string name="text_about_deepseek">
+        DeepSeek 是由中国深度求索公司开发的人工智能大模型，专注于文本创作、自然语言理解、编程辅助等任务，具备开源、低成本和高性能的特点。‌其最新版本在数学推理、代码生成等任务上达到国际领先水平，广泛应用于金融、政务、教育等领域。
     </string>
     <string name="text_about_sd">
         Stable Diffusion 是一个开源的文本到图像生成模型，由 Stability AI 开发。它能根据文本描述生成高分辨率的图像，具有快速、稳定的特点，广泛应用于艺术创作、设计等领域，并受到广泛的社区支持。该模型的发布显著降低了高质量图像生成的门槛。

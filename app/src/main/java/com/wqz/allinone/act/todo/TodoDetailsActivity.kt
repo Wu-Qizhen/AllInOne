@@ -1,7 +1,6 @@
 package com.wqz.allinone.act.todo
 
 import android.os.Bundle
-import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
@@ -37,15 +36,15 @@ import androidx.lifecycle.viewModelScope
 import com.wqz.allinone.R
 import com.wqz.allinone.act.todo.viewmodel.TodoViewModel
 import com.wqz.allinone.entity.Todo
-import com.wqz.allinone.ui.AppBackground
+import com.wqz.allinone.ui.XBackground
 import com.wqz.allinone.ui.XCard
 import com.wqz.allinone.ui.XItem
+import com.wqz.allinone.ui.XToast
 import com.wqz.allinone.ui.color.BackgroundColor
 import com.wqz.allinone.ui.color.ContentColor
 import com.wqz.allinone.ui.color.TextFieldColor
 import com.wqz.allinone.ui.property.BorderWidth
 import com.wqz.allinone.ui.property.ButtonCategory
-import com.wqz.allinone.ui.theme.AllInOneTheme
 import com.wqz.allinone.ui.theme.ThemeColor
 import kotlinx.coroutines.launch
 
@@ -67,16 +66,14 @@ class TodoDetailsActivity : ComponentActivity() {
         viewModel = TodoViewModel(application)
 
         setContent {
-            AllInOneTheme {
-                AppBackground.BreathingBackground(title = R.string.todo_details) {
-                    TodoDetailsScreen(
-                        todo = Todo(
-                            id = todoId,
-                            title = todoContent.toString(),
-                            completed = todoCompleted
-                        )
+            XBackground.BreathingBackground(titleId = R.string.todo_details) {
+                TodoDetailsScreen(
+                    todo = Todo(
+                        id = todoId,
+                        title = todoContent.toString(),
+                        completed = todoCompleted
                     )
-                }
+                )
             }
         }
     }
@@ -190,18 +187,13 @@ class TodoDetailsActivity : ComponentActivity() {
                 deleteConfirm++
                 if (deleteConfirm > 2) {
                     viewModel.deleteTodo(todo.id)
-                    Toast.makeText(
+                    XToast.showText(
                         this@TodoDetailsActivity,
-                        R.string.deleted,
-                        Toast.LENGTH_SHORT
-                    ).show()
+                        R.string.deleted
+                    )
                     finish()
                 } else {
-                    Toast.makeText(
-                        this@TodoDetailsActivity,
-                        "再按 ${3 - deleteConfirm} 次即可删除",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    XToast.showText("再按 ${3 - deleteConfirm} 次即可删除")
                 }
             }
 
@@ -217,18 +209,16 @@ class TodoDetailsActivity : ComponentActivity() {
                     viewModel.viewModelScope.launch {
                         viewModel.updateTodo(todo)
                     }
-                    Toast.makeText(
+                    XToast.showText(
                         this@TodoDetailsActivity,
-                        R.string.saved,
-                        Toast.LENGTH_SHORT
-                    ).show()
+                        R.string.saved
+                    )
                     finish()
                 } else {
-                    Toast.makeText(
+                    XToast.showText(
                         this@TodoDetailsActivity,
-                        R.string.input_todo_empty,
-                        Toast.LENGTH_SHORT
-                    ).show()
+                        R.string.input_todo_empty
+                    )
                 }
             }
         }

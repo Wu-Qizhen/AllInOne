@@ -3,7 +3,6 @@ package com.wqz.allinone.act.diary
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.result.contract.ActivityResultContracts
@@ -58,13 +57,13 @@ import com.wqz.allinone.R
 import com.wqz.allinone.act.diary.data.OptionData
 import com.wqz.allinone.act.diary.viewmodel.DiaryViewModel
 import com.wqz.allinone.entity.Diary
-import com.wqz.allinone.ui.AppBackground
 import com.wqz.allinone.ui.ModifierExtends.clickVfx
+import com.wqz.allinone.ui.XBackground
 import com.wqz.allinone.ui.XCard
 import com.wqz.allinone.ui.XItem
+import com.wqz.allinone.ui.XToast
 import com.wqz.allinone.ui.color.TextFieldColor
 import com.wqz.allinone.ui.property.BorderWidth
-import com.wqz.allinone.ui.theme.AllInOneTheme
 import kotlinx.coroutines.launch
 import java.time.DateTimeException
 import java.time.LocalDate
@@ -124,10 +123,8 @@ class DiaryEditActivity : ComponentActivity() {
             }
 
             setContent {
-                AllInOneTheme {
-                    AppBackground.BreathingBackground {
-                        DiaryEditScreen(diary)
-                    }
+                XBackground.BreathingBackground {
+                    DiaryEditScreen(diary)
                 }
             }
         }
@@ -217,11 +214,10 @@ class DiaryEditActivity : ComponentActivity() {
                 IconButton(
                     onClick = {
                         if (content.isEmpty()) {
-                            Toast.makeText(
+                            XToast.showText(
                                 this@DiaryEditActivity,
-                                R.string.input_empty,
-                                Toast.LENGTH_SHORT
-                            ).show()
+                                R.string.input_empty
+                            )
                             return@IconButton
                         }
                         viewModel.viewModelScope.launch {
@@ -246,11 +242,10 @@ class DiaryEditActivity : ComponentActivity() {
                                 )
                             }
                         }
-                        Toast.makeText(
+                        XToast.showText(
                             this@DiaryEditActivity,
-                            R.string.saved,
-                            Toast.LENGTH_SHORT
-                        ).show()
+                            R.string.saved
+                        )
                         finish()
                     },
                     content = {
@@ -349,21 +344,17 @@ class DiaryEditActivity : ComponentActivity() {
                                     try {
                                         selectedDate = LocalDate.of(year, month, day)
                                     } catch (e: DateTimeException) {
-                                        Toast.makeText(
+                                        XToast.showText(
                                             context,
-                                            R.string.invalid_date,
-                                            Toast.LENGTH_SHORT
+                                            R.string.invalid_date
                                         )
-                                            .show()
                                     }
                                     showDateSelect = false
                                 } else {
-                                    Toast.makeText(
+                                    XToast.showText(
                                         context,
-                                        R.string.invalid_date,
-                                        Toast.LENGTH_SHORT
+                                        R.string.invalid_date
                                     )
-                                        .show()
                                 }
                             }
                         }

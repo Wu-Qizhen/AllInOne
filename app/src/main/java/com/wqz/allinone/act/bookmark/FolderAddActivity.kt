@@ -1,7 +1,6 @@
 package com.wqz.allinone.act.bookmark
 
 import android.os.Bundle
-import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Spacer
@@ -26,11 +25,11 @@ import androidx.compose.ui.unit.sp
 import com.wqz.allinone.R
 import com.wqz.allinone.act.bookmark.viewmodel.BookmarkViewModel
 import com.wqz.allinone.entity.Folder
-import com.wqz.allinone.ui.AppBackground
+import com.wqz.allinone.ui.XBackground
 import com.wqz.allinone.ui.XCard
 import com.wqz.allinone.ui.XItem
+import com.wqz.allinone.ui.XToast
 import com.wqz.allinone.ui.color.TextFieldColor
-import com.wqz.allinone.ui.theme.AllInOneTheme
 
 /**
  * 文件夹添加
@@ -46,10 +45,8 @@ class FolderAddActivity : ComponentActivity() {
         viewModel = BookmarkViewModel(application)
 
         setContent {
-            AllInOneTheme {
-                AppBackground.BreathingBackground(title = R.string.add_folder) {
-                    FolderAddScreen()
-                }
+            XBackground.BreathingBackground(titleId = R.string.add_folder) {
+                FolderAddScreen()
             }
         }
     }
@@ -89,11 +86,10 @@ class FolderAddActivity : ComponentActivity() {
                     name = name
                 )
                 viewModel.insertFolder(folder)
-                Toast.makeText(context, R.string.added, Toast.LENGTH_SHORT).show()
+                XToast.showText(context, R.string.added)
                 finish()
             } else {
-                Toast.makeText(context, R.string.input_folder_name_empty, Toast.LENGTH_SHORT)
-                    .show()
+                XToast.showText(context, R.string.input_folder_name_empty)
             }
         }
 

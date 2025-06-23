@@ -32,11 +32,10 @@ import androidx.compose.ui.unit.sp
 import com.wqz.allinone.R
 import com.wqz.allinone.act.diary.data.Option
 import com.wqz.allinone.act.diary.data.OptionData
-import com.wqz.allinone.ui.AppBackground
 import com.wqz.allinone.ui.ModifierExtends.clickVfx
+import com.wqz.allinone.ui.XBackground
 import com.wqz.allinone.ui.XCard
 import com.wqz.allinone.ui.property.BorderWidth
-import com.wqz.allinone.ui.theme.AllInOneTheme
 
 /**
  * 心情选择
@@ -48,10 +47,8 @@ class MoodSelectActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         setContent {
-            AllInOneTheme {
-                AppBackground.BreathingBackground(title = R.string.mood_select) {
-                    MoodSelectScreen()
-                }
+            XBackground.BreathingBackground(titleId = R.string.mood_select) {
+                MoodSelectScreen()
             }
         }
     }

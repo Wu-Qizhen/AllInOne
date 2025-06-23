@@ -1,7 +1,6 @@
 package com.wqz.allinone.act.bookmark
 
 import android.os.Bundle
-import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Spacer
@@ -25,11 +24,11 @@ import androidx.compose.ui.unit.sp
 import com.wqz.allinone.R
 import com.wqz.allinone.act.bookmark.viewmodel.BookmarkViewModel
 import com.wqz.allinone.entity.Link
-import com.wqz.allinone.ui.AppBackground
+import com.wqz.allinone.ui.XBackground
 import com.wqz.allinone.ui.XCard
 import com.wqz.allinone.ui.XItem
+import com.wqz.allinone.ui.XToast
 import com.wqz.allinone.ui.color.TextFieldColor
-import com.wqz.allinone.ui.theme.AllInOneTheme
 import java.util.regex.Pattern
 
 /**
@@ -47,14 +46,12 @@ class LinkImportActivity : ComponentActivity() {
         val folderId = intent.getIntExtra("FOLDER_ID", 0)
 
         setContent {
-            AllInOneTheme {
-                AppBackground.BreathingBackground(
-                    R.string.batch_import
-                ) {
-                    LinkImportScreen(
-                        folderId = folderId
-                    )
-                }
+            XBackground.BreathingBackground(
+                R.string.batch_import
+            ) {
+                LinkImportScreen(
+                    folderId = folderId
+                )
             }
         }
     }
@@ -114,10 +111,10 @@ class LinkImportActivity : ComponentActivity() {
 
             if (links.isNotEmpty()) {
                 viewModel.insertLinks(links)
-                Toast.makeText(this, R.string.imported, Toast.LENGTH_SHORT).show()
+                XToast.showText(this, R.string.imported)
                 finish()
             } else {
-                Toast.makeText(this, R.string.invalid_content, Toast.LENGTH_SHORT).show()
+                XToast.showText(this, R.string.invalid_content)
             }
         }
 

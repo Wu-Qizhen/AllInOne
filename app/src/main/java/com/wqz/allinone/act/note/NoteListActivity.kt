@@ -2,7 +2,6 @@ package com.wqz.allinone.act.note
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.animation.AnimatedVisibility
@@ -48,16 +47,16 @@ import androidx.compose.ui.unit.sp
 import com.wqz.allinone.R
 import com.wqz.allinone.act.note.viewmodel.NoteViewModel
 import com.wqz.allinone.entity.Note
-import com.wqz.allinone.ui.AppBackground
 import com.wqz.allinone.ui.ModifierExtends.clickVfx
+import com.wqz.allinone.ui.XBackground
 import com.wqz.allinone.ui.XCard
 import com.wqz.allinone.ui.XItem
+import com.wqz.allinone.ui.XToast
 import com.wqz.allinone.ui.color.BackgroundColor
 import com.wqz.allinone.ui.color.BorderColor
 import com.wqz.allinone.ui.color.ContentColor
 import com.wqz.allinone.ui.property.BorderWidth
 import com.wqz.allinone.ui.property.ButtonCategory
-import com.wqz.allinone.ui.theme.AllInOneTheme
 import com.wqz.allinone.ui.theme.ThemeColor
 
 /**
@@ -74,10 +73,8 @@ class NoteListActivity : ComponentActivity() {
         viewModel = NoteViewModel(application)
 
         setContent {
-            AllInOneTheme {
-                AppBackground.BreathingBackground(title = R.string.note) {
-                    NoteListScreen()
-                }
+            XBackground.BreathingBackground(titleId = R.string.note) {
+                NoteListScreen()
             }
         }
     }
@@ -255,20 +252,16 @@ class NoteListActivity : ComponentActivity() {
                         ) {
                             if (!note.isLocked) {
                                 showDialog = 2
-                                Toast.makeText(
+                                XToast.showText(
                                     this@NoteListActivity,
-                                    R.string.deleted,
-                                    Toast.LENGTH_SHORT
+                                    R.string.deleted
                                 )
-                                    .show()
                                 viewModel.deleteNoteWithDelay(note.id)
                             } else {
-                                Toast.makeText(
+                                XToast.showText(
                                     this@NoteListActivity,
-                                    R.string.note_locked,
-                                    Toast.LENGTH_SHORT
+                                    R.string.note_locked
                                 )
-                                    .show()
                             }
                         }
 

@@ -5,7 +5,6 @@ import android.annotation.SuppressLint
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
-import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.result.ActivityResultLauncher
@@ -51,11 +50,11 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.viewModelScope
 import com.wqz.allinone.R
 import com.wqz.allinone.act.backup.viewmodel.BackupViewModel
-import com.wqz.allinone.ui.AppBackground
+import com.wqz.allinone.ui.XBackground
 import com.wqz.allinone.ui.XCard
 import com.wqz.allinone.ui.XItem
+import com.wqz.allinone.ui.XToast
 import com.wqz.allinone.ui.property.BorderWidth
-import com.wqz.allinone.ui.theme.AllInOneTheme
 import com.wqz.allinone.ui.theme.ThemeColor
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -78,19 +77,17 @@ class BackupActivity : ComponentActivity() {
                 if (isGranted) {
                     onPermissionGranted()
                 } else {
-                    Toast.makeText(this, R.string.permission_denied, Toast.LENGTH_SHORT).show()
+                    XToast.showText(this, R.string.permission_denied)
                 }
             }
 
         viewModel = BackupViewModel(application)
 
         setContent {
-            AllInOneTheme {
-                AppBackground.BreathingBackground(
-                    R.string.backup
-                ) {
-                    BackupScreen()
-                }
+            XBackground.BreathingBackground(
+                R.string.backup
+            ) {
+                BackupScreen()
             }
         }
     }

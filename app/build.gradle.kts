@@ -12,8 +12,8 @@ android {
         applicationId = "com.wqz.allinone"
         minSdk = 30
         targetSdk = 34
-        versionCode = 26
-        versionName = "Kraken"
+        versionCode = 27
+        versionName = "Lapis"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
             useSupportLibrary = true

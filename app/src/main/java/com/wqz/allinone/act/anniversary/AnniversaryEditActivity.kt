@@ -1,7 +1,6 @@
 package com.wqz.allinone.act.anniversary
 
 import android.os.Bundle
-import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Arrangement
@@ -33,12 +32,12 @@ import androidx.lifecycle.viewModelScope
 import com.wqz.allinone.R
 import com.wqz.allinone.act.anniversary.viewmodel.AnniversaryViewModel
 import com.wqz.allinone.entity.Anniversary
-import com.wqz.allinone.ui.AppBackground
+import com.wqz.allinone.ui.XBackground
 import com.wqz.allinone.ui.XCard
 import com.wqz.allinone.ui.XItem
+import com.wqz.allinone.ui.XToast
 import com.wqz.allinone.ui.color.TextFieldColor
 import com.wqz.allinone.ui.property.ButtonCategory
-import com.wqz.allinone.ui.theme.AllInOneTheme
 import kotlinx.coroutines.launch
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
@@ -58,10 +57,8 @@ class AnniversaryEditActivity : ComponentActivity() {
         val anniversaryId = intent.getIntExtra("ANNIVERSARY_ID", -1)
 
         setContent {
-            AllInOneTheme {
-                AppBackground.BreathingBackground(title = R.string.edit_anniversary) {
-                    AnniversaryEditScreen(anniversaryId)
-                }
+            XBackground.BreathingBackground(titleId = R.string.edit_anniversary) {
+                AnniversaryEditScreen(anniversaryId)
             }
         }
     }
@@ -80,7 +77,7 @@ class AnniversaryEditActivity : ComponentActivity() {
                 // 调用挂起函数获取周年纪念信息
                 anniversary = viewModel.getAnniversary(anniversaryId)
             } catch (e: Exception) {
-                Toast.makeText(context, e.toString(), Toast.LENGTH_SHORT).show()
+                XToast.showText(e.toString())
             }
         }
 
@@ -147,18 +144,13 @@ class AnniversaryEditActivity : ComponentActivity() {
                 deleteConfirm++
                 if (deleteConfirm > 2) {
                     viewModel.deleteAnniversary(anniversaryId)
-                    Toast.makeText(
+                    XToast.showText(
                         this@AnniversaryEditActivity,
-                        R.string.deleted,
-                        Toast.LENGTH_SHORT
-                    ).show()
+                        R.string.deleted
+                    )
                     finish()
                 } else {
-                    Toast.makeText(
-                        this@AnniversaryEditActivity,
-                        "再按 ${3 - deleteConfirm} 次即可删除",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    XToast.showText("再按 ${3 - deleteConfirm} 次即可删除")
                 }
             }
 
@@ -178,15 +170,13 @@ class AnniversaryEditActivity : ComponentActivity() {
                     viewModel.viewModelScope.launch {
                         viewModel.updateAnniversary(modifiedAnniversary)
                     }
-                    Toast.makeText(
+                    XToast.showText(
                         this@AnniversaryEditActivity,
-                        R.string.saved,
-                        Toast.LENGTH_SHORT
-                    ).show()
+                        R.string.saved
+                    )
                     finish()
                 } else {
-                    Toast.makeText(context, R.string.input_anniversary_empty, Toast.LENGTH_SHORT)
-                        .show()
+                    XToast.showText(context, R.string.input_anniversary_empty)
                 }
             }
         }
