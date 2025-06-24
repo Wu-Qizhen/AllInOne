@@ -48,10 +48,10 @@ import com.wqz.allinone.ui.theme.ThemeColor
 
 /**
  * 胶囊按钮 -> 项目按钮
- * Created by Wu Qizhen on 2024.6.16
- * Updated by Wu Qizhen on 2024.8.31
- * Refactored by Wu Qizhen on 2024.11.30
- * Updated by Wu Qizhen on 2024.12.31
+ * Created by Wu Qizhen on 2024.6.16 (V0)
+ * Updated by Wu Qizhen on 2024.8.31 (V0)
+ * Updated by Wu Qizhen on 2024.11.30 (V1)
+ * Updated by Wu Qizhen on 2024.12.31 (V1)
  */
 object XItem {
     private val BACKGROUND_DEFAULT_GRAY = BackgroundColor.DEFAULT_GRAY
@@ -213,6 +213,63 @@ object XItem {
             )
         }
     }
+
+    /*
+     * 带动态模糊背景的文本按钮
+     * @param text 按钮文字
+     * @param blurRadius 模糊半径
+     * @param onClick 点击事件
+     */
+    /*@Composable
+    fun BlurButton(
+        text: String,
+        blurRadius: Float = 15f,
+        onClick: () -> Unit
+    ) {
+        val interactionSource = remember { MutableInteractionSource() }
+        val isPressed by interactionSource.collectIsPressedAsState()
+
+        // 动态模糊效果
+        val blurModifier =
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.S) {
+                Modifier.graphicsLayer {
+                    renderEffect = RenderEffect
+                        .createBlurEffect(blurRadius, blurRadius, Shader.TileMode.DECAL)
+                        .asComposeRenderEffect()
+                }
+            } else {
+                Modifier // Android 12 以下不应用模糊
+            }
+
+        // 按钮背景颜色（根据按压状态变化）
+        val backgroundColor = when {
+            isPressed -> BACKGROUND_PRESSED_YELLOW
+            else -> Color.Transparent // 使用透明背景以显示模糊效果
+        }
+
+        Box(
+            modifier = Modifier
+                .clickable(
+                    interactionSource = interactionSource,
+                    indication = null, // 禁用默认波纹效果
+                    onClick = onClick
+                )
+                .wrapContentSize()
+                .then(blurModifier) // 应用模糊效果
+                .background(
+                    color = backgroundColor,
+                    shape = RoundedCornerShape(50.dp)
+                )
+                .padding(horizontal = 20.dp, vertical = 10.dp)
+        ) {
+            Text(
+                text = text,
+                fontSize = 16.sp,
+                fontWeight = FontWeight.Bold,
+                color = ContentColor.DEFAULT_BROWN
+            )
+        }
+    }*/
 
     /**
      * 胶囊按钮

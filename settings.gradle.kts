@@ -34,5 +34,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "万象归一"
+rootProject.name = "AllInOne"
 include(":app")
