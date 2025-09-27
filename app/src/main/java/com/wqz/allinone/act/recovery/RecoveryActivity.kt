@@ -15,7 +15,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Divider
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.RadioButtonDefaults
@@ -130,7 +130,7 @@ class RecoveryActivity : ComponentActivity() {
 
             Spacer(modifier = Modifier.height(10.dp))
 
-            Divider(
+            HorizontalDivider(
                 modifier = Modifier
                     .fillMaxWidth(),
                 thickness = BorderWidth.DEFAULT_WIDTH,
@@ -157,7 +157,7 @@ class RecoveryActivity : ComponentActivity() {
                 }
             )
 
-            Divider(
+            HorizontalDivider(
                 modifier = Modifier
                     .fillMaxWidth(),
                 thickness = BorderWidth.DEFAULT_WIDTH,

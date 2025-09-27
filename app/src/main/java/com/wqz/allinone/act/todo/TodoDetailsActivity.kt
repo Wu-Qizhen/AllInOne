@@ -12,7 +12,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Divider
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
@@ -104,7 +104,7 @@ class TodoDetailsActivity : ComponentActivity() {
                 }
             )
 
-            Divider(
+            HorizontalDivider(
                 modifier = Modifier
                     .fillMaxWidth(),
                 thickness = BorderWidth.DEFAULT_WIDTH,

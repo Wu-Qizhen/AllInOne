@@ -7,7 +7,7 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.material3.Divider
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -40,7 +40,7 @@ class SubjectChooseActivity : ComponentActivity() {
                 startActivity(Intent(this@SubjectChooseActivity, ChineseActivity::class.java))
             }
 
-            Divider(
+            HorizontalDivider(
                 modifier = Modifier
                     .fillMaxWidth(),
                 thickness = BorderWidth.DEFAULT_WIDTH,

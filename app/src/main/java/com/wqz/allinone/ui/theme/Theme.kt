@@ -59,7 +59,9 @@ fun AllInOneTheme(
     if (!view.isInEditMode) {
         SideEffect {
             val window = (view.context as Activity).window
-            window.statusBarColor = colorScheme.primary.toArgb()
+            // 关键修改：强制设置为黑色
+            window.statusBarColor = Color.Black.toArgb()
+            // 确保状态栏图标可见（亮色图标）
             WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = darkTheme
         }
     }

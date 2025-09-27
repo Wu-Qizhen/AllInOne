@@ -27,8 +27,8 @@ import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.KeyboardArrowLeft
-import androidx.compose.material.icons.rounded.KeyboardArrowRight
+import androidx.compose.material.icons.automirrored.rounded.KeyboardArrowLeft
+import androidx.compose.material.icons.automirrored.rounded.KeyboardArrowRight
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
@@ -151,7 +151,7 @@ class DiaryPreviewActivity : ComponentActivity() {
                 },
                 content = {
                     Icon(
-                        imageVector = Icons.Rounded.KeyboardArrowLeft,
+                        imageVector = Icons.AutoMirrored.Rounded.KeyboardArrowLeft,
                         contentDescription = "上个月",
                         tint = Color.White
                     )
@@ -181,7 +181,7 @@ class DiaryPreviewActivity : ComponentActivity() {
                 },
                 content = {
                     Icon(
-                        imageVector = Icons.Rounded.KeyboardArrowRight,
+                        imageVector = Icons.AutoMirrored.Rounded.KeyboardArrowRight,
                         contentDescription = "下个月",
                         tint = Color.White
                     )

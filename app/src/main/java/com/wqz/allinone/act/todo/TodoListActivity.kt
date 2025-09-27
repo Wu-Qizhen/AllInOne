@@ -25,7 +25,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.CheckboxDefaults
-import androidx.compose.material3.Divider
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -119,7 +119,7 @@ class TodoListActivity : ComponentActivity() {
                         )
                         // 分如果不是最后一个绘制割线
                         if (it != todos.last()) {
-                            Divider(
+                            HorizontalDivider(
                                 modifier = Modifier
                                     .fillMaxWidth(),
                                 thickness = BorderWidth.DEFAULT_WIDTH,

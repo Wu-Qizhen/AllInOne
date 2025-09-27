@@ -24,7 +24,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.ArrowBack
+import androidx.compose.material.icons.automirrored.rounded.ArrowBack
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
@@ -49,8 +49,8 @@ import androidx.compose.ui.unit.sp
 import com.wqz.allinone.R
 import com.wqz.allinone.act.anniversary.viewmodel.AnniversaryViewModel
 import com.wqz.allinone.entity.Anniversary
-import com.wqz.allinone.ui.XBackground
 import com.wqz.allinone.ui.ModifierExtends.clickVfx
+import com.wqz.allinone.ui.XBackground
 import com.wqz.allinone.ui.XToast
 import java.time.ZoneId
 import java.time.temporal.ChronoUnit
@@ -136,7 +136,7 @@ class AnniversaryDetailsActivity : ComponentActivity() {
                             },
                             content = {
                                 Icon(
-                                    imageVector = Icons.Rounded.ArrowBack,
+                                    imageVector = Icons.AutoMirrored.Rounded.ArrowBack,
                                     contentDescription = "返回",
                                     tint = Color.White
                                 )

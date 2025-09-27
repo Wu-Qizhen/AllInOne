@@ -28,8 +28,8 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.KeyboardArrowLeft
-import androidx.compose.material.icons.rounded.KeyboardArrowRight
+import androidx.compose.material.icons.automirrored.rounded.KeyboardArrowLeft
+import androidx.compose.material.icons.automirrored.rounded.KeyboardArrowRight
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
@@ -138,7 +138,7 @@ class AnniversaryPreviewActivity : ComponentActivity() {
                 },
                 content = {
                     Icon(
-                        imageVector = Icons.Rounded.KeyboardArrowLeft,
+                        imageVector = Icons.AutoMirrored.Rounded.KeyboardArrowLeft,
                         contentDescription = "前一天",
                         tint = Color.White
                     )
@@ -172,7 +172,7 @@ class AnniversaryPreviewActivity : ComponentActivity() {
                 },
                 content = {
                     Icon(
-                        imageVector = Icons.Rounded.KeyboardArrowRight,
+                        imageVector = Icons.AutoMirrored.Rounded.KeyboardArrowRight,
                         contentDescription = "后一天",
                         tint = Color.White
                     )

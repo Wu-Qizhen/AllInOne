@@ -22,7 +22,7 @@ import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.CheckboxDefaults
-import androidx.compose.material3.Divider
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.RadioButtonDefaults
@@ -278,7 +278,7 @@ class BackupActivity : ComponentActivity() {
 
             Spacer(modifier = Modifier.height(15.dp))
 
-            Divider(
+            HorizontalDivider(
                 modifier = Modifier
                     .fillMaxWidth(),
                 thickness = BorderWidth.DEFAULT_WIDTH,
@@ -320,7 +320,7 @@ class BackupActivity : ComponentActivity() {
                 }
             }
 
-            Divider(
+            HorizontalDivider(
                 modifier = Modifier
                     .fillMaxWidth(),
                 thickness = BorderWidth.DEFAULT_WIDTH,

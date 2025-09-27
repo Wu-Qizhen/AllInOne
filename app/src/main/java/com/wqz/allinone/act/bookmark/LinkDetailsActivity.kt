@@ -2,9 +2,7 @@ package com.wqz.allinone.act.bookmark
 
 import android.content.ClipData
 import android.content.ClipboardManager
-import android.content.Context
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -14,7 +12,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
-import androidx.compose.material3.Divider
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
@@ -33,6 +31,7 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.net.toUri
 import com.wqz.allinone.R
 import com.wqz.allinone.act.bookmark.viewmodel.BookmarkViewModel
 import com.wqz.allinone.entity.Link
@@ -83,7 +82,7 @@ class LinkDetailsActivity : ComponentActivity() {
     ) {
         val context = LocalContext.current
         val clipboardManager =
-            context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+            context.getSystemService(CLIPBOARD_SERVICE) as ClipboardManager
 
         var name by remember { mutableStateOf(link.title) }
         var url by remember { mutableStateOf(link.url) }
@@ -108,7 +107,7 @@ class LinkDetailsActivity : ComponentActivity() {
                 }
             )
 
-            Divider(
+            HorizontalDivider(
                 modifier = Modifier
                     .fillMaxWidth(),
                 thickness = BorderWidth.DEFAULT_WIDTH,
@@ -157,10 +156,10 @@ class LinkDetailsActivity : ComponentActivity() {
                 text = stringResource(id = R.string.visit)
             ) {
                 val intent = Intent(Intent.ACTION_VIEW)
-                intent.data = Uri.parse(link.url)
+                intent.data = link.url.toUri()
                 try {
                     startActivity(intent)
-                } catch (e: Exception) {
+                } catch (_: Exception) {
                     XToast.showText(
                         context,
                         R.string.open_error

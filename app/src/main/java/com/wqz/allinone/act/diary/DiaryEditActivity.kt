@@ -25,9 +25,9 @@ import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.ArrowBack
+import androidx.compose.material.icons.automirrored.rounded.ArrowBack
 import androidx.compose.material.icons.rounded.Check
-import androidx.compose.material3.Divider
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
@@ -79,7 +79,7 @@ class DiaryEditActivity : ComponentActivity() {
     private lateinit var viewModel: DiaryViewModel
     private val weatherSelectLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-            if (result.resultCode == Activity.RESULT_OK) {
+            if (result.resultCode == RESULT_OK) {
                 result.data?.getIntExtra("selected_weather", -1)?.let { selectedWeatherId ->
                     // 找到对应的 Option 并通过 ViewModel 设置
                     OptionData.weatherOptions.firstOrNull { it.id == selectedWeatherId }
@@ -201,7 +201,7 @@ class DiaryEditActivity : ComponentActivity() {
                     },
                     content = {
                         Icon(
-                            imageVector = Icons.Rounded.ArrowBack,
+                            imageVector = Icons.AutoMirrored.Rounded.ArrowBack,
                             contentDescription = "返回",
                             tint = Color.White
                         )
@@ -297,7 +297,7 @@ class DiaryEditActivity : ComponentActivity() {
                         modifier = Modifier.fillMaxWidth(),
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
-                        Divider(
+                        HorizontalDivider(
                             modifier = Modifier
                                 .fillMaxWidth(),
                             thickness = BorderWidth.DEFAULT_WIDTH,
@@ -343,7 +343,7 @@ class DiaryEditActivity : ComponentActivity() {
                                     val day = parts[2].toInt()
                                     try {
                                         selectedDate = LocalDate.of(year, month, day)
-                                    } catch (e: DateTimeException) {
+                                    } catch (_: DateTimeException) {
                                         XToast.showText(
                                             context,
                                             R.string.invalid_date
@@ -363,7 +363,7 @@ class DiaryEditActivity : ComponentActivity() {
                     }
                 }
 
-                Divider(
+                HorizontalDivider(
                     modifier = Modifier
                         .fillMaxWidth(),
                     thickness = BorderWidth.DEFAULT_WIDTH,
@@ -423,7 +423,7 @@ class DiaryEditActivity : ComponentActivity() {
                     }
                 }
 
-                Divider(
+                HorizontalDivider(
                     modifier = Modifier
                         .fillMaxWidth(),
                     thickness = BorderWidth.DEFAULT_WIDTH,
@@ -483,7 +483,7 @@ class DiaryEditActivity : ComponentActivity() {
                     }
                 }
 
-                Divider(
+                HorizontalDivider(
                     modifier = Modifier
                         .fillMaxWidth(),
                     thickness = BorderWidth.DEFAULT_WIDTH,
