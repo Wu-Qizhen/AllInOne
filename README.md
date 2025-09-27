@@ -5,7 +5,7 @@
 
 ![输入图片说明](preview/Screenshot_20250927_231139_allinone.png)
 
-![输入图片说明](Screenshot_20250927_231241_allinone.png)
+![输入图片说明](preview/Screenshot_20250927_231241_allinone.png)
 
 ![输入图片说明](preview/Screenshot_20250927_231255_allinone.png)
 
