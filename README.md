@@ -1,7 +1,6 @@
-# 万象归一
+# All In One | 万象归一
 
-## 预览
-直接看图吧 (●'◡'●)
+## Preview | 预览
 
 ![输入图片说明](preview/Screenshot_20250927_231139_allinone.png)
 
